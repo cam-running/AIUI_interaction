@@ -1,0 +1,1822 @@
+. 2025-07-09 10:37:10.992 --------------------------------------------------------------------------
+. 2025-07-09 10:37:10.992 WinSCP Version 6.5.2 (Build 16354 2025-06-18) (OS 10.0.19044 – Windows 10 Enterprise LTSC 2021)
+. 2025-07-09 10:37:10.992 Configuration: nul
+. 2025-07-09 10:37:10.992 Log level: Normal
+. 2025-07-09 10:37:10.992 Local account: ZHAOSEO\Administrator
+. 2025-07-09 10:37:10.992 Working directory: E:\home\ict\robot_ai\docker
+. 2025-07-09 10:37:10.992 Process ID: 18212
+. 2025-07-09 10:37:11.002 Ancestor processes: cmd, explorer, ...
+. 2025-07-09 10:37:11.002 Command-line: "D:\Program Files (x86)\WinSCP\WinSCP.exe"  /script=winscp_script.txt /log=winscp_log.txt /ini=nul
+. 2025-07-09 10:37:11.005 Time zone: Current: GMT+8 (中国标准时间), No DST
+. 2025-07-09 10:37:11.005 Login time: 2025年7月9日 10:37:11
+. 2025-07-09 10:37:11.005 --------------------------------------------------------------------------
+. 2025-07-09 10:37:11.005 Script: Retrospectively logging previous script records:
+> 2025-07-09 10:37:11.005 Script: open sftp://admin:***@192.168.0.10/ -hostkey="ssh-ed25519 255 jpSGJzJruc/a09yKIik/CNLRhLtKht8Oe0PjXhrLKNQ"
+. 2025-07-09 10:37:11.005 --------------------------------------------------------------------------
+. 2025-07-09 10:37:11.005 Session name: admin@192.168.0.10 (Ad-Hoc site)
+. 2025-07-09 10:37:11.005 Host name: 192.168.0.10 (Port: 22)
+. 2025-07-09 10:37:11.005 User name: admin (Password: Yes, Key file: No, Passphrase: No)
+. 2025-07-09 10:37:11.005 Tunnel: No
+. 2025-07-09 10:37:11.005 Transfer Protocol: SFTP
+. 2025-07-09 10:37:11.005 Ping type: Off, Ping interval: 30 sec; Timeout: 15 sec
+. 2025-07-09 10:37:11.005 Disable Nagle: No
+. 2025-07-09 10:37:11.005 Proxy: None
+. 2025-07-09 10:37:11.005 Send buffer: 262144
+. 2025-07-09 10:37:11.005 Compression: No
+. 2025-07-09 10:37:11.005 Bypass authentication: No
+. 2025-07-09 10:37:11.005 Try agent: Yes; Agent forwarding: No; KI: Yes; GSSAPI: Yes
+. 2025-07-09 10:37:11.005 GSSAPI: KEX: No; Forwarding: No; Libs: gssapi32,sspi,custom; Custom: 
+. 2025-07-09 10:37:11.005 Ciphers: aes,chacha20,aesgcm,3des,WARN,des,blowfish,arcfour; Ssh2DES: No
+. 2025-07-09 10:37:11.005 KEX: ntru-curve25519,mlkem-curve25519,mlkem-nist,ecdh,dh-gex-sha1,dh-group18-sha512,dh-group17-sha512,dh-group16-sha512,dh-group15-sha512,dh-group14-sha1,rsa,WARN,dh-group1-sha1
+. 2025-07-09 10:37:11.005 SSH Bugs: Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto
+. 2025-07-09 10:37:11.005 Simple channel: Yes
+. 2025-07-09 10:37:11.005 Return code variable: Autodetect; Lookup user groups: Auto
+. 2025-07-09 10:37:11.005 Shell: default
+. 2025-07-09 10:37:11.005 EOL: LF, UTF: Auto
+. 2025-07-09 10:37:11.005 Clear aliases: Yes, Unset nat.vars: Yes, Resolve symlinks: Yes; Follow directory symlinks: No
+. 2025-07-09 10:37:11.005 LS: ls -la, Ign LS warn: Yes, Scp1 Comp: No; Exit code 1 is error: No
+. 2025-07-09 10:37:11.005 SFTP Bugs: Auto,Auto
+. 2025-07-09 10:37:11.005 SFTP Server: default
+. 2025-07-09 10:37:11.005 Local directory: default, Remote directory: home, Update: Yes, Cache: Yes
+. 2025-07-09 10:37:11.005 Cache directory changes: Yes, Permanent: Yes
+. 2025-07-09 10:37:11.005 Recycle bin: Delete to: No, Overwritten to: No, Bin path: 
+. 2025-07-09 10:37:11.005 DST mode: Unix
+. 2025-07-09 10:37:11.005 --------------------------------------------------------------------------
+< 2025-07-09 10:37:11.005 Script: Searching for host...
+. 2025-07-09 10:37:11.005 Looking up host "192.168.0.10" for SSH connection
+. 2025-07-09 10:37:11.006 Connecting to 192.168.0.10 port 22
+. 2025-07-09 10:37:11.019 Connected to 192.168.0.10 (from 192.168.0.15:1717)
+< 2025-07-09 10:37:11.019 Script: Connecting to host...
+. 2025-07-09 10:37:11.019 We claim version: SSH-2.0-WinSCP_release_6.5.2
+. 2025-07-09 10:37:11.019 Connected to 192.168.0.10 (from 192.168.0.15:1717)
+. 2025-07-09 10:37:11.060 Remote version: SSH-2.0-OpenSSH_8.9p1 Ubuntu-3ubuntu0.13
+. 2025-07-09 10:37:11.060 Using SSH protocol version 2
+. 2025-07-09 10:37:11.060 Have a known host key of type ssh-ed25519
+. 2025-07-09 10:37:11.074 Enabling strict key exchange semantics
+. 2025-07-09 10:37:11.074 Doing NTRU Prime / Curve25519 hybrid key exchange, using hash SHA-512 (unaccelerated)
+. 2025-07-09 10:37:11.211 Server also has ecdsa-sha2-nistp256/rsa-sha2-512/rsa-sha2-256 host keys, but we don't know any of them
+. 2025-07-09 10:37:11.211 Host key fingerprint is:
+. 2025-07-09 10:37:11.211 ssh-ed25519 255 SHA256:jpSGJzJruc/a09yKIik/CNLRhLtKht8Oe0PjXhrLKNQ
+< 2025-07-09 10:37:11.211 Script: Authenticating...
+. 2025-07-09 10:37:11.211 Host key matches configured key fingerprint
+. 2025-07-09 10:37:11.211 Initialised AES-256 SDCTR (AES-NI accelerated) [aes256-ctr] outbound encryption
+. 2025-07-09 10:37:11.211 Initialised HMAC-SHA-256 outbound MAC algorithm
+. 2025-07-09 10:37:11.211 Initialised AES-256 SDCTR (AES-NI accelerated) [aes256-ctr] inbound encryption
+. 2025-07-09 10:37:11.211 Initialised HMAC-SHA-256 inbound MAC algorithm
+! 2025-07-09 10:37:11.222 Using username "admin".
+< 2025-07-09 10:37:11.222 Script: Using username "admin".
+. 2025-07-09 10:37:11.240 Server offered these authentication methods: publickey,password
+. 2025-07-09 10:37:11.240 Prompt (password, "SSH password", <no instructions>, "&Password: ")
+. 2025-07-09 10:37:11.240 Using stored password.
+< 2025-07-09 10:37:11.240 Script: Authenticating with pre-entered password.
+. 2025-07-09 10:37:11.240 Sent password
+. 2025-07-09 10:37:11.338 Access granted
+. 2025-07-09 10:37:11.341 Opening main session channel
+. 2025-07-09 10:37:11.769 Opened main channel
+. 2025-07-09 10:37:11.784 Started a shell/command
+< 2025-07-09 10:37:11.784 Script: Authenticated.
+. 2025-07-09 10:37:11.784 --------------------------------------------------------------------------
+. 2025-07-09 10:37:11.784 Using SFTP protocol.
+. 2025-07-09 10:37:11.784 Doing startup conversation with host.
+< 2025-07-09 10:37:11.784 Script: Starting the session...
+. 2025-07-09 10:37:11.784 Well known server, allowing SFTP version 6.
+> 2025-07-09 10:37:11.784 Type: SSH_FXP_INIT, Size: 5, Number: -1
+< 2025-07-09 10:37:11.806 Type: SSH_FXP_VERSION, Size: 238, Number: -1
+. 2025-07-09 10:37:11.806 SFTP version 3 negotiated.
+. 2025-07-09 10:37:11.806 Supports extension posix-rename@openssh.com="1"
+. 2025-07-09 10:37:11.806 Supports statvfs@openssh.com extension version 2
+. 2025-07-09 10:37:11.806 Unknown server extension fstatvfs@openssh.com="2"
+. 2025-07-09 10:37:11.806 Supports hardlink@openssh.com extension version 1
+. 2025-07-09 10:37:11.806 Unknown server extension fsync@openssh.com="1"
+. 2025-07-09 10:37:11.806 Unknown server extension lsetstat@openssh.com="1"
+. 2025-07-09 10:37:11.806 Supports limits@openssh.com extension version 1
+. 2025-07-09 10:37:11.806 Unknown server extension expand-path@openssh.com="1"
+. 2025-07-09 10:37:11.806 We believe the server has signed timestamps bug
+. 2025-07-09 10:37:11.806 We will use UTF-8 strings until server sends an invalid UTF-8 string as with SFTP version 3 and older UTF-8 strings are not mandatory
+> 2025-07-09 10:37:11.806 Type: SSH_FXP_EXTENDED, Size: 27, Number: 200
+< 2025-07-09 10:37:11.813 Type: SSH_FXP_EXTENDED_REPLY, Size: 37, Number: 200
+. 2025-07-09 10:37:11.813 Limiting packet size to server's limit of 262144 + 4 bytes
+. 2025-07-09 10:37:11.813 Getting current directory name.
+. 2025-07-09 10:37:11.813 Getting real path for '.'
+> 2025-07-09 10:37:11.813 Type: SSH_FXP_REALPATH, Size: 10, Number: 272
+< 2025-07-09 10:37:11.816 Type: SSH_FXP_NAME, Size: 43, Number: 272
+. 2025-07-09 10:37:11.816 Real path is '/home/admin'
+. 2025-07-09 10:37:11.816 Startup conversation with host finished.
+< 2025-07-09 10:37:11.816 Script: Session started.
+< 2025-07-09 10:37:11.816 Script: Active session: [1] admin@192.168.0.10
+> 2025-07-09 10:37:11.816 Script: cd /home/ict/robot_ai/docker 
+. 2025-07-09 10:37:11.816 Changing directory to "/home/ict/robot_ai/docker".
+. 2025-07-09 10:37:11.816 Getting real path for '/home/ict/robot_ai/docker'
+> 2025-07-09 10:37:11.816 Type: SSH_FXP_REALPATH, Size: 34, Number: 528
+< 2025-07-09 10:37:11.821 Type: SSH_FXP_NAME, Size: 71, Number: 528
+. 2025-07-09 10:37:11.826 Real path is '/home/ict/robot_ai/docker'
+. 2025-07-09 10:37:11.826 Trying to open directory "/home/ict/robot_ai/docker".
+> 2025-07-09 10:37:11.826 Type: SSH_FXP_LSTAT, Size: 34, Number: 775
+< 2025-07-09 10:37:11.836 Type: SSH_FXP_ATTRS, Size: 37, Number: 775
+. 2025-07-09 10:37:11.836 Getting current directory name.
+< 2025-07-09 10:37:11.836 Script: /home/ict/robot_ai/docker
+> 2025-07-09 10:37:11.836 Script: put "E:\home\ict\robot_ai\docker\install.sh" 
+. 2025-07-09 10:37:11.836 Copying 1 files/directories to remote directory "/home/ict/robot_ai/docker" - total size: 9,811
+. 2025-07-09 10:37:11.836   PrTime: Yes; PrRO: No; Rght: rw-r--r--; PrR: No (No); FnCs: N; RIC: 0001; Resume: S (102400); CalcS: No; Mask: 
+. 2025-07-09 10:37:11.836   TM: B; ClAr: No; RemEOF: No; RemBOM: No; CPS: 0; NewerOnly: No; EncryptNewFiles: Yes; ExcludeHiddenFiles: No; ExcludeEmptyDirectories: No; InclM: ; ResumeL: 0
+. 2025-07-09 10:37:11.836   AscM: *.*html; *.htm; *.txt; *.php; *.php3; *.cgi; *.c; *.cpp; *.h; *.pas; *.bas; *.tex; *.pl; *.js; .htaccess; *.xtml; *.css; *.cfg; *.ini; *.sh; *.xml
+. 2025-07-09 10:37:11.836 File: 'E:\home\ict\robot_ai\docker\install.sh' [2025-07-09T02:36:37.595Z] [9811]
+. 2025-07-09 10:37:11.836 Copying "E:\home\ict\robot_ai\docker\install.sh" to remote directory started.
+. 2025-07-09 10:37:11.836 Binary transfer mode selected.
+. 2025-07-09 10:37:11.836 Opening remote file.
+> 2025-07-09 10:37:11.836 Type: SSH_FXP_OPEN, Size: 61, Number: 1027
+< 2025-07-09 10:37:11.846 Type: SSH_FXP_HANDLE, Size: 13, Number: 1027
+> 2025-07-09 10:37:11.846 Type: SSH_FXP_WRITE, Size: 9836, Number: 1542
+> 2025-07-09 10:37:11.846 Type: SSH_FXP_CLOSE, Size: 13, Number: 1796
+> 2025-07-09 10:37:11.846 Type: SSH_FXP_SETSTAT, Size: 57, Number: 1289
+< 2025-07-09 10:37:11.864 Type: SSH_FXP_STATUS, Size: 24, Number: 1542
+< 2025-07-09 10:37:11.864 Status code: 0
+< 2025-07-09 10:37:11.870 Type: SSH_FXP_STATUS, Size: 24, Number: 1796
+< 2025-07-09 10:37:11.870 Status code: 0
+. 2025-07-09 10:37:11.870 Preserving timestamp [2025-07-09T02:36:37.000Z]
+< 2025-07-09 10:37:11.870 Type: SSH_FXP_STATUS, Size: 24, Number: 1289
+< 2025-07-09 10:37:11.870 Status code: 0
+. 2025-07-09 10:37:11.870 Transfer done: 'E:\home\ict\robot_ai\docker\install.sh' => '/home/ict/robot_ai/docker/install.sh' [9811]
+. 2025-07-09 10:37:11.870 Copying finished: Transferred: 9,811, Elapsed: 0:00:00, CPS: 288,558/s
+> 2025-07-09 10:37:11.870 Script: exit 
+. 2025-07-09 10:37:11.870 Script: Exit code: 0
+. 2025-07-09 10:37:11.870 Closing connection.
+. 2025-07-09 10:37:11.870 Sending special code: 1
+. 2025-07-09 10:37:11.885 Session sent command exit status 0
+. 2025-07-09 10:37:11.885 Main session channel closed
+. 2025-07-09 10:37:11.885 All channels closed
+. 2025-07-09 10:39:28.181 --------------------------------------------------------------------------
+. 2025-07-09 10:39:28.181 WinSCP Version 6.5.2 (Build 16354 2025-06-18) (OS 10.0.19044 – Windows 10 Enterprise LTSC 2021)
+. 2025-07-09 10:39:28.181 Configuration: nul
+. 2025-07-09 10:39:28.181 Log level: Normal
+. 2025-07-09 10:39:28.181 Local account: ZHAOSEO\Administrator
+. 2025-07-09 10:39:28.181 Working directory: E:\home\ict\robot_ai\docker
+. 2025-07-09 10:39:28.181 Process ID: 16468
+. 2025-07-09 10:39:28.191 Ancestor processes: cmd, explorer, ...
+. 2025-07-09 10:39:28.193 Command-line: "D:\Program Files (x86)\WinSCP\WinSCP.exe"  /script=winscp_script.txt /log=winscp_log.txt /ini=nul
+. 2025-07-09 10:39:28.193 Time zone: Current: GMT+8 (中国标准时间), No DST
+. 2025-07-09 10:39:28.193 Login time: 2025年7月9日 10:39:28
+. 2025-07-09 10:39:28.193 --------------------------------------------------------------------------
+. 2025-07-09 10:39:28.193 Script: Retrospectively logging previous script records:
+> 2025-07-09 10:39:28.193 Script: open sftp://admin:***@192.168.0.10/ -hostkey="ssh-ed25519 255 jpSGJzJruc/a09yKIik/CNLRhLtKht8Oe0PjXhrLKNQ"
+. 2025-07-09 10:39:28.193 --------------------------------------------------------------------------
+. 2025-07-09 10:39:28.193 Session name: admin@192.168.0.10 (Ad-Hoc site)
+. 2025-07-09 10:39:28.193 Host name: 192.168.0.10 (Port: 22)
+. 2025-07-09 10:39:28.193 User name: admin (Password: Yes, Key file: No, Passphrase: No)
+. 2025-07-09 10:39:28.193 Tunnel: No
+. 2025-07-09 10:39:28.193 Transfer Protocol: SFTP
+. 2025-07-09 10:39:28.193 Ping type: Off, Ping interval: 30 sec; Timeout: 15 sec
+. 2025-07-09 10:39:28.193 Disable Nagle: No
+. 2025-07-09 10:39:28.193 Proxy: None
+. 2025-07-09 10:39:28.193 Send buffer: 262144
+. 2025-07-09 10:39:28.193 Compression: No
+. 2025-07-09 10:39:28.193 Bypass authentication: No
+. 2025-07-09 10:39:28.193 Try agent: Yes; Agent forwarding: No; KI: Yes; GSSAPI: Yes
+. 2025-07-09 10:39:28.193 GSSAPI: KEX: No; Forwarding: No; Libs: gssapi32,sspi,custom; Custom: 
+. 2025-07-09 10:39:28.193 Ciphers: aes,chacha20,aesgcm,3des,WARN,des,blowfish,arcfour; Ssh2DES: No
+. 2025-07-09 10:39:28.193 KEX: ntru-curve25519,mlkem-curve25519,mlkem-nist,ecdh,dh-gex-sha1,dh-group18-sha512,dh-group17-sha512,dh-group16-sha512,dh-group15-sha512,dh-group14-sha1,rsa,WARN,dh-group1-sha1
+. 2025-07-09 10:39:28.193 SSH Bugs: Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto
+. 2025-07-09 10:39:28.193 Simple channel: Yes
+. 2025-07-09 10:39:28.193 Return code variable: Autodetect; Lookup user groups: Auto
+. 2025-07-09 10:39:28.193 Shell: default
+. 2025-07-09 10:39:28.193 EOL: LF, UTF: Auto
+. 2025-07-09 10:39:28.193 Clear aliases: Yes, Unset nat.vars: Yes, Resolve symlinks: Yes; Follow directory symlinks: No
+. 2025-07-09 10:39:28.193 LS: ls -la, Ign LS warn: Yes, Scp1 Comp: No; Exit code 1 is error: No
+. 2025-07-09 10:39:28.193 SFTP Bugs: Auto,Auto
+. 2025-07-09 10:39:28.193 SFTP Server: default
+. 2025-07-09 10:39:28.193 Local directory: default, Remote directory: home, Update: Yes, Cache: Yes
+. 2025-07-09 10:39:28.193 Cache directory changes: Yes, Permanent: Yes
+. 2025-07-09 10:39:28.193 Recycle bin: Delete to: No, Overwritten to: No, Bin path: 
+. 2025-07-09 10:39:28.193 DST mode: Unix
+. 2025-07-09 10:39:28.193 --------------------------------------------------------------------------
+< 2025-07-09 10:39:28.193 Script: Searching for host...
+. 2025-07-09 10:39:28.193 Looking up host "192.168.0.10" for SSH connection
+. 2025-07-09 10:39:28.193 Connecting to 192.168.0.10 port 22
+. 2025-07-09 10:39:28.202 Connected to 192.168.0.10 (from 192.168.0.15:1817)
+< 2025-07-09 10:39:28.202 Script: Connecting to host...
+. 2025-07-09 10:39:28.202 We claim version: SSH-2.0-WinSCP_release_6.5.2
+. 2025-07-09 10:39:28.202 Connected to 192.168.0.10 (from 192.168.0.15:1817)
+. 2025-07-09 10:39:28.223 Remote version: SSH-2.0-OpenSSH_8.9p1 Ubuntu-3ubuntu0.13
+. 2025-07-09 10:39:28.223 Using SSH protocol version 2
+. 2025-07-09 10:39:28.223 Have a known host key of type ssh-ed25519
+. 2025-07-09 10:39:28.231 Enabling strict key exchange semantics
+. 2025-07-09 10:39:28.231 Doing NTRU Prime / Curve25519 hybrid key exchange, using hash SHA-512 (unaccelerated)
+. 2025-07-09 10:39:28.361 Server also has ecdsa-sha2-nistp256/rsa-sha2-512/rsa-sha2-256 host keys, but we don't know any of them
+. 2025-07-09 10:39:28.363 Host key fingerprint is:
+. 2025-07-09 10:39:28.363 ssh-ed25519 255 SHA256:jpSGJzJruc/a09yKIik/CNLRhLtKht8Oe0PjXhrLKNQ
+< 2025-07-09 10:39:28.363 Script: Authenticating...
+. 2025-07-09 10:39:28.363 Host key matches configured key fingerprint
+. 2025-07-09 10:39:28.363 Initialised AES-256 SDCTR (AES-NI accelerated) [aes256-ctr] outbound encryption
+. 2025-07-09 10:39:28.363 Initialised HMAC-SHA-256 outbound MAC algorithm
+. 2025-07-09 10:39:28.363 Initialised AES-256 SDCTR (AES-NI accelerated) [aes256-ctr] inbound encryption
+. 2025-07-09 10:39:28.363 Initialised HMAC-SHA-256 inbound MAC algorithm
+! 2025-07-09 10:39:28.381 Using username "admin".
+< 2025-07-09 10:39:28.381 Script: Using username "admin".
+. 2025-07-09 10:39:28.398 Server offered these authentication methods: publickey,password
+. 2025-07-09 10:39:28.398 Prompt (password, "SSH password", <no instructions>, "&Password: ")
+. 2025-07-09 10:39:28.398 Using stored password.
+< 2025-07-09 10:39:28.398 Script: Authenticating with pre-entered password.
+. 2025-07-09 10:39:28.398 Sent password
+. 2025-07-09 10:39:28.490 Access granted
+. 2025-07-09 10:39:28.490 Opening main session channel
+. 2025-07-09 10:39:28.932 Opened main channel
+. 2025-07-09 10:39:28.940 Started a shell/command
+< 2025-07-09 10:39:28.940 Script: Authenticated.
+. 2025-07-09 10:39:28.940 --------------------------------------------------------------------------
+. 2025-07-09 10:39:28.940 Using SFTP protocol.
+. 2025-07-09 10:39:28.940 Doing startup conversation with host.
+< 2025-07-09 10:39:28.940 Script: Starting the session...
+. 2025-07-09 10:39:28.940 Well known server, allowing SFTP version 6.
+> 2025-07-09 10:39:28.940 Type: SSH_FXP_INIT, Size: 5, Number: -1
+< 2025-07-09 10:39:28.956 Type: SSH_FXP_VERSION, Size: 238, Number: -1
+. 2025-07-09 10:39:28.956 SFTP version 3 negotiated.
+. 2025-07-09 10:39:28.956 Supports extension posix-rename@openssh.com="1"
+. 2025-07-09 10:39:28.956 Supports statvfs@openssh.com extension version 2
+. 2025-07-09 10:39:28.956 Unknown server extension fstatvfs@openssh.com="2"
+. 2025-07-09 10:39:28.956 Supports hardlink@openssh.com extension version 1
+. 2025-07-09 10:39:28.956 Unknown server extension fsync@openssh.com="1"
+. 2025-07-09 10:39:28.956 Unknown server extension lsetstat@openssh.com="1"
+. 2025-07-09 10:39:28.956 Supports limits@openssh.com extension version 1
+. 2025-07-09 10:39:28.956 Unknown server extension expand-path@openssh.com="1"
+. 2025-07-09 10:39:28.956 We believe the server has signed timestamps bug
+. 2025-07-09 10:39:28.956 We will use UTF-8 strings until server sends an invalid UTF-8 string as with SFTP version 3 and older UTF-8 strings are not mandatory
+> 2025-07-09 10:39:28.956 Type: SSH_FXP_EXTENDED, Size: 27, Number: 200
+< 2025-07-09 10:39:28.964 Type: SSH_FXP_EXTENDED_REPLY, Size: 37, Number: 200
+. 2025-07-09 10:39:28.964 Limiting packet size to server's limit of 262144 + 4 bytes
+. 2025-07-09 10:39:28.964 Getting current directory name.
+. 2025-07-09 10:39:28.964 Getting real path for '.'
+> 2025-07-09 10:39:28.964 Type: SSH_FXP_REALPATH, Size: 10, Number: 272
+< 2025-07-09 10:39:28.973 Type: SSH_FXP_NAME, Size: 43, Number: 272
+. 2025-07-09 10:39:28.973 Real path is '/home/admin'
+. 2025-07-09 10:39:28.973 Startup conversation with host finished.
+< 2025-07-09 10:39:28.973 Script: Session started.
+< 2025-07-09 10:39:28.973 Script: Active session: [1] admin@192.168.0.10
+> 2025-07-09 10:39:28.973 Script: cd /home/ict/robot_ai/docker 
+. 2025-07-09 10:39:28.973 Changing directory to "/home/ict/robot_ai/docker".
+. 2025-07-09 10:39:28.973 Getting real path for '/home/ict/robot_ai/docker'
+> 2025-07-09 10:39:28.973 Type: SSH_FXP_REALPATH, Size: 34, Number: 528
+< 2025-07-09 10:39:28.980 Type: SSH_FXP_NAME, Size: 71, Number: 528
+. 2025-07-09 10:39:28.980 Real path is '/home/ict/robot_ai/docker'
+. 2025-07-09 10:39:28.980 Trying to open directory "/home/ict/robot_ai/docker".
+> 2025-07-09 10:39:28.980 Type: SSH_FXP_LSTAT, Size: 34, Number: 775
+< 2025-07-09 10:39:28.986 Type: SSH_FXP_ATTRS, Size: 37, Number: 775
+. 2025-07-09 10:39:28.986 Getting current directory name.
+< 2025-07-09 10:39:28.986 Script: /home/ict/robot_ai/docker
+> 2025-07-09 10:39:28.986 Script: put "E:\home\ict\robot_ai\docker\install.sh" 
+. 2025-07-09 10:39:28.986 Copying 1 files/directories to remote directory "/home/ict/robot_ai/docker" - total size: 11,840
+. 2025-07-09 10:39:28.986   PrTime: Yes; PrRO: No; Rght: rw-r--r--; PrR: No (No); FnCs: N; RIC: 0001; Resume: S (102400); CalcS: No; Mask: 
+. 2025-07-09 10:39:28.986   TM: B; ClAr: No; RemEOF: No; RemBOM: No; CPS: 0; NewerOnly: No; EncryptNewFiles: Yes; ExcludeHiddenFiles: No; ExcludeEmptyDirectories: No; InclM: ; ResumeL: 0
+. 2025-07-09 10:39:28.986   AscM: *.*html; *.htm; *.txt; *.php; *.php3; *.cgi; *.c; *.cpp; *.h; *.pas; *.bas; *.tex; *.pl; *.js; .htaccess; *.xtml; *.css; *.cfg; *.ini; *.sh; *.xml
+. 2025-07-09 10:39:28.986 File: 'E:\home\ict\robot_ai\docker\install.sh' [2025-07-09T02:39:00.065Z] [11840]
+. 2025-07-09 10:39:28.986 Copying "E:\home\ict\robot_ai\docker\install.sh" to remote directory started.
+. 2025-07-09 10:39:28.986 Binary transfer mode selected.
+. 2025-07-09 10:39:28.986 Opening remote file.
+> 2025-07-09 10:39:28.986 Type: SSH_FXP_OPEN, Size: 61, Number: 1027
+< 2025-07-09 10:39:28.990 Type: SSH_FXP_HANDLE, Size: 13, Number: 1027
+> 2025-07-09 10:39:28.990 Type: SSH_FXP_WRITE, Size: 11865, Number: 1542
+> 2025-07-09 10:39:28.990 Type: SSH_FXP_CLOSE, Size: 13, Number: 1796
+> 2025-07-09 10:39:28.990 Type: SSH_FXP_SETSTAT, Size: 57, Number: 1289
+< 2025-07-09 10:39:29.011 Type: SSH_FXP_STATUS, Size: 24, Number: 1542
+< 2025-07-09 10:39:29.011 Status code: 0
+< 2025-07-09 10:39:29.013 Type: SSH_FXP_STATUS, Size: 24, Number: 1796
+< 2025-07-09 10:39:29.013 Status code: 0
+. 2025-07-09 10:39:29.013 Preserving timestamp [2025-07-09T02:39:00.000Z]
+< 2025-07-09 10:39:29.014 Type: SSH_FXP_STATUS, Size: 24, Number: 1289
+< 2025-07-09 10:39:29.014 Status code: 0
+. 2025-07-09 10:39:29.014 Transfer done: 'E:\home\ict\robot_ai\docker\install.sh' => '/home/ict/robot_ai/docker/install.sh' [11840]
+. 2025-07-09 10:39:29.014 Copying finished: Transferred: 11,840, Elapsed: 0:00:00, CPS: 422,857/s
+> 2025-07-09 10:39:29.014 Script: exit 
+. 2025-07-09 10:39:29.014 Script: Exit code: 0
+. 2025-07-09 10:39:29.014 Closing connection.
+. 2025-07-09 10:39:29.014 Sending special code: 1
+. 2025-07-09 10:39:29.032 Session sent command exit status 0
+. 2025-07-09 10:39:29.032 Main session channel closed
+. 2025-07-09 10:39:29.032 All channels closed
+. 2025-07-09 10:42:45.515 --------------------------------------------------------------------------
+. 2025-07-09 10:42:45.515 WinSCP Version 6.5.2 (Build 16354 2025-06-18) (OS 10.0.19044 – Windows 10 Enterprise LTSC 2021)
+. 2025-07-09 10:42:45.515 Configuration: nul
+. 2025-07-09 10:42:45.515 Log level: Normal
+. 2025-07-09 10:42:45.515 Local account: ZHAOSEO\Administrator
+. 2025-07-09 10:42:45.515 Working directory: E:\home\ict\robot_ai\docker
+. 2025-07-09 10:42:45.515 Process ID: 2000
+. 2025-07-09 10:42:45.520 Ancestor processes: cmd, explorer, ...
+. 2025-07-09 10:42:45.520 Command-line: "D:\Program Files (x86)\WinSCP\WinSCP.exe"  /script=winscp_script.txt /log=winscp_log.txt /ini=nul
+. 2025-07-09 10:42:45.520 Time zone: Current: GMT+8 (中国标准时间), No DST
+. 2025-07-09 10:42:45.520 Login time: 2025年7月9日 10:42:45
+. 2025-07-09 10:42:45.520 --------------------------------------------------------------------------
+. 2025-07-09 10:42:45.520 Script: Retrospectively logging previous script records:
+> 2025-07-09 10:42:45.520 Script: open sftp://admin:***@192.168.0.10/ -hostkey="ssh-ed25519 255 jpSGJzJruc/a09yKIik/CNLRhLtKht8Oe0PjXhrLKNQ"
+. 2025-07-09 10:42:45.520 --------------------------------------------------------------------------
+. 2025-07-09 10:42:45.520 Session name: admin@192.168.0.10 (Ad-Hoc site)
+. 2025-07-09 10:42:45.520 Host name: 192.168.0.10 (Port: 22)
+. 2025-07-09 10:42:45.520 User name: admin (Password: Yes, Key file: No, Passphrase: No)
+. 2025-07-09 10:42:45.520 Tunnel: No
+. 2025-07-09 10:42:45.520 Transfer Protocol: SFTP
+. 2025-07-09 10:42:45.520 Ping type: Off, Ping interval: 30 sec; Timeout: 15 sec
+. 2025-07-09 10:42:45.520 Disable Nagle: No
+. 2025-07-09 10:42:45.520 Proxy: None
+. 2025-07-09 10:42:45.520 Send buffer: 262144
+. 2025-07-09 10:42:45.520 Compression: No
+. 2025-07-09 10:42:45.520 Bypass authentication: No
+. 2025-07-09 10:42:45.520 Try agent: Yes; Agent forwarding: No; KI: Yes; GSSAPI: Yes
+. 2025-07-09 10:42:45.520 GSSAPI: KEX: No; Forwarding: No; Libs: gssapi32,sspi,custom; Custom: 
+. 2025-07-09 10:42:45.520 Ciphers: aes,chacha20,aesgcm,3des,WARN,des,blowfish,arcfour; Ssh2DES: No
+. 2025-07-09 10:42:45.520 KEX: ntru-curve25519,mlkem-curve25519,mlkem-nist,ecdh,dh-gex-sha1,dh-group18-sha512,dh-group17-sha512,dh-group16-sha512,dh-group15-sha512,dh-group14-sha1,rsa,WARN,dh-group1-sha1
+. 2025-07-09 10:42:45.520 SSH Bugs: Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto
+. 2025-07-09 10:42:45.520 Simple channel: Yes
+. 2025-07-09 10:42:45.520 Return code variable: Autodetect; Lookup user groups: Auto
+. 2025-07-09 10:42:45.520 Shell: default
+. 2025-07-09 10:42:45.520 EOL: LF, UTF: Auto
+. 2025-07-09 10:42:45.520 Clear aliases: Yes, Unset nat.vars: Yes, Resolve symlinks: Yes; Follow directory symlinks: No
+. 2025-07-09 10:42:45.520 LS: ls -la, Ign LS warn: Yes, Scp1 Comp: No; Exit code 1 is error: No
+. 2025-07-09 10:42:45.520 SFTP Bugs: Auto,Auto
+. 2025-07-09 10:42:45.520 SFTP Server: default
+. 2025-07-09 10:42:45.520 Local directory: default, Remote directory: home, Update: Yes, Cache: Yes
+. 2025-07-09 10:42:45.520 Cache directory changes: Yes, Permanent: Yes
+. 2025-07-09 10:42:45.520 Recycle bin: Delete to: No, Overwritten to: No, Bin path: 
+. 2025-07-09 10:42:45.520 DST mode: Unix
+. 2025-07-09 10:42:45.520 --------------------------------------------------------------------------
+< 2025-07-09 10:42:45.520 Script: Searching for host...
+. 2025-07-09 10:42:45.521 Looking up host "192.168.0.10" for SSH connection
+. 2025-07-09 10:42:45.521 Connecting to 192.168.0.10 port 22
+. 2025-07-09 10:42:45.533 Connected to 192.168.0.10 (from 192.168.0.15:1962)
+< 2025-07-09 10:42:45.533 Script: Connecting to host...
+. 2025-07-09 10:42:45.533 We claim version: SSH-2.0-WinSCP_release_6.5.2
+. 2025-07-09 10:42:45.533 Connected to 192.168.0.10 (from 192.168.0.15:1962)
+. 2025-07-09 10:42:45.572 Remote version: SSH-2.0-OpenSSH_8.9p1 Ubuntu-3ubuntu0.13
+. 2025-07-09 10:42:45.572 Using SSH protocol version 2
+. 2025-07-09 10:42:45.577 Have a known host key of type ssh-ed25519
+. 2025-07-09 10:42:45.600 Enabling strict key exchange semantics
+. 2025-07-09 10:42:45.600 Doing NTRU Prime / Curve25519 hybrid key exchange, using hash SHA-512 (unaccelerated)
+. 2025-07-09 10:42:45.828 Server also has ecdsa-sha2-nistp256/rsa-sha2-512/rsa-sha2-256 host keys, but we don't know any of them
+. 2025-07-09 10:42:45.828 Host key fingerprint is:
+. 2025-07-09 10:42:45.828 ssh-ed25519 255 SHA256:jpSGJzJruc/a09yKIik/CNLRhLtKht8Oe0PjXhrLKNQ
+< 2025-07-09 10:42:45.828 Script: Authenticating...
+. 2025-07-09 10:42:45.828 Host key matches configured key fingerprint
+. 2025-07-09 10:42:45.828 Initialised AES-256 SDCTR (AES-NI accelerated) [aes256-ctr] outbound encryption
+. 2025-07-09 10:42:45.828 Initialised HMAC-SHA-256 outbound MAC algorithm
+. 2025-07-09 10:42:45.828 Initialised AES-256 SDCTR (AES-NI accelerated) [aes256-ctr] inbound encryption
+. 2025-07-09 10:42:45.828 Initialised HMAC-SHA-256 inbound MAC algorithm
+! 2025-07-09 10:42:45.853 Using username "admin".
+< 2025-07-09 10:42:45.853 Script: Using username "admin".
+. 2025-07-09 10:42:45.867 Server offered these authentication methods: publickey,password
+. 2025-07-09 10:42:45.867 Prompt (password, "SSH password", <no instructions>, "&Password: ")
+. 2025-07-09 10:42:45.867 Using stored password.
+< 2025-07-09 10:42:45.867 Script: Authenticating with pre-entered password.
+. 2025-07-09 10:42:45.867 Sent password
+. 2025-07-09 10:42:45.970 Access granted
+. 2025-07-09 10:42:45.970 Opening main session channel
+. 2025-07-09 10:42:46.426 Opened main channel
+. 2025-07-09 10:42:46.440 Started a shell/command
+< 2025-07-09 10:42:46.440 Script: Authenticated.
+. 2025-07-09 10:42:46.440 --------------------------------------------------------------------------
+. 2025-07-09 10:42:46.440 Using SFTP protocol.
+. 2025-07-09 10:42:46.440 Doing startup conversation with host.
+< 2025-07-09 10:42:46.440 Script: Starting the session...
+. 2025-07-09 10:42:46.440 Well known server, allowing SFTP version 6.
+> 2025-07-09 10:42:46.440 Type: SSH_FXP_INIT, Size: 5, Number: -1
+< 2025-07-09 10:42:46.463 Type: SSH_FXP_VERSION, Size: 238, Number: -1
+. 2025-07-09 10:42:46.463 SFTP version 3 negotiated.
+. 2025-07-09 10:42:46.463 Supports extension posix-rename@openssh.com="1"
+. 2025-07-09 10:42:46.463 Supports statvfs@openssh.com extension version 2
+. 2025-07-09 10:42:46.463 Unknown server extension fstatvfs@openssh.com="2"
+. 2025-07-09 10:42:46.463 Supports hardlink@openssh.com extension version 1
+. 2025-07-09 10:42:46.463 Unknown server extension fsync@openssh.com="1"
+. 2025-07-09 10:42:46.463 Unknown server extension lsetstat@openssh.com="1"
+. 2025-07-09 10:42:46.463 Supports limits@openssh.com extension version 1
+. 2025-07-09 10:42:46.463 Unknown server extension expand-path@openssh.com="1"
+. 2025-07-09 10:42:46.463 We believe the server has signed timestamps bug
+. 2025-07-09 10:42:46.463 We will use UTF-8 strings until server sends an invalid UTF-8 string as with SFTP version 3 and older UTF-8 strings are not mandatory
+> 2025-07-09 10:42:46.463 Type: SSH_FXP_EXTENDED, Size: 27, Number: 200
+< 2025-07-09 10:42:46.471 Type: SSH_FXP_EXTENDED_REPLY, Size: 37, Number: 200
+. 2025-07-09 10:42:46.471 Limiting packet size to server's limit of 262144 + 4 bytes
+. 2025-07-09 10:42:46.471 Getting current directory name.
+. 2025-07-09 10:42:46.471 Getting real path for '.'
+> 2025-07-09 10:42:46.471 Type: SSH_FXP_REALPATH, Size: 10, Number: 272
+< 2025-07-09 10:42:46.498 Type: SSH_FXP_NAME, Size: 43, Number: 272
+. 2025-07-09 10:42:46.498 Real path is '/home/admin'
+. 2025-07-09 10:42:46.498 Startup conversation with host finished.
+< 2025-07-09 10:42:46.498 Script: Session started.
+< 2025-07-09 10:42:46.498 Script: Active session: [1] admin@192.168.0.10
+> 2025-07-09 10:42:46.498 Script: cd /home/ict/robot_ai/docker 
+. 2025-07-09 10:42:46.498 Changing directory to "/home/ict/robot_ai/docker".
+. 2025-07-09 10:42:46.498 Getting real path for '/home/ict/robot_ai/docker'
+> 2025-07-09 10:42:46.498 Type: SSH_FXP_REALPATH, Size: 34, Number: 528
+< 2025-07-09 10:42:46.506 Type: SSH_FXP_NAME, Size: 71, Number: 528
+. 2025-07-09 10:42:46.506 Real path is '/home/ict/robot_ai/docker'
+. 2025-07-09 10:42:46.506 Trying to open directory "/home/ict/robot_ai/docker".
+> 2025-07-09 10:42:46.506 Type: SSH_FXP_LSTAT, Size: 34, Number: 775
+< 2025-07-09 10:42:46.542 Type: SSH_FXP_ATTRS, Size: 37, Number: 775
+. 2025-07-09 10:42:46.542 Getting current directory name.
+< 2025-07-09 10:42:46.542 Script: /home/ict/robot_ai/docker
+> 2025-07-09 10:42:46.542 Script: put "E:\home\ict\robot_ai\docker\install.sh" 
+. 2025-07-09 10:42:46.542 Copying 1 files/directories to remote directory "/home/ict/robot_ai/docker" - total size: 11,840
+. 2025-07-09 10:42:46.542   PrTime: Yes; PrRO: No; Rght: rw-r--r--; PrR: No (No); FnCs: N; RIC: 0001; Resume: S (102400); CalcS: No; Mask: 
+. 2025-07-09 10:42:46.542   TM: B; ClAr: No; RemEOF: No; RemBOM: No; CPS: 0; NewerOnly: No; EncryptNewFiles: Yes; ExcludeHiddenFiles: No; ExcludeEmptyDirectories: No; InclM: ; ResumeL: 0
+. 2025-07-09 10:42:46.542   AscM: *.*html; *.htm; *.txt; *.php; *.php3; *.cgi; *.c; *.cpp; *.h; *.pas; *.bas; *.tex; *.pl; *.js; .htaccess; *.xtml; *.css; *.cfg; *.ini; *.sh; *.xml
+. 2025-07-09 10:42:46.542 File: 'E:\home\ict\robot_ai\docker\install.sh' [2025-07-09T02:40:37.514Z] [11840]
+. 2025-07-09 10:42:46.542 Copying "E:\home\ict\robot_ai\docker\install.sh" to remote directory started.
+. 2025-07-09 10:42:46.542 Binary transfer mode selected.
+. 2025-07-09 10:42:46.542 Opening remote file.
+> 2025-07-09 10:42:46.542 Type: SSH_FXP_OPEN, Size: 61, Number: 1027
+< 2025-07-09 10:42:46.552 Type: SSH_FXP_HANDLE, Size: 13, Number: 1027
+> 2025-07-09 10:42:46.552 Type: SSH_FXP_WRITE, Size: 11865, Number: 1542
+> 2025-07-09 10:42:46.552 Type: SSH_FXP_CLOSE, Size: 13, Number: 1796
+> 2025-07-09 10:42:46.552 Type: SSH_FXP_SETSTAT, Size: 57, Number: 1289
+< 2025-07-09 10:42:46.584 Type: SSH_FXP_STATUS, Size: 24, Number: 1542
+< 2025-07-09 10:42:46.585 Status code: 0
+< 2025-07-09 10:42:46.614 Type: SSH_FXP_STATUS, Size: 24, Number: 1796
+< 2025-07-09 10:42:46.614 Status code: 0
+. 2025-07-09 10:42:46.614 Preserving timestamp [2025-07-09T02:40:37.000Z]
+< 2025-07-09 10:42:47.106 Type: SSH_FXP_STATUS, Size: 24, Number: 1289
+< 2025-07-09 10:42:47.106 Status code: 0
+. 2025-07-09 10:42:47.106 Transfer done: 'E:\home\ict\robot_ai\docker\install.sh' => '/home/ict/robot_ai/docker/install.sh' [11840]
+. 2025-07-09 10:42:47.106 Copying finished: Transferred: 11,840, Elapsed: 0:00:00, CPS: 20,992/s
+> 2025-07-09 10:42:47.107 Script: put "E:\home\ict\robot_ai\docker\docker_file\*" "/home/ict/robot_ai/docker/docker_file/" 
+. 2025-07-09 10:42:47.107 Copying 4 files/directories to remote directory "/home/ict/robot_ai/docker/docker_file/" - total size: 121,978,585
+. 2025-07-09 10:42:47.107   PrTime: Yes; PrRO: No; Rght: rw-r--r--; PrR: No (No); FnCs: N; RIC: 0001; Resume: S (102400); CalcS: No; Mask: 
+. 2025-07-09 10:42:47.107   TM: B; ClAr: No; RemEOF: No; RemBOM: No; CPS: 0; NewerOnly: No; EncryptNewFiles: Yes; ExcludeHiddenFiles: No; ExcludeEmptyDirectories: No; InclM: ; ResumeL: 0
+. 2025-07-09 10:42:47.107   AscM: *.*html; *.htm; *.txt; *.php; *.php3; *.cgi; *.c; *.cpp; *.h; *.pas; *.bas; *.tex; *.pl; *.js; .htaccess; *.xtml; *.css; *.cfg; *.ini; *.sh; *.xml
+. 2025-07-09 10:42:47.107 File: 'E:\home\ict\robot_ai\docker\docker_file\containerd.io_1.7.27-1_arm64.deb' [2025-06-24T03:16:19.091Z] [22753396]
+. 2025-07-09 10:42:47.108 Copying "E:\home\ict\robot_ai\docker\docker_file\containerd.io_1.7.27-1_arm64.deb" to remote directory started.
+. 2025-07-09 10:42:47.108 Binary transfer mode selected.
+. 2025-07-09 10:42:47.108 Checking existence of file.
+> 2025-07-09 10:42:47.108 Type: SSH_FXP_LSTAT, Size: 79, Number: 2055
+< 2025-07-09 10:42:47.128 Type: SSH_FXP_STATUS, Size: 29, Number: 2055
+< 2025-07-09 10:42:47.128 Status code: 2
+. 2025-07-09 10:42:47.128 Checking existence of partially transferred file.
+> 2025-07-09 10:42:47.128 Type: SSH_FXP_LSTAT, Size: 88, Number: 2311
+< 2025-07-09 10:42:47.142 Type: SSH_FXP_STATUS, Size: 29, Number: 2311
+< 2025-07-09 10:42:47.142 Status code: 2
+. 2025-07-09 10:42:47.142 Opening remote file.
+> 2025-07-09 10:42:47.142 Type: SSH_FXP_OPEN, Size: 104, Number: 2563
+< 2025-07-09 10:42:47.155 Type: SSH_FXP_HANDLE, Size: 13, Number: 2563
+> 2025-07-09 10:42:47.155 Type: SSH_FXP_WRITE, Size: 32761, Number: 3078
+. 2025-07-09 10:42:47.181 Skipped 14 SSH_FXP_WRITE packets
+< 2025-07-09 10:42:47.181 Type: SSH_FXP_STATUS, Size: 24, Number: 3078
+< 2025-07-09 10:42:47.181 Status code: 0
+. 2025-07-09 10:42:48.592 Increasing send buffer from 262144 to 524288
+. 2025-07-09 10:42:49.605 Increasing send buffer from 524288 to 1048576
+. 2025-07-09 10:42:52.502 Skipped 681 SSH_FXP_WRITE and 673 SSH_FXP_STATUS packets
+> 2025-07-09 10:42:52.502 Type: SSH_FXP_CLOSE, Size: 13, Number: 181252
+. 2025-07-09 10:42:52.959 Skipped 22 SSH_FXP_STATUS packets
+< 2025-07-09 10:42:52.959 Type: SSH_FXP_STATUS, Size: 24, Number: 181252
+< 2025-07-09 10:42:52.959 Status code: 0
+> 2025-07-09 10:42:52.959 Type: SSH_FXP_RENAME, Size: 162, Number: 181522
+< 2025-07-09 10:42:52.992 Type: SSH_FXP_STATUS, Size: 24, Number: 181522
+< 2025-07-09 10:42:52.992 Status code: 0
+. 2025-07-09 10:42:52.992 Preserving timestamp [2025-06-24T03:16:19.000Z]
+> 2025-07-09 10:42:52.992 Type: SSH_FXP_SETSTAT, Size: 91, Number: 2825
+< 2025-07-09 10:42:53.048 Type: SSH_FXP_STATUS, Size: 24, Number: 2825
+< 2025-07-09 10:42:53.049 Status code: 0
+. 2025-07-09 10:42:53.049 Transfer done: 'E:\home\ict\robot_ai\docker\docker_file\containerd.io_1.7.27-1_arm64.deb' => '/home/ict/robot_ai/docker/docker_file/containerd.io_1.7.27-1_arm64.deb' [22753396]
+. 2025-07-09 10:42:53.049 File: 'E:\home\ict\robot_ai\docker\docker_file\docker-ce-cli_24.0.7-1~ubuntu.22.04~jammy_arm64.deb' [2025-06-24T02:18:45.069Z] [12038180]
+. 2025-07-09 10:42:53.050 Copying "E:\home\ict\robot_ai\docker\docker_file\docker-ce-cli_24.0.7-1~ubuntu.22.04~jammy_arm64.deb" to remote directory started.
+. 2025-07-09 10:42:53.050 Binary transfer mode selected.
+. 2025-07-09 10:42:53.050 Checking existence of file.
+> 2025-07-09 10:42:53.050 Type: SSH_FXP_LSTAT, Size: 98, Number: 181767
+< 2025-07-09 10:42:53.077 Type: SSH_FXP_STATUS, Size: 29, Number: 181767
+< 2025-07-09 10:42:53.077 Status code: 2
+. 2025-07-09 10:42:53.077 Checking existence of partially transferred file.
+> 2025-07-09 10:42:53.077 Type: SSH_FXP_LSTAT, Size: 107, Number: 182023
+< 2025-07-09 10:42:53.099 Type: SSH_FXP_STATUS, Size: 29, Number: 182023
+< 2025-07-09 10:42:53.099 Status code: 2
+. 2025-07-09 10:42:53.099 Opening remote file.
+> 2025-07-09 10:42:53.099 Type: SSH_FXP_OPEN, Size: 123, Number: 182275
+< 2025-07-09 10:42:53.125 Type: SSH_FXP_HANDLE, Size: 13, Number: 182275
+> 2025-07-09 10:42:53.125 Type: SSH_FXP_WRITE, Size: 32761, Number: 182790
+. 2025-07-09 10:42:53.276 Skipped 38 SSH_FXP_WRITE packets
+< 2025-07-09 10:42:53.276 Type: SSH_FXP_STATUS, Size: 24, Number: 182790
+< 2025-07-09 10:42:53.276 Status code: 0
+. 2025-07-09 10:42:54.926 Skipped 329 SSH_FXP_WRITE and 327 SSH_FXP_STATUS packets
+> 2025-07-09 10:42:54.926 Type: SSH_FXP_CLOSE, Size: 13, Number: 276996
+. 2025-07-09 10:42:55.106 Skipped 40 SSH_FXP_STATUS packets
+< 2025-07-09 10:42:55.106 Type: SSH_FXP_STATUS, Size: 24, Number: 276996
+< 2025-07-09 10:42:55.106 Status code: 0
+> 2025-07-09 10:42:55.106 Type: SSH_FXP_RENAME, Size: 200, Number: 277266
+< 2025-07-09 10:42:55.122 Type: SSH_FXP_STATUS, Size: 24, Number: 277266
+< 2025-07-09 10:42:55.122 Status code: 0
+. 2025-07-09 10:42:55.122 Preserving timestamp [2025-06-24T02:18:45.000Z]
+> 2025-07-09 10:42:55.122 Type: SSH_FXP_SETSTAT, Size: 110, Number: 182537
+< 2025-07-09 10:42:55.135 Type: SSH_FXP_STATUS, Size: 24, Number: 182537
+< 2025-07-09 10:42:55.135 Status code: 0
+. 2025-07-09 10:42:55.135 Transfer done: 'E:\home\ict\robot_ai\docker\docker_file\docker-ce-cli_24.0.7-1~ubuntu.22.04~jammy_arm64.deb' => '/home/ict/robot_ai/docker/docker_file/docker-ce-cli_24.0.7-1~ubuntu.22.04~jammy_arm64.deb' [12038180]
+. 2025-07-09 10:42:55.135 File: 'E:\home\ict\robot_ai\docker\docker_file\docker-ce_24.0.7-1~ubuntu.22.04~jammy_arm64.deb' [2025-06-24T02:18:40.169Z] [13889908]
+. 2025-07-09 10:42:55.135 Copying "E:\home\ict\robot_ai\docker\docker_file\docker-ce_24.0.7-1~ubuntu.22.04~jammy_arm64.deb" to remote directory started.
+. 2025-07-09 10:42:55.135 Binary transfer mode selected.
+. 2025-07-09 10:42:55.135 Checking existence of file.
+> 2025-07-09 10:42:55.135 Type: SSH_FXP_LSTAT, Size: 94, Number: 277511
+< 2025-07-09 10:42:55.184 Type: SSH_FXP_STATUS, Size: 29, Number: 277511
+< 2025-07-09 10:42:55.184 Status code: 2
+. 2025-07-09 10:42:55.184 Checking existence of partially transferred file.
+> 2025-07-09 10:42:55.184 Type: SSH_FXP_LSTAT, Size: 103, Number: 277767
+< 2025-07-09 10:42:55.233 Type: SSH_FXP_STATUS, Size: 29, Number: 277767
+< 2025-07-09 10:42:55.233 Status code: 2
+. 2025-07-09 10:42:55.233 Opening remote file.
+> 2025-07-09 10:42:55.233 Type: SSH_FXP_OPEN, Size: 119, Number: 278019
+< 2025-07-09 10:42:55.312 Type: SSH_FXP_HANDLE, Size: 13, Number: 278019
+> 2025-07-09 10:42:55.312 Type: SSH_FXP_WRITE, Size: 32761, Number: 278534
+. 2025-07-09 10:42:55.345 Skipped 40 SSH_FXP_WRITE packets
+< 2025-07-09 10:42:55.345 Type: SSH_FXP_STATUS, Size: 24, Number: 278534
+< 2025-07-09 10:42:55.345 Status code: 0
+. 2025-07-09 10:42:59.066 Skipped 384 SSH_FXP_WRITE and 385 SSH_FXP_STATUS packets
+> 2025-07-09 10:42:59.066 Type: SSH_FXP_CLOSE, Size: 13, Number: 387332
+. 2025-07-09 10:42:59.395 Skipped 39 SSH_FXP_STATUS packets
+< 2025-07-09 10:42:59.395 Type: SSH_FXP_STATUS, Size: 24, Number: 387332
+< 2025-07-09 10:42:59.395 Status code: 0
+> 2025-07-09 10:42:59.395 Type: SSH_FXP_RENAME, Size: 192, Number: 387602
+< 2025-07-09 10:42:59.406 Type: SSH_FXP_STATUS, Size: 24, Number: 387602
+< 2025-07-09 10:42:59.406 Status code: 0
+. 2025-07-09 10:42:59.406 Preserving timestamp [2025-06-24T02:18:40.000Z]
+> 2025-07-09 10:42:59.406 Type: SSH_FXP_SETSTAT, Size: 106, Number: 278281
+< 2025-07-09 10:42:59.418 Type: SSH_FXP_STATUS, Size: 24, Number: 278281
+< 2025-07-09 10:42:59.418 Status code: 0
+. 2025-07-09 10:42:59.418 Transfer done: 'E:\home\ict\robot_ai\docker\docker_file\docker-ce_24.0.7-1~ubuntu.22.04~jammy_arm64.deb' => '/home/ict/robot_ai/docker/docker_file/docker-ce_24.0.7-1~ubuntu.22.04~jammy_arm64.deb' [13889908]
+. 2025-07-09 10:42:59.418 File: 'E:\home\ict\robot_ai\docker\docker_file\docker-compose-linux-aarch64' [2025-07-09T02:20:55.530Z] [73297101]
+. 2025-07-09 10:42:59.418 Copying "E:\home\ict\robot_ai\docker\docker_file\docker-compose-linux-aarch64" to remote directory started.
+. 2025-07-09 10:42:59.418 Binary transfer mode selected.
+. 2025-07-09 10:42:59.418 Checking existence of file.
+> 2025-07-09 10:42:59.418 Type: SSH_FXP_LSTAT, Size: 75, Number: 387847
+< 2025-07-09 10:42:59.428 Type: SSH_FXP_STATUS, Size: 29, Number: 387847
+< 2025-07-09 10:42:59.428 Status code: 2
+. 2025-07-09 10:42:59.428 Checking existence of partially transferred file.
+> 2025-07-09 10:42:59.428 Type: SSH_FXP_LSTAT, Size: 84, Number: 388103
+< 2025-07-09 10:42:59.442 Type: SSH_FXP_STATUS, Size: 29, Number: 388103
+< 2025-07-09 10:42:59.442 Status code: 2
+. 2025-07-09 10:42:59.442 Opening remote file.
+> 2025-07-09 10:42:59.442 Type: SSH_FXP_OPEN, Size: 100, Number: 388355
+< 2025-07-09 10:42:59.461 Type: SSH_FXP_HANDLE, Size: 13, Number: 388355
+> 2025-07-09 10:42:59.461 Type: SSH_FXP_WRITE, Size: 32761, Number: 388870
+. 2025-07-09 10:42:59.481 Skipped 38 SSH_FXP_WRITE packets
+< 2025-07-09 10:42:59.481 Type: SSH_FXP_STATUS, Size: 24, Number: 388870
+< 2025-07-09 10:42:59.481 Status code: 0
+. 2025-07-09 10:43:14.505 Skipped 2201 SSH_FXP_WRITE and 2201 SSH_FXP_STATUS packets
+> 2025-07-09 10:43:14.505 Type: SSH_FXP_CLOSE, Size: 13, Number: 962308
+. 2025-07-09 10:43:14.612 Skipped 38 SSH_FXP_STATUS packets
+< 2025-07-09 10:43:14.613 Type: SSH_FXP_STATUS, Size: 24, Number: 962308
+< 2025-07-09 10:43:14.613 Status code: 0
+> 2025-07-09 10:43:14.613 Type: SSH_FXP_RENAME, Size: 154, Number: 962578
+< 2025-07-09 10:43:14.618 Type: SSH_FXP_STATUS, Size: 24, Number: 962578
+< 2025-07-09 10:43:14.618 Status code: 0
+. 2025-07-09 10:43:14.618 Preserving timestamp [2025-07-09T02:20:55.000Z]
+> 2025-07-09 10:43:14.618 Type: SSH_FXP_SETSTAT, Size: 87, Number: 388617
+< 2025-07-09 10:43:14.628 Type: SSH_FXP_STATUS, Size: 24, Number: 388617
+< 2025-07-09 10:43:14.628 Status code: 0
+. 2025-07-09 10:43:14.628 Transfer done: 'E:\home\ict\robot_ai\docker\docker_file\docker-compose-linux-aarch64' => '/home/ict/robot_ai/docker/docker_file/docker-compose-linux-aarch64' [73297101]
+. 2025-07-09 10:43:14.628 Copying finished: Transferred: 121,978,585, Elapsed: 0:00:27, CPS: 4,432,200/s
+> 2025-07-09 10:43:14.628 Script: put "E:\home\ict\robot_ai\docker\Dockerfile" 
+. 2025-07-09 10:43:14.628 Copying 1 files/directories to remote directory "/home/ict/robot_ai/docker" - total size: 981
+. 2025-07-09 10:43:14.628   PrTime: Yes; PrRO: No; Rght: rw-r--r--; PrR: No (No); FnCs: N; RIC: 0001; Resume: S (102400); CalcS: No; Mask: 
+. 2025-07-09 10:43:14.628   TM: B; ClAr: No; RemEOF: No; RemBOM: No; CPS: 0; NewerOnly: No; EncryptNewFiles: Yes; ExcludeHiddenFiles: No; ExcludeEmptyDirectories: No; InclM: ; ResumeL: 0
+. 2025-07-09 10:43:14.628   AscM: *.*html; *.htm; *.txt; *.php; *.php3; *.cgi; *.c; *.cpp; *.h; *.pas; *.bas; *.tex; *.pl; *.js; .htaccess; *.xtml; *.css; *.cfg; *.ini; *.sh; *.xml
+. 2025-07-09 10:43:14.628 File: 'E:\home\ict\robot_ai\docker\Dockerfile' [2025-07-04T07:09:32.033Z] [981]
+. 2025-07-09 10:43:14.628 Copying "E:\home\ict\robot_ai\docker\Dockerfile" to remote directory started.
+. 2025-07-09 10:43:14.628 Binary transfer mode selected.
+. 2025-07-09 10:43:14.628 Opening remote file.
+> 2025-07-09 10:43:14.628 Type: SSH_FXP_OPEN, Size: 61, Number: 962819
+< 2025-07-09 10:43:14.639 Type: SSH_FXP_HANDLE, Size: 13, Number: 962819
+> 2025-07-09 10:43:14.639 Type: SSH_FXP_WRITE, Size: 1006, Number: 963334
+> 2025-07-09 10:43:14.639 Type: SSH_FXP_CLOSE, Size: 13, Number: 963588
+> 2025-07-09 10:43:14.639 Type: SSH_FXP_SETSTAT, Size: 57, Number: 963081
+< 2025-07-09 10:43:14.644 Type: SSH_FXP_STATUS, Size: 24, Number: 963334
+< 2025-07-09 10:43:14.644 Status code: 0
+< 2025-07-09 10:43:14.644 Type: SSH_FXP_STATUS, Size: 24, Number: 963588
+< 2025-07-09 10:43:14.644 Status code: 0
+. 2025-07-09 10:43:14.644 Preserving timestamp [2025-07-04T07:09:32.000Z]
+< 2025-07-09 10:43:14.649 Type: SSH_FXP_STATUS, Size: 24, Number: 963081
+< 2025-07-09 10:43:14.649 Status code: 0
+. 2025-07-09 10:43:14.649 Transfer done: 'E:\home\ict\robot_ai\docker\Dockerfile' => '/home/ict/robot_ai/docker/Dockerfile' [981]
+. 2025-07-09 10:43:14.649 Copying finished: Transferred: 981, Elapsed: 0:00:00, CPS: 46,714/s
+> 2025-07-09 10:43:14.649 Script: put "E:\home\ict\robot_ai\docker\docker-compose.yml" 
+. 2025-07-09 10:43:14.649 Copying 1 files/directories to remote directory "/home/ict/robot_ai/docker" - total size: 1,478
+. 2025-07-09 10:43:14.649   PrTime: Yes; PrRO: No; Rght: rw-r--r--; PrR: No (No); FnCs: N; RIC: 0001; Resume: S (102400); CalcS: No; Mask: 
+. 2025-07-09 10:43:14.649   TM: B; ClAr: No; RemEOF: No; RemBOM: No; CPS: 0; NewerOnly: No; EncryptNewFiles: Yes; ExcludeHiddenFiles: No; ExcludeEmptyDirectories: No; InclM: ; ResumeL: 0
+. 2025-07-09 10:43:14.649   AscM: *.*html; *.htm; *.txt; *.php; *.php3; *.cgi; *.c; *.cpp; *.h; *.pas; *.bas; *.tex; *.pl; *.js; .htaccess; *.xtml; *.css; *.cfg; *.ini; *.sh; *.xml
+. 2025-07-09 10:43:14.649 File: 'E:\home\ict\robot_ai\docker\docker-compose.yml' [2025-07-04T07:09:29.740Z] [1478]
+. 2025-07-09 10:43:14.649 Copying "E:\home\ict\robot_ai\docker\docker-compose.yml" to remote directory started.
+. 2025-07-09 10:43:14.654 Binary transfer mode selected.
+. 2025-07-09 10:43:14.654 Opening remote file.
+> 2025-07-09 10:43:14.654 Type: SSH_FXP_OPEN, Size: 69, Number: 963843
+< 2025-07-09 10:43:14.666 Type: SSH_FXP_HANDLE, Size: 13, Number: 963843
+> 2025-07-09 10:43:14.666 Type: SSH_FXP_WRITE, Size: 1503, Number: 964358
+> 2025-07-09 10:43:14.666 Type: SSH_FXP_CLOSE, Size: 13, Number: 964612
+> 2025-07-09 10:43:14.666 Type: SSH_FXP_SETSTAT, Size: 65, Number: 964105
+< 2025-07-09 10:43:14.677 Type: SSH_FXP_STATUS, Size: 24, Number: 964358
+< 2025-07-09 10:43:14.677 Status code: 0
+< 2025-07-09 10:43:14.677 Type: SSH_FXP_STATUS, Size: 24, Number: 964612
+< 2025-07-09 10:43:14.677 Status code: 0
+. 2025-07-09 10:43:14.677 Preserving timestamp [2025-07-04T07:09:29.000Z]
+< 2025-07-09 10:43:14.684 Type: SSH_FXP_STATUS, Size: 24, Number: 964105
+< 2025-07-09 10:43:14.684 Status code: 0
+. 2025-07-09 10:43:14.684 Transfer done: 'E:\home\ict\robot_ai\docker\docker-compose.yml' => '/home/ict/robot_ai/docker/docker-compose.yml' [1478]
+. 2025-07-09 10:43:14.684 Copying finished: Transferred: 1,478, Elapsed: 0:00:00, CPS: 42,228/s
+> 2025-07-09 10:43:14.684 Script: exit 
+. 2025-07-09 10:43:14.684 Script: Exit code: 0
+. 2025-07-09 10:43:14.684 Closing connection.
+. 2025-07-09 10:43:14.684 Sending special code: 1
+. 2025-07-09 10:43:14.694 Session sent command exit status 0
+. 2025-07-09 10:43:14.694 Main session channel closed
+. 2025-07-09 10:43:14.694 All channels closed
+. 2025-07-09 10:45:11.899 --------------------------------------------------------------------------
+. 2025-07-09 10:45:11.899 WinSCP Version 6.5.2 (Build 16354 2025-06-18) (OS 10.0.19044 – Windows 10 Enterprise LTSC 2021)
+. 2025-07-09 10:45:11.899 Configuration: nul
+. 2025-07-09 10:45:11.899 Log level: Normal
+. 2025-07-09 10:45:11.899 Local account: ZHAOSEO\Administrator
+. 2025-07-09 10:45:11.899 Working directory: E:\home\ict\robot_ai\docker
+. 2025-07-09 10:45:11.899 Process ID: 8240
+. 2025-07-09 10:45:11.904 Ancestor processes: cmd, explorer, ...
+. 2025-07-09 10:45:11.904 Command-line: "D:\Program Files (x86)\WinSCP\WinSCP.exe"  /script=winscp_script.txt /log=winscp_log.txt /ini=nul
+. 2025-07-09 10:45:11.904 Time zone: Current: GMT+8 (中国标准时间), No DST
+. 2025-07-09 10:45:11.904 Login time: 2025年7月9日 10:45:11
+. 2025-07-09 10:45:11.904 --------------------------------------------------------------------------
+. 2025-07-09 10:45:11.904 Script: Retrospectively logging previous script records:
+> 2025-07-09 10:45:11.904 Script: open sftp://admin:***@192.168.0.10/ -hostkey="ssh-ed25519 255 jpSGJzJruc/a09yKIik/CNLRhLtKht8Oe0PjXhrLKNQ"
+. 2025-07-09 10:45:11.904 --------------------------------------------------------------------------
+. 2025-07-09 10:45:11.904 Session name: admin@192.168.0.10 (Ad-Hoc site)
+. 2025-07-09 10:45:11.904 Host name: 192.168.0.10 (Port: 22)
+. 2025-07-09 10:45:11.904 User name: admin (Password: Yes, Key file: No, Passphrase: No)
+. 2025-07-09 10:45:11.904 Tunnel: No
+. 2025-07-09 10:45:11.904 Transfer Protocol: SFTP
+. 2025-07-09 10:45:11.904 Ping type: Off, Ping interval: 30 sec; Timeout: 15 sec
+. 2025-07-09 10:45:11.904 Disable Nagle: No
+. 2025-07-09 10:45:11.904 Proxy: None
+. 2025-07-09 10:45:11.904 Send buffer: 262144
+. 2025-07-09 10:45:11.904 Compression: No
+. 2025-07-09 10:45:11.904 Bypass authentication: No
+. 2025-07-09 10:45:11.904 Try agent: Yes; Agent forwarding: No; KI: Yes; GSSAPI: Yes
+. 2025-07-09 10:45:11.904 GSSAPI: KEX: No; Forwarding: No; Libs: gssapi32,sspi,custom; Custom: 
+. 2025-07-09 10:45:11.904 Ciphers: aes,chacha20,aesgcm,3des,WARN,des,blowfish,arcfour; Ssh2DES: No
+. 2025-07-09 10:45:11.904 KEX: ntru-curve25519,mlkem-curve25519,mlkem-nist,ecdh,dh-gex-sha1,dh-group18-sha512,dh-group17-sha512,dh-group16-sha512,dh-group15-sha512,dh-group14-sha1,rsa,WARN,dh-group1-sha1
+. 2025-07-09 10:45:11.904 SSH Bugs: Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto
+. 2025-07-09 10:45:11.904 Simple channel: Yes
+. 2025-07-09 10:45:11.904 Return code variable: Autodetect; Lookup user groups: Auto
+. 2025-07-09 10:45:11.904 Shell: default
+. 2025-07-09 10:45:11.904 EOL: LF, UTF: Auto
+. 2025-07-09 10:45:11.904 Clear aliases: Yes, Unset nat.vars: Yes, Resolve symlinks: Yes; Follow directory symlinks: No
+. 2025-07-09 10:45:11.904 LS: ls -la, Ign LS warn: Yes, Scp1 Comp: No; Exit code 1 is error: No
+. 2025-07-09 10:45:11.904 SFTP Bugs: Auto,Auto
+. 2025-07-09 10:45:11.904 SFTP Server: default
+. 2025-07-09 10:45:11.904 Local directory: default, Remote directory: home, Update: Yes, Cache: Yes
+. 2025-07-09 10:45:11.904 Cache directory changes: Yes, Permanent: Yes
+. 2025-07-09 10:45:11.904 Recycle bin: Delete to: No, Overwritten to: No, Bin path: 
+. 2025-07-09 10:45:11.904 DST mode: Unix
+. 2025-07-09 10:45:11.904 --------------------------------------------------------------------------
+< 2025-07-09 10:45:11.904 Script: Searching for host...
+. 2025-07-09 10:45:11.904 Looking up host "192.168.0.10" for SSH connection
+. 2025-07-09 10:45:11.904 Connecting to 192.168.0.10 port 22
+. 2025-07-09 10:45:11.909 Connected to 192.168.0.10 (from 192.168.0.15:2023)
+< 2025-07-09 10:45:11.909 Script: Connecting to host...
+. 2025-07-09 10:45:11.909 We claim version: SSH-2.0-WinSCP_release_6.5.2
+. 2025-07-09 10:45:11.909 Connected to 192.168.0.10 (from 192.168.0.15:2023)
+. 2025-07-09 10:45:11.960 Remote version: SSH-2.0-OpenSSH_8.9p1 Ubuntu-3ubuntu0.13
+. 2025-07-09 10:45:11.960 Using SSH protocol version 2
+. 2025-07-09 10:45:11.960 Have a known host key of type ssh-ed25519
+. 2025-07-09 10:45:12.031 Enabling strict key exchange semantics
+. 2025-07-09 10:45:12.031 Doing NTRU Prime / Curve25519 hybrid key exchange, using hash SHA-512 (unaccelerated)
+. 2025-07-09 10:45:12.177 Server also has ecdsa-sha2-nistp256/rsa-sha2-512/rsa-sha2-256 host keys, but we don't know any of them
+. 2025-07-09 10:45:12.177 Host key fingerprint is:
+. 2025-07-09 10:45:12.177 ssh-ed25519 255 SHA256:jpSGJzJruc/a09yKIik/CNLRhLtKht8Oe0PjXhrLKNQ
+< 2025-07-09 10:45:12.177 Script: Authenticating...
+. 2025-07-09 10:45:12.182 Host key matches configured key fingerprint
+. 2025-07-09 10:45:12.182 Initialised AES-256 SDCTR (AES-NI accelerated) [aes256-ctr] outbound encryption
+. 2025-07-09 10:45:12.182 Initialised HMAC-SHA-256 outbound MAC algorithm
+. 2025-07-09 10:45:12.182 Initialised AES-256 SDCTR (AES-NI accelerated) [aes256-ctr] inbound encryption
+. 2025-07-09 10:45:12.182 Initialised HMAC-SHA-256 inbound MAC algorithm
+! 2025-07-09 10:45:12.199 Using username "admin".
+< 2025-07-09 10:45:12.199 Script: Using username "admin".
+. 2025-07-09 10:45:12.221 Server offered these authentication methods: publickey,password
+. 2025-07-09 10:45:12.221 Prompt (password, "SSH password", <no instructions>, "&Password: ")
+. 2025-07-09 10:45:12.221 Using stored password.
+< 2025-07-09 10:45:12.221 Script: Authenticating with pre-entered password.
+. 2025-07-09 10:45:12.221 Sent password
+. 2025-07-09 10:45:12.322 Access granted
+. 2025-07-09 10:45:12.322 Opening main session channel
+. 2025-07-09 10:45:12.755 Opened main channel
+. 2025-07-09 10:45:12.770 Started a shell/command
+< 2025-07-09 10:45:12.770 Script: Authenticated.
+. 2025-07-09 10:45:12.770 --------------------------------------------------------------------------
+. 2025-07-09 10:45:12.770 Using SFTP protocol.
+. 2025-07-09 10:45:12.770 Doing startup conversation with host.
+< 2025-07-09 10:45:12.770 Script: Starting the session...
+. 2025-07-09 10:45:12.770 Well known server, allowing SFTP version 6.
+> 2025-07-09 10:45:12.770 Type: SSH_FXP_INIT, Size: 5, Number: -1
+< 2025-07-09 10:45:12.779 Type: SSH_FXP_VERSION, Size: 238, Number: -1
+. 2025-07-09 10:45:12.779 SFTP version 3 negotiated.
+. 2025-07-09 10:45:12.779 Supports extension posix-rename@openssh.com="1"
+. 2025-07-09 10:45:12.779 Supports statvfs@openssh.com extension version 2
+. 2025-07-09 10:45:12.779 Unknown server extension fstatvfs@openssh.com="2"
+. 2025-07-09 10:45:12.779 Supports hardlink@openssh.com extension version 1
+. 2025-07-09 10:45:12.779 Unknown server extension fsync@openssh.com="1"
+. 2025-07-09 10:45:12.779 Unknown server extension lsetstat@openssh.com="1"
+. 2025-07-09 10:45:12.779 Supports limits@openssh.com extension version 1
+. 2025-07-09 10:45:12.779 Unknown server extension expand-path@openssh.com="1"
+. 2025-07-09 10:45:12.779 We believe the server has signed timestamps bug
+. 2025-07-09 10:45:12.779 We will use UTF-8 strings until server sends an invalid UTF-8 string as with SFTP version 3 and older UTF-8 strings are not mandatory
+> 2025-07-09 10:45:12.779 Type: SSH_FXP_EXTENDED, Size: 27, Number: 200
+< 2025-07-09 10:45:12.784 Type: SSH_FXP_EXTENDED_REPLY, Size: 37, Number: 200
+. 2025-07-09 10:45:12.784 Limiting packet size to server's limit of 262144 + 4 bytes
+. 2025-07-09 10:45:12.784 Getting current directory name.
+. 2025-07-09 10:45:12.784 Getting real path for '.'
+> 2025-07-09 10:45:12.784 Type: SSH_FXP_REALPATH, Size: 10, Number: 272
+< 2025-07-09 10:45:12.791 Type: SSH_FXP_NAME, Size: 43, Number: 272
+. 2025-07-09 10:45:12.791 Real path is '/home/admin'
+. 2025-07-09 10:45:12.791 Startup conversation with host finished.
+< 2025-07-09 10:45:12.791 Script: Session started.
+< 2025-07-09 10:45:12.791 Script: Active session: [1] admin@192.168.0.10
+> 2025-07-09 10:45:12.791 Script: cd /home/ict/robot_ai/docker 
+. 2025-07-09 10:45:12.791 Changing directory to "/home/ict/robot_ai/docker".
+. 2025-07-09 10:45:12.791 Getting real path for '/home/ict/robot_ai/docker'
+> 2025-07-09 10:45:12.791 Type: SSH_FXP_REALPATH, Size: 34, Number: 528
+< 2025-07-09 10:45:12.796 Type: SSH_FXP_NAME, Size: 71, Number: 528
+. 2025-07-09 10:45:12.796 Real path is '/home/ict/robot_ai/docker'
+. 2025-07-09 10:45:12.796 Trying to open directory "/home/ict/robot_ai/docker".
+> 2025-07-09 10:45:12.796 Type: SSH_FXP_LSTAT, Size: 34, Number: 775
+< 2025-07-09 10:45:12.807 Type: SSH_FXP_ATTRS, Size: 37, Number: 775
+. 2025-07-09 10:45:12.807 Getting current directory name.
+< 2025-07-09 10:45:12.807 Script: /home/ict/robot_ai/docker
+> 2025-07-09 10:45:12.807 Script: put "E:\home\ict\robot_ai\docker\install.sh" 
+. 2025-07-09 10:45:12.807 Copying 1 files/directories to remote directory "/home/ict/robot_ai/docker" - total size: 11,955
+. 2025-07-09 10:45:12.807   PrTime: Yes; PrRO: No; Rght: rw-r--r--; PrR: No (No); FnCs: N; RIC: 0001; Resume: S (102400); CalcS: No; Mask: 
+. 2025-07-09 10:45:12.807   TM: B; ClAr: No; RemEOF: No; RemBOM: No; CPS: 0; NewerOnly: No; EncryptNewFiles: Yes; ExcludeHiddenFiles: No; ExcludeEmptyDirectories: No; InclM: ; ResumeL: 0
+. 2025-07-09 10:45:12.807   AscM: *.*html; *.htm; *.txt; *.php; *.php3; *.cgi; *.c; *.cpp; *.h; *.pas; *.bas; *.tex; *.pl; *.js; .htaccess; *.xtml; *.css; *.cfg; *.ini; *.sh; *.xml
+. 2025-07-09 10:45:12.807 File: 'E:\home\ict\robot_ai\docker\install.sh' [2025-07-09T02:45:10.016Z] [11955]
+. 2025-07-09 10:45:12.807 Copying "E:\home\ict\robot_ai\docker\install.sh" to remote directory started.
+. 2025-07-09 10:45:12.807 Binary transfer mode selected.
+. 2025-07-09 10:45:12.807 Opening remote file.
+> 2025-07-09 10:45:12.807 Type: SSH_FXP_OPEN, Size: 61, Number: 1027
+< 2025-07-09 10:45:12.812 Type: SSH_FXP_HANDLE, Size: 13, Number: 1027
+> 2025-07-09 10:45:12.812 Type: SSH_FXP_WRITE, Size: 11980, Number: 1542
+> 2025-07-09 10:45:12.812 Type: SSH_FXP_CLOSE, Size: 13, Number: 1796
+> 2025-07-09 10:45:12.812 Type: SSH_FXP_SETSTAT, Size: 57, Number: 1289
+< 2025-07-09 10:45:12.829 Type: SSH_FXP_STATUS, Size: 24, Number: 1542
+< 2025-07-09 10:45:12.829 Status code: 0
+< 2025-07-09 10:45:12.829 Type: SSH_FXP_STATUS, Size: 24, Number: 1796
+< 2025-07-09 10:45:12.829 Status code: 0
+. 2025-07-09 10:45:12.829 Preserving timestamp [2025-07-09T02:45:10.000Z]
+< 2025-07-09 10:45:12.833 Type: SSH_FXP_STATUS, Size: 24, Number: 1289
+< 2025-07-09 10:45:12.833 Status code: 0
+. 2025-07-09 10:45:12.833 Transfer done: 'E:\home\ict\robot_ai\docker\install.sh' => '/home/ict/robot_ai/docker/install.sh' [11955]
+. 2025-07-09 10:45:12.833 Copying finished: Transferred: 11,955, Elapsed: 0:00:00, CPS: 459,807/s
+> 2025-07-09 10:45:12.833 Script: put "E:\home\ict\robot_ai\docker\Dockerfile" 
+. 2025-07-09 10:45:12.833 Copying 1 files/directories to remote directory "/home/ict/robot_ai/docker" - total size: 981
+. 2025-07-09 10:45:12.833   PrTime: Yes; PrRO: No; Rght: rw-r--r--; PrR: No (No); FnCs: N; RIC: 0001; Resume: S (102400); CalcS: No; Mask: 
+. 2025-07-09 10:45:12.833   TM: B; ClAr: No; RemEOF: No; RemBOM: No; CPS: 0; NewerOnly: No; EncryptNewFiles: Yes; ExcludeHiddenFiles: No; ExcludeEmptyDirectories: No; InclM: ; ResumeL: 0
+. 2025-07-09 10:45:12.833   AscM: *.*html; *.htm; *.txt; *.php; *.php3; *.cgi; *.c; *.cpp; *.h; *.pas; *.bas; *.tex; *.pl; *.js; .htaccess; *.xtml; *.css; *.cfg; *.ini; *.sh; *.xml
+. 2025-07-09 10:45:12.833 File: 'E:\home\ict\robot_ai\docker\Dockerfile' [2025-07-04T07:09:32.033Z] [981]
+. 2025-07-09 10:45:12.833 Copying "E:\home\ict\robot_ai\docker\Dockerfile" to remote directory started.
+. 2025-07-09 10:45:12.833 Binary transfer mode selected.
+. 2025-07-09 10:45:12.833 Opening remote file.
+> 2025-07-09 10:45:12.833 Type: SSH_FXP_OPEN, Size: 61, Number: 2051
+< 2025-07-09 10:45:12.840 Type: SSH_FXP_HANDLE, Size: 13, Number: 2051
+> 2025-07-09 10:45:12.840 Type: SSH_FXP_WRITE, Size: 1006, Number: 2566
+> 2025-07-09 10:45:12.840 Type: SSH_FXP_CLOSE, Size: 13, Number: 2820
+> 2025-07-09 10:45:12.840 Type: SSH_FXP_SETSTAT, Size: 57, Number: 2313
+< 2025-07-09 10:45:12.847 Type: SSH_FXP_STATUS, Size: 24, Number: 2566
+< 2025-07-09 10:45:12.847 Status code: 0
+< 2025-07-09 10:45:12.847 Type: SSH_FXP_STATUS, Size: 24, Number: 2820
+< 2025-07-09 10:45:12.847 Status code: 0
+. 2025-07-09 10:45:12.847 Preserving timestamp [2025-07-04T07:09:32.000Z]
+< 2025-07-09 10:45:12.853 Type: SSH_FXP_STATUS, Size: 24, Number: 2313
+< 2025-07-09 10:45:12.853 Status code: 0
+. 2025-07-09 10:45:12.853 Transfer done: 'E:\home\ict\robot_ai\docker\Dockerfile' => '/home/ict/robot_ai/docker/Dockerfile' [981]
+. 2025-07-09 10:45:12.853 Copying finished: Transferred: 981, Elapsed: 0:00:00, CPS: 49,050/s
+> 2025-07-09 10:45:12.853 Script: put "E:\home\ict\robot_ai\docker\docker-compose.yml" 
+. 2025-07-09 10:45:12.853 Copying 1 files/directories to remote directory "/home/ict/robot_ai/docker" - total size: 1,478
+. 2025-07-09 10:45:12.853   PrTime: Yes; PrRO: No; Rght: rw-r--r--; PrR: No (No); FnCs: N; RIC: 0001; Resume: S (102400); CalcS: No; Mask: 
+. 2025-07-09 10:45:12.853   TM: B; ClAr: No; RemEOF: No; RemBOM: No; CPS: 0; NewerOnly: No; EncryptNewFiles: Yes; ExcludeHiddenFiles: No; ExcludeEmptyDirectories: No; InclM: ; ResumeL: 0
+. 2025-07-09 10:45:12.853   AscM: *.*html; *.htm; *.txt; *.php; *.php3; *.cgi; *.c; *.cpp; *.h; *.pas; *.bas; *.tex; *.pl; *.js; .htaccess; *.xtml; *.css; *.cfg; *.ini; *.sh; *.xml
+. 2025-07-09 10:45:12.853 File: 'E:\home\ict\robot_ai\docker\docker-compose.yml' [2025-07-04T07:09:29.740Z] [1478]
+. 2025-07-09 10:45:12.853 Copying "E:\home\ict\robot_ai\docker\docker-compose.yml" to remote directory started.
+. 2025-07-09 10:45:12.853 Binary transfer mode selected.
+. 2025-07-09 10:45:12.853 Opening remote file.
+> 2025-07-09 10:45:12.853 Type: SSH_FXP_OPEN, Size: 69, Number: 3075
+< 2025-07-09 10:45:12.856 Type: SSH_FXP_HANDLE, Size: 13, Number: 3075
+> 2025-07-09 10:45:12.856 Type: SSH_FXP_WRITE, Size: 1503, Number: 3590
+> 2025-07-09 10:45:12.856 Type: SSH_FXP_CLOSE, Size: 13, Number: 3844
+> 2025-07-09 10:45:12.856 Type: SSH_FXP_SETSTAT, Size: 65, Number: 3337
+< 2025-07-09 10:45:12.866 Type: SSH_FXP_STATUS, Size: 24, Number: 3590
+< 2025-07-09 10:45:12.866 Status code: 0
+< 2025-07-09 10:45:12.871 Type: SSH_FXP_STATUS, Size: 24, Number: 3844
+< 2025-07-09 10:45:12.871 Status code: 0
+. 2025-07-09 10:45:12.871 Preserving timestamp [2025-07-04T07:09:29.000Z]
+< 2025-07-09 10:45:12.871 Type: SSH_FXP_STATUS, Size: 24, Number: 3337
+< 2025-07-09 10:45:12.871 Status code: 0
+. 2025-07-09 10:45:12.871 Transfer done: 'E:\home\ict\robot_ai\docker\docker-compose.yml' => '/home/ict/robot_ai/docker/docker-compose.yml' [1478]
+. 2025-07-09 10:45:12.871 Copying finished: Transferred: 1,478, Elapsed: 0:00:00, CPS: 82,111/s
+> 2025-07-09 10:45:12.871 Script: exit 
+. 2025-07-09 10:45:12.871 Script: Exit code: 0
+. 2025-07-09 10:45:12.871 Closing connection.
+. 2025-07-09 10:45:12.871 Sending special code: 1
+. 2025-07-09 10:45:12.881 Session sent command exit status 0
+. 2025-07-09 10:45:12.881 Main session channel closed
+. 2025-07-09 10:45:12.881 All channels closed
+. 2025-07-09 10:48:08.785 --------------------------------------------------------------------------
+. 2025-07-09 10:48:08.785 WinSCP Version 6.5.2 (Build 16354 2025-06-18) (OS 10.0.19044 – Windows 10 Enterprise LTSC 2021)
+. 2025-07-09 10:48:08.785 Configuration: nul
+. 2025-07-09 10:48:08.785 Log level: Normal
+. 2025-07-09 10:48:08.785 Local account: ZHAOSEO\Administrator
+. 2025-07-09 10:48:08.785 Working directory: E:\home\ict\robot_ai\docker
+. 2025-07-09 10:48:08.785 Process ID: 11896
+. 2025-07-09 10:48:08.790 Ancestor processes: cmd, explorer, ...
+. 2025-07-09 10:48:08.790 Command-line: "D:\Program Files (x86)\WinSCP\WinSCP.exe"  /script=winscp_script.txt /log=winscp_log.txt /ini=nul
+. 2025-07-09 10:48:08.790 Time zone: Current: GMT+8 (中国标准时间), No DST
+. 2025-07-09 10:48:08.790 Login time: 2025年7月9日 10:48:08
+. 2025-07-09 10:48:08.790 --------------------------------------------------------------------------
+. 2025-07-09 10:48:08.790 Script: Retrospectively logging previous script records:
+> 2025-07-09 10:48:08.790 Script: open sftp://admin:***@192.168.0.10/ -hostkey="ssh-ed25519 255 jpSGJzJruc/a09yKIik/CNLRhLtKht8Oe0PjXhrLKNQ"
+. 2025-07-09 10:48:08.790 --------------------------------------------------------------------------
+. 2025-07-09 10:48:08.790 Session name: admin@192.168.0.10 (Ad-Hoc site)
+. 2025-07-09 10:48:08.790 Host name: 192.168.0.10 (Port: 22)
+. 2025-07-09 10:48:08.790 User name: admin (Password: Yes, Key file: No, Passphrase: No)
+. 2025-07-09 10:48:08.790 Tunnel: No
+. 2025-07-09 10:48:08.790 Transfer Protocol: SFTP
+. 2025-07-09 10:48:08.790 Ping type: Off, Ping interval: 30 sec; Timeout: 15 sec
+. 2025-07-09 10:48:08.790 Disable Nagle: No
+. 2025-07-09 10:48:08.790 Proxy: None
+. 2025-07-09 10:48:08.790 Send buffer: 262144
+. 2025-07-09 10:48:08.790 Compression: No
+. 2025-07-09 10:48:08.790 Bypass authentication: No
+. 2025-07-09 10:48:08.790 Try agent: Yes; Agent forwarding: No; KI: Yes; GSSAPI: Yes
+. 2025-07-09 10:48:08.790 GSSAPI: KEX: No; Forwarding: No; Libs: gssapi32,sspi,custom; Custom: 
+. 2025-07-09 10:48:08.790 Ciphers: aes,chacha20,aesgcm,3des,WARN,des,blowfish,arcfour; Ssh2DES: No
+. 2025-07-09 10:48:08.790 KEX: ntru-curve25519,mlkem-curve25519,mlkem-nist,ecdh,dh-gex-sha1,dh-group18-sha512,dh-group17-sha512,dh-group16-sha512,dh-group15-sha512,dh-group14-sha1,rsa,WARN,dh-group1-sha1
+. 2025-07-09 10:48:08.790 SSH Bugs: Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto
+. 2025-07-09 10:48:08.790 Simple channel: Yes
+. 2025-07-09 10:48:08.790 Return code variable: Autodetect; Lookup user groups: Auto
+. 2025-07-09 10:48:08.790 Shell: default
+. 2025-07-09 10:48:08.790 EOL: LF, UTF: Auto
+. 2025-07-09 10:48:08.790 Clear aliases: Yes, Unset nat.vars: Yes, Resolve symlinks: Yes; Follow directory symlinks: No
+. 2025-07-09 10:48:08.790 LS: ls -la, Ign LS warn: Yes, Scp1 Comp: No; Exit code 1 is error: No
+. 2025-07-09 10:48:08.790 SFTP Bugs: Auto,Auto
+. 2025-07-09 10:48:08.790 SFTP Server: default
+. 2025-07-09 10:48:08.790 Local directory: default, Remote directory: home, Update: Yes, Cache: Yes
+. 2025-07-09 10:48:08.790 Cache directory changes: Yes, Permanent: Yes
+. 2025-07-09 10:48:08.790 Recycle bin: Delete to: No, Overwritten to: No, Bin path: 
+. 2025-07-09 10:48:08.790 DST mode: Unix
+. 2025-07-09 10:48:08.790 --------------------------------------------------------------------------
+< 2025-07-09 10:48:08.790 Script: Searching for host...
+. 2025-07-09 10:48:08.790 Looking up host "192.168.0.10" for SSH connection
+. 2025-07-09 10:48:08.795 Connecting to 192.168.0.10 port 22
+. 2025-07-09 10:48:08.804 Connected to 192.168.0.10 (from 192.168.0.15:2220)
+< 2025-07-09 10:48:08.804 Script: Connecting to host...
+. 2025-07-09 10:48:08.804 We claim version: SSH-2.0-WinSCP_release_6.5.2
+. 2025-07-09 10:48:08.804 Connected to 192.168.0.10 (from 192.168.0.15:2220)
+. 2025-07-09 10:48:08.842 Remote version: SSH-2.0-OpenSSH_8.9p1 Ubuntu-3ubuntu0.13
+. 2025-07-09 10:48:08.842 Using SSH protocol version 2
+. 2025-07-09 10:48:08.843 Have a known host key of type ssh-ed25519
+. 2025-07-09 10:48:08.857 Enabling strict key exchange semantics
+. 2025-07-09 10:48:08.862 Doing NTRU Prime / Curve25519 hybrid key exchange, using hash SHA-512 (unaccelerated)
+. 2025-07-09 10:48:08.993 Server also has ecdsa-sha2-nistp256/rsa-sha2-512/rsa-sha2-256 host keys, but we don't know any of them
+. 2025-07-09 10:48:08.994 Host key fingerprint is:
+. 2025-07-09 10:48:08.994 ssh-ed25519 255 SHA256:jpSGJzJruc/a09yKIik/CNLRhLtKht8Oe0PjXhrLKNQ
+< 2025-07-09 10:48:08.994 Script: Authenticating...
+. 2025-07-09 10:48:08.994 Host key matches configured key fingerprint
+. 2025-07-09 10:48:08.994 Initialised AES-256 SDCTR (AES-NI accelerated) [aes256-ctr] outbound encryption
+. 2025-07-09 10:48:08.994 Initialised HMAC-SHA-256 outbound MAC algorithm
+. 2025-07-09 10:48:08.994 Initialised AES-256 SDCTR (AES-NI accelerated) [aes256-ctr] inbound encryption
+. 2025-07-09 10:48:08.994 Initialised HMAC-SHA-256 inbound MAC algorithm
+! 2025-07-09 10:48:09.105 Using username "admin".
+< 2025-07-09 10:48:09.105 Script: Using username "admin".
+. 2025-07-09 10:48:09.134 Server offered these authentication methods: publickey,password
+. 2025-07-09 10:48:09.134 Prompt (password, "SSH password", <no instructions>, "&Password: ")
+. 2025-07-09 10:48:09.134 Using stored password.
+< 2025-07-09 10:48:09.134 Script: Authenticating with pre-entered password.
+. 2025-07-09 10:48:09.134 Sent password
+. 2025-07-09 10:48:09.256 Access granted
+. 2025-07-09 10:48:09.256 Opening main session channel
+. 2025-07-09 10:48:09.681 Opened main channel
+. 2025-07-09 10:48:09.688 Started a shell/command
+< 2025-07-09 10:48:09.688 Script: Authenticated.
+. 2025-07-09 10:48:09.688 --------------------------------------------------------------------------
+. 2025-07-09 10:48:09.688 Using SFTP protocol.
+. 2025-07-09 10:48:09.688 Doing startup conversation with host.
+< 2025-07-09 10:48:09.688 Script: Starting the session...
+. 2025-07-09 10:48:09.688 Well known server, allowing SFTP version 6.
+> 2025-07-09 10:48:09.688 Type: SSH_FXP_INIT, Size: 5, Number: -1
+< 2025-07-09 10:48:09.737 Type: SSH_FXP_VERSION, Size: 238, Number: -1
+. 2025-07-09 10:48:09.737 SFTP version 3 negotiated.
+. 2025-07-09 10:48:09.737 Supports extension posix-rename@openssh.com="1"
+. 2025-07-09 10:48:09.737 Supports statvfs@openssh.com extension version 2
+. 2025-07-09 10:48:09.737 Unknown server extension fstatvfs@openssh.com="2"
+. 2025-07-09 10:48:09.737 Supports hardlink@openssh.com extension version 1
+. 2025-07-09 10:48:09.737 Unknown server extension fsync@openssh.com="1"
+. 2025-07-09 10:48:09.737 Unknown server extension lsetstat@openssh.com="1"
+. 2025-07-09 10:48:09.737 Supports limits@openssh.com extension version 1
+. 2025-07-09 10:48:09.737 Unknown server extension expand-path@openssh.com="1"
+. 2025-07-09 10:48:09.737 We believe the server has signed timestamps bug
+. 2025-07-09 10:48:09.737 We will use UTF-8 strings until server sends an invalid UTF-8 string as with SFTP version 3 and older UTF-8 strings are not mandatory
+> 2025-07-09 10:48:09.737 Type: SSH_FXP_EXTENDED, Size: 27, Number: 200
+< 2025-07-09 10:48:09.747 Type: SSH_FXP_EXTENDED_REPLY, Size: 37, Number: 200
+. 2025-07-09 10:48:09.747 Limiting packet size to server's limit of 262144 + 4 bytes
+. 2025-07-09 10:48:09.747 Getting current directory name.
+. 2025-07-09 10:48:09.747 Getting real path for '.'
+> 2025-07-09 10:48:09.747 Type: SSH_FXP_REALPATH, Size: 10, Number: 272
+< 2025-07-09 10:48:09.762 Type: SSH_FXP_NAME, Size: 43, Number: 272
+. 2025-07-09 10:48:09.762 Real path is '/home/admin'
+. 2025-07-09 10:48:09.762 Startup conversation with host finished.
+< 2025-07-09 10:48:09.762 Script: Session started.
+< 2025-07-09 10:48:09.762 Script: Active session: [1] admin@192.168.0.10
+> 2025-07-09 10:48:09.762 Script: cd /home/ict/robot_ai/docker 
+. 2025-07-09 10:48:09.762 Changing directory to "/home/ict/robot_ai/docker".
+. 2025-07-09 10:48:09.762 Getting real path for '/home/ict/robot_ai/docker'
+> 2025-07-09 10:48:09.762 Type: SSH_FXP_REALPATH, Size: 34, Number: 528
+< 2025-07-09 10:48:09.835 Type: SSH_FXP_NAME, Size: 71, Number: 528
+. 2025-07-09 10:48:09.835 Real path is '/home/ict/robot_ai/docker'
+. 2025-07-09 10:48:09.835 Trying to open directory "/home/ict/robot_ai/docker".
+> 2025-07-09 10:48:09.835 Type: SSH_FXP_LSTAT, Size: 34, Number: 775
+< 2025-07-09 10:48:09.846 Type: SSH_FXP_ATTRS, Size: 37, Number: 775
+. 2025-07-09 10:48:09.846 Getting current directory name.
+< 2025-07-09 10:48:09.846 Script: /home/ict/robot_ai/docker
+> 2025-07-09 10:48:09.846 Script: put "E:\home\ict\robot_ai\docker\install.sh" 
+. 2025-07-09 10:48:09.846 Copying 1 files/directories to remote directory "/home/ict/robot_ai/docker" - total size: 9,448
+. 2025-07-09 10:48:09.846   PrTime: Yes; PrRO: No; Rght: rw-r--r--; PrR: No (No); FnCs: N; RIC: 0001; Resume: S (102400); CalcS: No; Mask: 
+. 2025-07-09 10:48:09.846   TM: B; ClAr: No; RemEOF: No; RemBOM: No; CPS: 0; NewerOnly: No; EncryptNewFiles: Yes; ExcludeHiddenFiles: No; ExcludeEmptyDirectories: No; InclM: ; ResumeL: 0
+. 2025-07-09 10:48:09.846   AscM: *.*html; *.htm; *.txt; *.php; *.php3; *.cgi; *.c; *.cpp; *.h; *.pas; *.bas; *.tex; *.pl; *.js; .htaccess; *.xtml; *.css; *.cfg; *.ini; *.sh; *.xml
+. 2025-07-09 10:48:09.846 File: 'E:\home\ict\robot_ai\docker\install.sh' [2025-07-09T02:47:48.772Z] [9448]
+. 2025-07-09 10:48:09.846 Copying "E:\home\ict\robot_ai\docker\install.sh" to remote directory started.
+. 2025-07-09 10:48:09.846 Binary transfer mode selected.
+. 2025-07-09 10:48:09.846 Opening remote file.
+> 2025-07-09 10:48:09.846 Type: SSH_FXP_OPEN, Size: 61, Number: 1027
+< 2025-07-09 10:48:09.861 Type: SSH_FXP_HANDLE, Size: 13, Number: 1027
+> 2025-07-09 10:48:09.861 Type: SSH_FXP_WRITE, Size: 9473, Number: 1542
+> 2025-07-09 10:48:09.861 Type: SSH_FXP_CLOSE, Size: 13, Number: 1796
+> 2025-07-09 10:48:09.861 Type: SSH_FXP_SETSTAT, Size: 57, Number: 1289
+< 2025-07-09 10:48:09.884 Type: SSH_FXP_STATUS, Size: 24, Number: 1542
+< 2025-07-09 10:48:09.884 Status code: 0
+< 2025-07-09 10:48:09.884 Type: SSH_FXP_STATUS, Size: 24, Number: 1796
+< 2025-07-09 10:48:09.884 Status code: 0
+. 2025-07-09 10:48:09.884 Preserving timestamp [2025-07-09T02:47:48.000Z]
+< 2025-07-09 10:48:09.961 Type: SSH_FXP_STATUS, Size: 24, Number: 1289
+< 2025-07-09 10:48:09.961 Status code: 0
+. 2025-07-09 10:48:09.961 Transfer done: 'E:\home\ict\robot_ai\docker\install.sh' => '/home/ict/robot_ai/docker/install.sh' [9448]
+. 2025-07-09 10:48:09.961 Copying finished: Transferred: 9,448, Elapsed: 0:00:00, CPS: 82,156/s
+> 2025-07-09 10:48:09.961 Script: put "E:\home\ict\robot_ai\docker\Dockerfile" 
+. 2025-07-09 10:48:09.961 Copying 1 files/directories to remote directory "/home/ict/robot_ai/docker" - total size: 981
+. 2025-07-09 10:48:09.961   PrTime: Yes; PrRO: No; Rght: rw-r--r--; PrR: No (No); FnCs: N; RIC: 0001; Resume: S (102400); CalcS: No; Mask: 
+. 2025-07-09 10:48:09.961   TM: B; ClAr: No; RemEOF: No; RemBOM: No; CPS: 0; NewerOnly: No; EncryptNewFiles: Yes; ExcludeHiddenFiles: No; ExcludeEmptyDirectories: No; InclM: ; ResumeL: 0
+. 2025-07-09 10:48:09.961   AscM: *.*html; *.htm; *.txt; *.php; *.php3; *.cgi; *.c; *.cpp; *.h; *.pas; *.bas; *.tex; *.pl; *.js; .htaccess; *.xtml; *.css; *.cfg; *.ini; *.sh; *.xml
+. 2025-07-09 10:48:09.961 File: 'E:\home\ict\robot_ai\docker\Dockerfile' [2025-07-04T07:09:32.033Z] [981]
+. 2025-07-09 10:48:09.961 Copying "E:\home\ict\robot_ai\docker\Dockerfile" to remote directory started.
+. 2025-07-09 10:48:09.961 Binary transfer mode selected.
+. 2025-07-09 10:48:09.961 Opening remote file.
+> 2025-07-09 10:48:09.961 Type: SSH_FXP_OPEN, Size: 61, Number: 2051
+< 2025-07-09 10:48:09.982 Type: SSH_FXP_HANDLE, Size: 13, Number: 2051
+> 2025-07-09 10:48:09.982 Type: SSH_FXP_WRITE, Size: 1006, Number: 2566
+> 2025-07-09 10:48:09.982 Type: SSH_FXP_CLOSE, Size: 13, Number: 2820
+> 2025-07-09 10:48:09.982 Type: SSH_FXP_SETSTAT, Size: 57, Number: 2313
+< 2025-07-09 10:48:09.997 Type: SSH_FXP_STATUS, Size: 24, Number: 2566
+< 2025-07-09 10:48:09.997 Status code: 0
+< 2025-07-09 10:48:09.997 Type: SSH_FXP_STATUS, Size: 24, Number: 2820
+< 2025-07-09 10:48:09.997 Status code: 0
+. 2025-07-09 10:48:09.997 Preserving timestamp [2025-07-04T07:09:32.000Z]
+< 2025-07-09 10:48:10.013 Type: SSH_FXP_STATUS, Size: 24, Number: 2313
+< 2025-07-09 10:48:10.013 Status code: 0
+. 2025-07-09 10:48:10.013 Transfer done: 'E:\home\ict\robot_ai\docker\Dockerfile' => '/home/ict/robot_ai/docker/Dockerfile' [981]
+. 2025-07-09 10:48:10.013 Copying finished: Transferred: 981, Elapsed: 0:00:00, CPS: 18,865/s
+> 2025-07-09 10:48:10.013 Script: put "E:\home\ict\robot_ai\docker\docker-compose.yml" 
+. 2025-07-09 10:48:10.013 Copying 1 files/directories to remote directory "/home/ict/robot_ai/docker" - total size: 1,478
+. 2025-07-09 10:48:10.013   PrTime: Yes; PrRO: No; Rght: rw-r--r--; PrR: No (No); FnCs: N; RIC: 0001; Resume: S (102400); CalcS: No; Mask: 
+. 2025-07-09 10:48:10.013   TM: B; ClAr: No; RemEOF: No; RemBOM: No; CPS: 0; NewerOnly: No; EncryptNewFiles: Yes; ExcludeHiddenFiles: No; ExcludeEmptyDirectories: No; InclM: ; ResumeL: 0
+. 2025-07-09 10:48:10.013   AscM: *.*html; *.htm; *.txt; *.php; *.php3; *.cgi; *.c; *.cpp; *.h; *.pas; *.bas; *.tex; *.pl; *.js; .htaccess; *.xtml; *.css; *.cfg; *.ini; *.sh; *.xml
+. 2025-07-09 10:48:10.013 File: 'E:\home\ict\robot_ai\docker\docker-compose.yml' [2025-07-04T07:09:29.740Z] [1478]
+. 2025-07-09 10:48:10.013 Copying "E:\home\ict\robot_ai\docker\docker-compose.yml" to remote directory started.
+. 2025-07-09 10:48:10.013 Binary transfer mode selected.
+. 2025-07-09 10:48:10.013 Opening remote file.
+> 2025-07-09 10:48:10.013 Type: SSH_FXP_OPEN, Size: 69, Number: 3075
+< 2025-07-09 10:48:10.023 Type: SSH_FXP_HANDLE, Size: 13, Number: 3075
+> 2025-07-09 10:48:10.023 Type: SSH_FXP_WRITE, Size: 1503, Number: 3590
+> 2025-07-09 10:48:10.023 Type: SSH_FXP_CLOSE, Size: 13, Number: 3844
+> 2025-07-09 10:48:10.023 Type: SSH_FXP_SETSTAT, Size: 65, Number: 3337
+< 2025-07-09 10:48:10.044 Type: SSH_FXP_STATUS, Size: 24, Number: 3590
+< 2025-07-09 10:48:10.044 Status code: 0
+< 2025-07-09 10:48:10.051 Type: SSH_FXP_STATUS, Size: 24, Number: 3844
+< 2025-07-09 10:48:10.051 Status code: 0
+. 2025-07-09 10:48:10.051 Preserving timestamp [2025-07-04T07:09:29.000Z]
+< 2025-07-09 10:48:10.055 Type: SSH_FXP_STATUS, Size: 24, Number: 3337
+< 2025-07-09 10:48:10.055 Status code: 0
+. 2025-07-09 10:48:10.055 Transfer done: 'E:\home\ict\robot_ai\docker\docker-compose.yml' => '/home/ict/robot_ai/docker/docker-compose.yml' [1478]
+. 2025-07-09 10:48:10.055 Copying finished: Transferred: 1,478, Elapsed: 0:00:00, CPS: 35,190/s
+> 2025-07-09 10:48:10.056 Script: exit 
+. 2025-07-09 10:48:10.056 Script: Exit code: 0
+. 2025-07-09 10:48:10.056 Closing connection.
+. 2025-07-09 10:48:10.056 Sending special code: 1
+. 2025-07-09 10:48:10.074 Session sent command exit status 0
+. 2025-07-09 10:48:10.074 Main session channel closed
+. 2025-07-09 10:48:10.074 All channels closed
+. 2025-07-09 10:50:49.402 --------------------------------------------------------------------------
+. 2025-07-09 10:50:49.407 WinSCP Version 6.5.2 (Build 16354 2025-06-18) (OS 10.0.19044 – Windows 10 Enterprise LTSC 2021)
+. 2025-07-09 10:50:49.407 Configuration: nul
+. 2025-07-09 10:50:49.407 Log level: Normal
+. 2025-07-09 10:50:49.407 Local account: ZHAOSEO\Administrator
+. 2025-07-09 10:50:49.407 Working directory: E:\home\ict\robot_ai\docker
+. 2025-07-09 10:50:49.407 Process ID: 6792
+. 2025-07-09 10:50:49.412 Ancestor processes: cmd, explorer, ...
+. 2025-07-09 10:50:49.412 Command-line: "D:\Program Files (x86)\WinSCP\WinSCP.exe"  /script=winscp_script.txt /log=winscp_log.txt /ini=nul
+. 2025-07-09 10:50:49.412 Time zone: Current: GMT+8 (中国标准时间), No DST
+. 2025-07-09 10:50:49.412 Login time: 2025年7月9日 10:50:49
+. 2025-07-09 10:50:49.412 --------------------------------------------------------------------------
+. 2025-07-09 10:50:49.412 Script: Retrospectively logging previous script records:
+> 2025-07-09 10:50:49.412 Script: open sftp://admin:***@192.168.0.10/ -hostkey="ssh-ed25519 255 jpSGJzJruc/a09yKIik/CNLRhLtKht8Oe0PjXhrLKNQ"
+. 2025-07-09 10:50:49.412 --------------------------------------------------------------------------
+. 2025-07-09 10:50:49.412 Session name: admin@192.168.0.10 (Ad-Hoc site)
+. 2025-07-09 10:50:49.412 Host name: 192.168.0.10 (Port: 22)
+. 2025-07-09 10:50:49.412 User name: admin (Password: Yes, Key file: No, Passphrase: No)
+. 2025-07-09 10:50:49.412 Tunnel: No
+. 2025-07-09 10:50:49.412 Transfer Protocol: SFTP
+. 2025-07-09 10:50:49.412 Ping type: Off, Ping interval: 30 sec; Timeout: 15 sec
+. 2025-07-09 10:50:49.412 Disable Nagle: No
+. 2025-07-09 10:50:49.412 Proxy: None
+. 2025-07-09 10:50:49.412 Send buffer: 262144
+. 2025-07-09 10:50:49.412 Compression: No
+. 2025-07-09 10:50:49.412 Bypass authentication: No
+. 2025-07-09 10:50:49.412 Try agent: Yes; Agent forwarding: No; KI: Yes; GSSAPI: Yes
+. 2025-07-09 10:50:49.412 GSSAPI: KEX: No; Forwarding: No; Libs: gssapi32,sspi,custom; Custom: 
+. 2025-07-09 10:50:49.412 Ciphers: aes,chacha20,aesgcm,3des,WARN,des,blowfish,arcfour; Ssh2DES: No
+. 2025-07-09 10:50:49.412 KEX: ntru-curve25519,mlkem-curve25519,mlkem-nist,ecdh,dh-gex-sha1,dh-group18-sha512,dh-group17-sha512,dh-group16-sha512,dh-group15-sha512,dh-group14-sha1,rsa,WARN,dh-group1-sha1
+. 2025-07-09 10:50:49.412 SSH Bugs: Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto
+. 2025-07-09 10:50:49.412 Simple channel: Yes
+. 2025-07-09 10:50:49.412 Return code variable: Autodetect; Lookup user groups: Auto
+. 2025-07-09 10:50:49.412 Shell: default
+. 2025-07-09 10:50:49.412 EOL: LF, UTF: Auto
+. 2025-07-09 10:50:49.412 Clear aliases: Yes, Unset nat.vars: Yes, Resolve symlinks: Yes; Follow directory symlinks: No
+. 2025-07-09 10:50:49.412 LS: ls -la, Ign LS warn: Yes, Scp1 Comp: No; Exit code 1 is error: No
+. 2025-07-09 10:50:49.412 SFTP Bugs: Auto,Auto
+. 2025-07-09 10:50:49.412 SFTP Server: default
+. 2025-07-09 10:50:49.412 Local directory: default, Remote directory: home, Update: Yes, Cache: Yes
+. 2025-07-09 10:50:49.412 Cache directory changes: Yes, Permanent: Yes
+. 2025-07-09 10:50:49.412 Recycle bin: Delete to: No, Overwritten to: No, Bin path: 
+. 2025-07-09 10:50:49.412 DST mode: Unix
+. 2025-07-09 10:50:49.412 --------------------------------------------------------------------------
+< 2025-07-09 10:50:49.412 Script: Searching for host...
+. 2025-07-09 10:50:49.412 Looking up host "192.168.0.10" for SSH connection
+. 2025-07-09 10:50:49.412 Connecting to 192.168.0.10 port 22
+. 2025-07-09 10:50:49.470 Connected to 192.168.0.10 (from 192.168.0.15:2386)
+< 2025-07-09 10:50:49.470 Script: Connecting to host...
+. 2025-07-09 10:50:49.475 We claim version: SSH-2.0-WinSCP_release_6.5.2
+. 2025-07-09 10:50:49.475 Connected to 192.168.0.10 (from 192.168.0.15:2386)
+. 2025-07-09 10:50:49.536 Remote version: SSH-2.0-OpenSSH_8.9p1 Ubuntu-3ubuntu0.13
+. 2025-07-09 10:50:49.536 Using SSH protocol version 2
+. 2025-07-09 10:50:49.536 Have a known host key of type ssh-ed25519
+. 2025-07-09 10:50:49.628 Enabling strict key exchange semantics
+. 2025-07-09 10:50:49.628 Doing NTRU Prime / Curve25519 hybrid key exchange, using hash SHA-512 (unaccelerated)
+. 2025-07-09 10:50:49.807 Server also has ecdsa-sha2-nistp256/rsa-sha2-512/rsa-sha2-256 host keys, but we don't know any of them
+. 2025-07-09 10:50:49.807 Host key fingerprint is:
+. 2025-07-09 10:50:49.807 ssh-ed25519 255 SHA256:jpSGJzJruc/a09yKIik/CNLRhLtKht8Oe0PjXhrLKNQ
+< 2025-07-09 10:50:49.807 Script: Authenticating...
+. 2025-07-09 10:50:49.807 Host key matches configured key fingerprint
+. 2025-07-09 10:50:49.807 Initialised AES-256 SDCTR (AES-NI accelerated) [aes256-ctr] outbound encryption
+. 2025-07-09 10:50:49.807 Initialised HMAC-SHA-256 outbound MAC algorithm
+. 2025-07-09 10:50:49.807 Initialised AES-256 SDCTR (AES-NI accelerated) [aes256-ctr] inbound encryption
+. 2025-07-09 10:50:49.807 Initialised HMAC-SHA-256 inbound MAC algorithm
+! 2025-07-09 10:50:49.817 Using username "admin".
+< 2025-07-09 10:50:49.817 Script: Using username "admin".
+. 2025-07-09 10:50:49.832 Server offered these authentication methods: publickey,password
+. 2025-07-09 10:50:49.832 Prompt (password, "SSH password", <no instructions>, "&Password: ")
+. 2025-07-09 10:50:49.832 Using stored password.
+< 2025-07-09 10:50:49.832 Script: Authenticating with pre-entered password.
+. 2025-07-09 10:50:49.832 Sent password
+. 2025-07-09 10:50:50.013 Access granted
+. 2025-07-09 10:50:50.013 Opening main session channel
+. 2025-07-09 10:50:50.470 Opened main channel
+. 2025-07-09 10:50:50.481 Started a shell/command
+< 2025-07-09 10:50:50.481 Script: Authenticated.
+. 2025-07-09 10:50:50.481 --------------------------------------------------------------------------
+. 2025-07-09 10:50:50.481 Using SFTP protocol.
+. 2025-07-09 10:50:50.482 Doing startup conversation with host.
+< 2025-07-09 10:50:50.482 Script: Starting the session...
+. 2025-07-09 10:50:50.482 Well known server, allowing SFTP version 6.
+> 2025-07-09 10:50:50.482 Type: SSH_FXP_INIT, Size: 5, Number: -1
+< 2025-07-09 10:50:50.506 Type: SSH_FXP_VERSION, Size: 238, Number: -1
+. 2025-07-09 10:50:50.507 SFTP version 3 negotiated.
+. 2025-07-09 10:50:50.508 Supports extension posix-rename@openssh.com="1"
+. 2025-07-09 10:50:50.508 Supports statvfs@openssh.com extension version 2
+. 2025-07-09 10:50:50.508 Unknown server extension fstatvfs@openssh.com="2"
+. 2025-07-09 10:50:50.508 Supports hardlink@openssh.com extension version 1
+. 2025-07-09 10:50:50.508 Unknown server extension fsync@openssh.com="1"
+. 2025-07-09 10:50:50.508 Unknown server extension lsetstat@openssh.com="1"
+. 2025-07-09 10:50:50.508 Supports limits@openssh.com extension version 1
+. 2025-07-09 10:50:50.508 Unknown server extension expand-path@openssh.com="1"
+. 2025-07-09 10:50:50.508 We believe the server has signed timestamps bug
+. 2025-07-09 10:50:50.508 We will use UTF-8 strings until server sends an invalid UTF-8 string as with SFTP version 3 and older UTF-8 strings are not mandatory
+> 2025-07-09 10:50:50.509 Type: SSH_FXP_EXTENDED, Size: 27, Number: 200
+< 2025-07-09 10:50:50.517 Type: SSH_FXP_EXTENDED_REPLY, Size: 37, Number: 200
+. 2025-07-09 10:50:50.517 Limiting packet size to server's limit of 262144 + 4 bytes
+. 2025-07-09 10:50:50.517 Getting current directory name.
+. 2025-07-09 10:50:50.517 Getting real path for '.'
+> 2025-07-09 10:50:50.517 Type: SSH_FXP_REALPATH, Size: 10, Number: 272
+< 2025-07-09 10:50:50.542 Type: SSH_FXP_NAME, Size: 43, Number: 272
+. 2025-07-09 10:50:50.542 Real path is '/home/admin'
+. 2025-07-09 10:50:50.542 Startup conversation with host finished.
+< 2025-07-09 10:50:50.542 Script: Session started.
+< 2025-07-09 10:50:50.542 Script: Active session: [1] admin@192.168.0.10
+> 2025-07-09 10:50:50.542 Script: cd /home/ict/robot_ai/docker 
+. 2025-07-09 10:50:50.542 Changing directory to "/home/ict/robot_ai/docker".
+. 2025-07-09 10:50:50.542 Getting real path for '/home/ict/robot_ai/docker'
+> 2025-07-09 10:50:50.542 Type: SSH_FXP_REALPATH, Size: 34, Number: 528
+< 2025-07-09 10:50:50.551 Type: SSH_FXP_NAME, Size: 71, Number: 528
+. 2025-07-09 10:50:50.551 Real path is '/home/ict/robot_ai/docker'
+. 2025-07-09 10:50:50.551 Trying to open directory "/home/ict/robot_ai/docker".
+> 2025-07-09 10:50:50.551 Type: SSH_FXP_LSTAT, Size: 34, Number: 775
+< 2025-07-09 10:50:50.572 Type: SSH_FXP_ATTRS, Size: 37, Number: 775
+. 2025-07-09 10:50:50.572 Getting current directory name.
+< 2025-07-09 10:50:50.572 Script: /home/ict/robot_ai/docker
+> 2025-07-09 10:50:50.572 Script: put "E:\home\ict\robot_ai\docker\install.sh" 
+. 2025-07-09 10:50:50.572 Copying 1 files/directories to remote directory "/home/ict/robot_ai/docker" - total size: 9,448
+. 2025-07-09 10:50:50.572   PrTime: Yes; PrRO: No; Rght: rw-r--r--; PrR: No (No); FnCs: N; RIC: 0001; Resume: S (102400); CalcS: No; Mask: 
+. 2025-07-09 10:50:50.572   TM: B; ClAr: No; RemEOF: No; RemBOM: No; CPS: 0; NewerOnly: No; EncryptNewFiles: Yes; ExcludeHiddenFiles: No; ExcludeEmptyDirectories: No; InclM: ; ResumeL: 0
+. 2025-07-09 10:50:50.572   AscM: *.*html; *.htm; *.txt; *.php; *.php3; *.cgi; *.c; *.cpp; *.h; *.pas; *.bas; *.tex; *.pl; *.js; .htaccess; *.xtml; *.css; *.cfg; *.ini; *.sh; *.xml
+. 2025-07-09 10:50:50.572 File: 'E:\home\ict\robot_ai\docker\install.sh' [2025-07-09T02:47:48.772Z] [9448]
+. 2025-07-09 10:50:50.572 Copying "E:\home\ict\robot_ai\docker\install.sh" to remote directory started.
+. 2025-07-09 10:50:50.572 Binary transfer mode selected.
+. 2025-07-09 10:50:50.572 Opening remote file.
+> 2025-07-09 10:50:50.572 Type: SSH_FXP_OPEN, Size: 61, Number: 1027
+< 2025-07-09 10:50:50.583 Type: SSH_FXP_HANDLE, Size: 13, Number: 1027
+> 2025-07-09 10:50:50.583 Type: SSH_FXP_WRITE, Size: 9473, Number: 1542
+> 2025-07-09 10:50:50.583 Type: SSH_FXP_CLOSE, Size: 13, Number: 1796
+> 2025-07-09 10:50:50.583 Type: SSH_FXP_SETSTAT, Size: 57, Number: 1289
+< 2025-07-09 10:50:50.684 Type: SSH_FXP_STATUS, Size: 24, Number: 1542
+< 2025-07-09 10:50:50.684 Status code: 0
+< 2025-07-09 10:50:50.684 Type: SSH_FXP_STATUS, Size: 24, Number: 1796
+< 2025-07-09 10:50:50.684 Status code: 0
+. 2025-07-09 10:50:50.684 Preserving timestamp [2025-07-09T02:47:48.000Z]
+< 2025-07-09 10:50:50.693 Type: SSH_FXP_STATUS, Size: 24, Number: 1289
+< 2025-07-09 10:50:50.693 Status code: 0
+. 2025-07-09 10:50:50.693 Transfer done: 'E:\home\ict\robot_ai\docker\install.sh' => '/home/ict/robot_ai/docker/install.sh' [9448]
+. 2025-07-09 10:50:50.693 Copying finished: Transferred: 9,448, Elapsed: 0:00:00, CPS: 78,082/s
+> 2025-07-09 10:50:50.693 Script: put "E:\home\ict\robot_ai\docker\Dockerfile" 
+. 2025-07-09 10:50:50.693 Copying 1 files/directories to remote directory "/home/ict/robot_ai/docker" - total size: 981
+. 2025-07-09 10:50:50.693   PrTime: Yes; PrRO: No; Rght: rw-r--r--; PrR: No (No); FnCs: N; RIC: 0001; Resume: S (102400); CalcS: No; Mask: 
+. 2025-07-09 10:50:50.693   TM: B; ClAr: No; RemEOF: No; RemBOM: No; CPS: 0; NewerOnly: No; EncryptNewFiles: Yes; ExcludeHiddenFiles: No; ExcludeEmptyDirectories: No; InclM: ; ResumeL: 0
+. 2025-07-09 10:50:50.693   AscM: *.*html; *.htm; *.txt; *.php; *.php3; *.cgi; *.c; *.cpp; *.h; *.pas; *.bas; *.tex; *.pl; *.js; .htaccess; *.xtml; *.css; *.cfg; *.ini; *.sh; *.xml
+. 2025-07-09 10:50:50.693 File: 'E:\home\ict\robot_ai\docker\Dockerfile' [2025-07-04T07:09:32.033Z] [981]
+. 2025-07-09 10:50:50.693 Copying "E:\home\ict\robot_ai\docker\Dockerfile" to remote directory started.
+. 2025-07-09 10:50:50.693 Binary transfer mode selected.
+. 2025-07-09 10:50:50.693 Opening remote file.
+> 2025-07-09 10:50:50.693 Type: SSH_FXP_OPEN, Size: 61, Number: 2051
+< 2025-07-09 10:50:50.704 Type: SSH_FXP_HANDLE, Size: 13, Number: 2051
+> 2025-07-09 10:50:50.704 Type: SSH_FXP_WRITE, Size: 1006, Number: 2566
+> 2025-07-09 10:50:50.704 Type: SSH_FXP_CLOSE, Size: 13, Number: 2820
+> 2025-07-09 10:50:50.704 Type: SSH_FXP_SETSTAT, Size: 57, Number: 2313
+< 2025-07-09 10:50:50.729 Type: SSH_FXP_STATUS, Size: 24, Number: 2566
+< 2025-07-09 10:50:50.729 Status code: 0
+< 2025-07-09 10:50:50.729 Type: SSH_FXP_STATUS, Size: 24, Number: 2820
+< 2025-07-09 10:50:50.729 Status code: 0
+. 2025-07-09 10:50:50.729 Preserving timestamp [2025-07-04T07:09:32.000Z]
+< 2025-07-09 10:50:50.748 Type: SSH_FXP_STATUS, Size: 24, Number: 2313
+< 2025-07-09 10:50:50.748 Status code: 0
+. 2025-07-09 10:50:50.748 Transfer done: 'E:\home\ict\robot_ai\docker\Dockerfile' => '/home/ict/robot_ai/docker/Dockerfile' [981]
+. 2025-07-09 10:50:50.748 Copying finished: Transferred: 981, Elapsed: 0:00:00, CPS: 17,836/s
+> 2025-07-09 10:50:50.748 Script: put "E:\home\ict\robot_ai\docker\docker-compose.yml" 
+. 2025-07-09 10:50:50.748 Copying 1 files/directories to remote directory "/home/ict/robot_ai/docker" - total size: 1,478
+. 2025-07-09 10:50:50.748   PrTime: Yes; PrRO: No; Rght: rw-r--r--; PrR: No (No); FnCs: N; RIC: 0001; Resume: S (102400); CalcS: No; Mask: 
+. 2025-07-09 10:50:50.748   TM: B; ClAr: No; RemEOF: No; RemBOM: No; CPS: 0; NewerOnly: No; EncryptNewFiles: Yes; ExcludeHiddenFiles: No; ExcludeEmptyDirectories: No; InclM: ; ResumeL: 0
+. 2025-07-09 10:50:50.748   AscM: *.*html; *.htm; *.txt; *.php; *.php3; *.cgi; *.c; *.cpp; *.h; *.pas; *.bas; *.tex; *.pl; *.js; .htaccess; *.xtml; *.css; *.cfg; *.ini; *.sh; *.xml
+. 2025-07-09 10:50:50.748 File: 'E:\home\ict\robot_ai\docker\docker-compose.yml' [2025-07-04T07:09:29.740Z] [1478]
+. 2025-07-09 10:50:50.748 Copying "E:\home\ict\robot_ai\docker\docker-compose.yml" to remote directory started.
+. 2025-07-09 10:50:50.748 Binary transfer mode selected.
+. 2025-07-09 10:50:50.748 Opening remote file.
+> 2025-07-09 10:50:50.748 Type: SSH_FXP_OPEN, Size: 69, Number: 3075
+< 2025-07-09 10:50:50.834 Type: SSH_FXP_HANDLE, Size: 13, Number: 3075
+> 2025-07-09 10:50:50.834 Type: SSH_FXP_WRITE, Size: 1503, Number: 3590
+> 2025-07-09 10:50:50.834 Type: SSH_FXP_CLOSE, Size: 13, Number: 3844
+> 2025-07-09 10:50:50.834 Type: SSH_FXP_SETSTAT, Size: 65, Number: 3337
+< 2025-07-09 10:50:50.875 Type: SSH_FXP_STATUS, Size: 24, Number: 3590
+< 2025-07-09 10:50:50.875 Status code: 0
+< 2025-07-09 10:50:50.875 Type: SSH_FXP_STATUS, Size: 24, Number: 3844
+< 2025-07-09 10:50:50.875 Status code: 0
+. 2025-07-09 10:50:50.875 Preserving timestamp [2025-07-04T07:09:29.000Z]
+< 2025-07-09 10:50:50.908 Type: SSH_FXP_STATUS, Size: 24, Number: 3337
+< 2025-07-09 10:50:50.908 Status code: 0
+. 2025-07-09 10:50:50.908 Transfer done: 'E:\home\ict\robot_ai\docker\docker-compose.yml' => '/home/ict/robot_ai/docker/docker-compose.yml' [1478]
+. 2025-07-09 10:50:50.908 Copying finished: Transferred: 1,478, Elapsed: 0:00:00, CPS: 9,237/s
+> 2025-07-09 10:50:50.908 Script: exit 
+. 2025-07-09 10:50:50.908 Script: Exit code: 0
+. 2025-07-09 10:50:50.908 Closing connection.
+. 2025-07-09 10:50:50.908 Sending special code: 1
+. 2025-07-09 10:50:50.922 Session sent command exit status 0
+. 2025-07-09 10:50:50.922 Main session channel closed
+. 2025-07-09 10:50:50.922 All channels closed
+. 2025-07-09 11:02:03.794 --------------------------------------------------------------------------
+. 2025-07-09 11:02:03.794 WinSCP Version 6.5.2 (Build 16354 2025-06-18) (OS 10.0.19044 – Windows 10 Enterprise LTSC 2021)
+. 2025-07-09 11:02:03.794 Configuration: nul
+. 2025-07-09 11:02:03.794 Log level: Normal
+. 2025-07-09 11:02:03.794 Local account: ZHAOSEO\Administrator
+. 2025-07-09 11:02:03.794 Working directory: E:\home\ict\robot_ai\docker
+. 2025-07-09 11:02:03.794 Process ID: 15780
+. 2025-07-09 11:02:03.804 Ancestor processes: cmd, explorer, ...
+. 2025-07-09 11:02:03.804 Command-line: "D:\Program Files (x86)\WinSCP\WinSCP.exe"  /script=winscp_script.txt /log=winscp_log.txt /ini=nul
+. 2025-07-09 11:02:03.804 Time zone: Current: GMT+8 (中国标准时间), No DST
+. 2025-07-09 11:02:03.804 Login time: 2025年7月9日 11:02:03
+. 2025-07-09 11:02:03.804 --------------------------------------------------------------------------
+. 2025-07-09 11:02:03.804 Script: Retrospectively logging previous script records:
+> 2025-07-09 11:02:03.804 Script: open sftp://admin:***@192.168.0.10/ -hostkey="ssh-ed25519 255 jpSGJzJruc/a09yKIik/CNLRhLtKht8Oe0PjXhrLKNQ"
+. 2025-07-09 11:02:03.804 --------------------------------------------------------------------------
+. 2025-07-09 11:02:03.804 Session name: admin@192.168.0.10 (Ad-Hoc site)
+. 2025-07-09 11:02:03.804 Host name: 192.168.0.10 (Port: 22)
+. 2025-07-09 11:02:03.804 User name: admin (Password: Yes, Key file: No, Passphrase: No)
+. 2025-07-09 11:02:03.804 Tunnel: No
+. 2025-07-09 11:02:03.804 Transfer Protocol: SFTP
+. 2025-07-09 11:02:03.804 Ping type: Off, Ping interval: 30 sec; Timeout: 15 sec
+. 2025-07-09 11:02:03.804 Disable Nagle: No
+. 2025-07-09 11:02:03.804 Proxy: None
+. 2025-07-09 11:02:03.804 Send buffer: 262144
+. 2025-07-09 11:02:03.804 Compression: No
+. 2025-07-09 11:02:03.804 Bypass authentication: No
+. 2025-07-09 11:02:03.804 Try agent: Yes; Agent forwarding: No; KI: Yes; GSSAPI: Yes
+. 2025-07-09 11:02:03.804 GSSAPI: KEX: No; Forwarding: No; Libs: gssapi32,sspi,custom; Custom: 
+. 2025-07-09 11:02:03.804 Ciphers: aes,chacha20,aesgcm,3des,WARN,des,blowfish,arcfour; Ssh2DES: No
+. 2025-07-09 11:02:03.804 KEX: ntru-curve25519,mlkem-curve25519,mlkem-nist,ecdh,dh-gex-sha1,dh-group18-sha512,dh-group17-sha512,dh-group16-sha512,dh-group15-sha512,dh-group14-sha1,rsa,WARN,dh-group1-sha1
+. 2025-07-09 11:02:03.804 SSH Bugs: Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto
+. 2025-07-09 11:02:03.804 Simple channel: Yes
+. 2025-07-09 11:02:03.804 Return code variable: Autodetect; Lookup user groups: Auto
+. 2025-07-09 11:02:03.804 Shell: default
+. 2025-07-09 11:02:03.804 EOL: LF, UTF: Auto
+. 2025-07-09 11:02:03.804 Clear aliases: Yes, Unset nat.vars: Yes, Resolve symlinks: Yes; Follow directory symlinks: No
+. 2025-07-09 11:02:03.804 LS: ls -la, Ign LS warn: Yes, Scp1 Comp: No; Exit code 1 is error: No
+. 2025-07-09 11:02:03.804 SFTP Bugs: Auto,Auto
+. 2025-07-09 11:02:03.804 SFTP Server: default
+. 2025-07-09 11:02:03.804 Local directory: default, Remote directory: home, Update: Yes, Cache: Yes
+. 2025-07-09 11:02:03.804 Cache directory changes: Yes, Permanent: Yes
+. 2025-07-09 11:02:03.804 Recycle bin: Delete to: No, Overwritten to: No, Bin path: 
+. 2025-07-09 11:02:03.804 DST mode: Unix
+. 2025-07-09 11:02:03.804 --------------------------------------------------------------------------
+< 2025-07-09 11:02:03.804 Script: Searching for host...
+. 2025-07-09 11:02:03.804 Looking up host "192.168.0.10" for SSH connection
+. 2025-07-09 11:02:03.804 Connecting to 192.168.0.10 port 22
+. 2025-07-09 11:02:03.809 Connected to 192.168.0.10 (from 192.168.0.69:3244)
+< 2025-07-09 11:02:03.809 Script: Connecting to host...
+. 2025-07-09 11:02:03.809 We claim version: SSH-2.0-WinSCP_release_6.5.2
+. 2025-07-09 11:02:03.809 Connected to 192.168.0.10 (from 192.168.0.69:3244)
+. 2025-07-09 11:02:03.829 Remote version: SSH-2.0-OpenSSH_8.9p1 Ubuntu-3ubuntu0.13
+. 2025-07-09 11:02:03.829 Using SSH protocol version 2
+. 2025-07-09 11:02:03.834 Have a known host key of type ssh-ed25519
+. 2025-07-09 11:02:04.048 Enabling strict key exchange semantics
+. 2025-07-09 11:02:04.048 Doing NTRU Prime / Curve25519 hybrid key exchange, using hash SHA-512 (unaccelerated)
+. 2025-07-09 11:02:04.214 Server also has ecdsa-sha2-nistp256/rsa-sha2-512/rsa-sha2-256 host keys, but we don't know any of them
+. 2025-07-09 11:02:04.214 Host key fingerprint is:
+. 2025-07-09 11:02:04.214 ssh-ed25519 255 SHA256:jpSGJzJruc/a09yKIik/CNLRhLtKht8Oe0PjXhrLKNQ
+< 2025-07-09 11:02:04.214 Script: Authenticating...
+. 2025-07-09 11:02:04.214 Host key matches configured key fingerprint
+. 2025-07-09 11:02:04.214 Initialised AES-256 SDCTR (AES-NI accelerated) [aes256-ctr] outbound encryption
+. 2025-07-09 11:02:04.214 Initialised HMAC-SHA-256 outbound MAC algorithm
+. 2025-07-09 11:02:04.214 Initialised AES-256 SDCTR (AES-NI accelerated) [aes256-ctr] inbound encryption
+. 2025-07-09 11:02:04.214 Initialised HMAC-SHA-256 inbound MAC algorithm
+! 2025-07-09 11:02:04.294 Using username "admin".
+< 2025-07-09 11:02:04.294 Script: Using username "admin".
+. 2025-07-09 11:02:04.305 Server offered these authentication methods: publickey,password
+. 2025-07-09 11:02:04.305 Prompt (password, "SSH password", <no instructions>, "&Password: ")
+. 2025-07-09 11:02:04.305 Using stored password.
+< 2025-07-09 11:02:04.305 Script: Authenticating with pre-entered password.
+. 2025-07-09 11:02:04.305 Sent password
+. 2025-07-09 11:02:04.401 Access granted
+. 2025-07-09 11:02:04.401 Opening main session channel
+. 2025-07-09 11:02:05.009 Opened main channel
+. 2025-07-09 11:02:05.014 Started a shell/command
+< 2025-07-09 11:02:05.014 Script: Authenticated.
+. 2025-07-09 11:02:05.014 --------------------------------------------------------------------------
+. 2025-07-09 11:02:05.014 Using SFTP protocol.
+. 2025-07-09 11:02:05.014 Doing startup conversation with host.
+< 2025-07-09 11:02:05.014 Script: Starting the session...
+. 2025-07-09 11:02:05.014 Well known server, allowing SFTP version 6.
+> 2025-07-09 11:02:05.014 Type: SSH_FXP_INIT, Size: 5, Number: -1
+< 2025-07-09 11:02:05.024 Type: SSH_FXP_VERSION, Size: 238, Number: -1
+. 2025-07-09 11:02:05.024 SFTP version 3 negotiated.
+. 2025-07-09 11:02:05.024 Supports extension posix-rename@openssh.com="1"
+. 2025-07-09 11:02:05.024 Supports statvfs@openssh.com extension version 2
+. 2025-07-09 11:02:05.024 Unknown server extension fstatvfs@openssh.com="2"
+. 2025-07-09 11:02:05.024 Supports hardlink@openssh.com extension version 1
+. 2025-07-09 11:02:05.024 Unknown server extension fsync@openssh.com="1"
+. 2025-07-09 11:02:05.024 Unknown server extension lsetstat@openssh.com="1"
+. 2025-07-09 11:02:05.024 Supports limits@openssh.com extension version 1
+. 2025-07-09 11:02:05.024 Unknown server extension expand-path@openssh.com="1"
+. 2025-07-09 11:02:05.024 We believe the server has signed timestamps bug
+. 2025-07-09 11:02:05.024 We will use UTF-8 strings until server sends an invalid UTF-8 string as with SFTP version 3 and older UTF-8 strings are not mandatory
+> 2025-07-09 11:02:05.024 Type: SSH_FXP_EXTENDED, Size: 27, Number: 200
+< 2025-07-09 11:02:05.113 Type: SSH_FXP_EXTENDED_REPLY, Size: 37, Number: 200
+. 2025-07-09 11:02:05.113 Limiting packet size to server's limit of 262144 + 4 bytes
+. 2025-07-09 11:02:05.113 Getting current directory name.
+. 2025-07-09 11:02:05.113 Getting real path for '.'
+> 2025-07-09 11:02:05.113 Type: SSH_FXP_REALPATH, Size: 10, Number: 272
+< 2025-07-09 11:02:05.121 Type: SSH_FXP_NAME, Size: 43, Number: 272
+. 2025-07-09 11:02:05.121 Real path is '/home/admin'
+. 2025-07-09 11:02:05.121 Startup conversation with host finished.
+< 2025-07-09 11:02:05.121 Script: Session started.
+< 2025-07-09 11:02:05.121 Script: Active session: [1] admin@192.168.0.10
+> 2025-07-09 11:02:05.121 Script: cd /home/ict/robot_ai/docker 
+. 2025-07-09 11:02:05.121 Changing directory to "/home/ict/robot_ai/docker".
+. 2025-07-09 11:02:05.121 Getting real path for '/home/ict/robot_ai/docker'
+> 2025-07-09 11:02:05.121 Type: SSH_FXP_REALPATH, Size: 34, Number: 528
+< 2025-07-09 11:02:05.126 Type: SSH_FXP_NAME, Size: 71, Number: 528
+. 2025-07-09 11:02:05.126 Real path is '/home/ict/robot_ai/docker'
+. 2025-07-09 11:02:05.126 Trying to open directory "/home/ict/robot_ai/docker".
+> 2025-07-09 11:02:05.126 Type: SSH_FXP_LSTAT, Size: 34, Number: 775
+< 2025-07-09 11:02:05.131 Type: SSH_FXP_ATTRS, Size: 37, Number: 775
+. 2025-07-09 11:02:05.131 Getting current directory name.
+< 2025-07-09 11:02:05.131 Script: /home/ict/robot_ai/docker
+> 2025-07-09 11:02:05.131 Script: put "E:\home\ict\robot_ai\docker\install.sh" 
+. 2025-07-09 11:02:05.131 Copying 1 files/directories to remote directory "/home/ict/robot_ai/docker" - total size: 9,448
+. 2025-07-09 11:02:05.131   PrTime: Yes; PrRO: No; Rght: rw-r--r--; PrR: No (No); FnCs: N; RIC: 0001; Resume: S (102400); CalcS: No; Mask: 
+. 2025-07-09 11:02:05.131   TM: B; ClAr: No; RemEOF: No; RemBOM: No; CPS: 0; NewerOnly: No; EncryptNewFiles: Yes; ExcludeHiddenFiles: No; ExcludeEmptyDirectories: No; InclM: ; ResumeL: 0
+. 2025-07-09 11:02:05.131   AscM: *.*html; *.htm; *.txt; *.php; *.php3; *.cgi; *.c; *.cpp; *.h; *.pas; *.bas; *.tex; *.pl; *.js; .htaccess; *.xtml; *.css; *.cfg; *.ini; *.sh; *.xml
+. 2025-07-09 11:02:05.131 File: 'E:\home\ict\robot_ai\docker\install.sh' [2025-07-09T02:59:48.878Z] [9448]
+. 2025-07-09 11:02:05.131 Copying "E:\home\ict\robot_ai\docker\install.sh" to remote directory started.
+. 2025-07-09 11:02:05.131 Binary transfer mode selected.
+. 2025-07-09 11:02:05.131 Opening remote file.
+> 2025-07-09 11:02:05.131 Type: SSH_FXP_OPEN, Size: 61, Number: 1027
+< 2025-07-09 11:02:05.136 Type: SSH_FXP_HANDLE, Size: 13, Number: 1027
+> 2025-07-09 11:02:05.136 Type: SSH_FXP_WRITE, Size: 9473, Number: 1542
+> 2025-07-09 11:02:05.136 Type: SSH_FXP_CLOSE, Size: 13, Number: 1796
+> 2025-07-09 11:02:05.136 Type: SSH_FXP_SETSTAT, Size: 57, Number: 1289
+< 2025-07-09 11:02:05.146 Type: SSH_FXP_STATUS, Size: 24, Number: 1542
+< 2025-07-09 11:02:05.146 Status code: 0
+< 2025-07-09 11:02:05.146 Type: SSH_FXP_STATUS, Size: 24, Number: 1796
+< 2025-07-09 11:02:05.146 Status code: 0
+. 2025-07-09 11:02:05.146 Preserving timestamp [2025-07-09T02:59:48.000Z]
+< 2025-07-09 11:02:05.151 Type: SSH_FXP_STATUS, Size: 24, Number: 1289
+< 2025-07-09 11:02:05.151 Status code: 0
+. 2025-07-09 11:02:05.151 Transfer done: 'E:\home\ict\robot_ai\docker\install.sh' => '/home/ict/robot_ai/docker/install.sh' [9448]
+. 2025-07-09 11:02:05.151 Copying finished: Transferred: 9,448, Elapsed: 0:00:00, CPS: 472,400/s
+> 2025-07-09 11:02:05.151 Script: put "E:\home\ict\robot_ai\docker\docker_file\*" "/home/ict/robot_ai/docker/docker_file/" 
+. 2025-07-09 11:02:05.151 Copying 4 files/directories to remote directory "/home/ict/robot_ai/docker/docker_file/" - total size: 121,978,585
+. 2025-07-09 11:02:05.151   PrTime: Yes; PrRO: No; Rght: rw-r--r--; PrR: No (No); FnCs: N; RIC: 0001; Resume: S (102400); CalcS: No; Mask: 
+. 2025-07-09 11:02:05.151   TM: B; ClAr: No; RemEOF: No; RemBOM: No; CPS: 0; NewerOnly: No; EncryptNewFiles: Yes; ExcludeHiddenFiles: No; ExcludeEmptyDirectories: No; InclM: ; ResumeL: 0
+. 2025-07-09 11:02:05.151   AscM: *.*html; *.htm; *.txt; *.php; *.php3; *.cgi; *.c; *.cpp; *.h; *.pas; *.bas; *.tex; *.pl; *.js; .htaccess; *.xtml; *.css; *.cfg; *.ini; *.sh; *.xml
+. 2025-07-09 11:02:05.151 File: 'E:\home\ict\robot_ai\docker\docker_file\containerd.io_1.7.27-1_arm64.deb' [2025-06-24T03:16:19.091Z] [22753396]
+. 2025-07-09 11:02:05.151 Copying "E:\home\ict\robot_ai\docker\docker_file\containerd.io_1.7.27-1_arm64.deb" to remote directory started.
+. 2025-07-09 11:02:05.151 Binary transfer mode selected.
+. 2025-07-09 11:02:05.151 Checking existence of file.
+> 2025-07-09 11:02:05.151 Type: SSH_FXP_LSTAT, Size: 79, Number: 2055
+< 2025-07-09 11:02:05.229 Type: SSH_FXP_STATUS, Size: 29, Number: 2055
+< 2025-07-09 11:02:05.229 Status code: 2
+. 2025-07-09 11:02:05.229 Checking existence of partially transferred file.
+> 2025-07-09 11:02:05.229 Type: SSH_FXP_LSTAT, Size: 88, Number: 2311
+< 2025-07-09 11:02:05.234 Type: SSH_FXP_STATUS, Size: 29, Number: 2311
+< 2025-07-09 11:02:05.234 Status code: 2
+. 2025-07-09 11:02:05.234 Opening remote file.
+> 2025-07-09 11:02:05.234 Type: SSH_FXP_OPEN, Size: 104, Number: 2563
+< 2025-07-09 11:02:05.320 Type: SSH_FXP_HANDLE, Size: 13, Number: 2563
+> 2025-07-09 11:02:05.320 Type: SSH_FXP_WRITE, Size: 32761, Number: 3078
+. 2025-07-09 11:02:05.331 Skipped 14 SSH_FXP_WRITE packets
+< 2025-07-09 11:02:05.331 Type: SSH_FXP_STATUS, Size: 24, Number: 3078
+< 2025-07-09 11:02:05.331 Status code: 0
+. 2025-07-09 11:02:06.004 Increasing send buffer from 262144 to 524288
+. 2025-07-09 11:02:06.218 Skipped 681 SSH_FXP_WRITE and 674 SSH_FXP_STATUS packets
+> 2025-07-09 11:02:06.218 Type: SSH_FXP_CLOSE, Size: 13, Number: 181252
+. 2025-07-09 11:02:06.243 Skipped 21 SSH_FXP_STATUS packets
+< 2025-07-09 11:02:06.243 Type: SSH_FXP_STATUS, Size: 24, Number: 181252
+< 2025-07-09 11:02:06.243 Status code: 0
+> 2025-07-09 11:02:06.243 Type: SSH_FXP_RENAME, Size: 162, Number: 181522
+< 2025-07-09 11:02:06.250 Type: SSH_FXP_STATUS, Size: 24, Number: 181522
+< 2025-07-09 11:02:06.250 Status code: 0
+. 2025-07-09 11:02:06.250 Preserving timestamp [2025-06-24T03:16:19.000Z]
+> 2025-07-09 11:02:06.250 Type: SSH_FXP_SETSTAT, Size: 91, Number: 2825
+< 2025-07-09 11:02:06.256 Type: SSH_FXP_STATUS, Size: 24, Number: 2825
+< 2025-07-09 11:02:06.256 Status code: 0
+. 2025-07-09 11:02:06.256 Transfer done: 'E:\home\ict\robot_ai\docker\docker_file\containerd.io_1.7.27-1_arm64.deb' => '/home/ict/robot_ai/docker/docker_file/containerd.io_1.7.27-1_arm64.deb' [22753396]
+. 2025-07-09 11:02:06.256 File: 'E:\home\ict\robot_ai\docker\docker_file\docker-ce-cli_24.0.7-1~ubuntu.22.04~jammy_arm64.deb' [2025-06-24T02:18:45.069Z] [12038180]
+. 2025-07-09 11:02:06.256 Copying "E:\home\ict\robot_ai\docker\docker_file\docker-ce-cli_24.0.7-1~ubuntu.22.04~jammy_arm64.deb" to remote directory started.
+. 2025-07-09 11:02:06.256 Binary transfer mode selected.
+. 2025-07-09 11:02:06.256 Checking existence of file.
+> 2025-07-09 11:02:06.256 Type: SSH_FXP_LSTAT, Size: 98, Number: 181767
+< 2025-07-09 11:02:06.261 Type: SSH_FXP_STATUS, Size: 29, Number: 181767
+< 2025-07-09 11:02:06.261 Status code: 2
+. 2025-07-09 11:02:06.261 Checking existence of partially transferred file.
+> 2025-07-09 11:02:06.261 Type: SSH_FXP_LSTAT, Size: 107, Number: 182023
+< 2025-07-09 11:02:06.269 Type: SSH_FXP_STATUS, Size: 29, Number: 182023
+< 2025-07-09 11:02:06.269 Status code: 2
+. 2025-07-09 11:02:06.269 Opening remote file.
+> 2025-07-09 11:02:06.269 Type: SSH_FXP_OPEN, Size: 123, Number: 182275
+< 2025-07-09 11:02:06.276 Type: SSH_FXP_HANDLE, Size: 13, Number: 182275
+> 2025-07-09 11:02:06.276 Type: SSH_FXP_WRITE, Size: 32761, Number: 182790
+. 2025-07-09 11:02:06.289 Skipped 23 SSH_FXP_WRITE packets
+< 2025-07-09 11:02:06.289 Type: SSH_FXP_STATUS, Size: 24, Number: 182790
+< 2025-07-09 11:02:06.289 Status code: 0
+. 2025-07-09 11:02:06.813 Skipped 344 SSH_FXP_WRITE and 348 SSH_FXP_STATUS packets
+> 2025-07-09 11:02:06.813 Type: SSH_FXP_CLOSE, Size: 13, Number: 276996
+. 2025-07-09 11:02:06.828 Skipped 19 SSH_FXP_STATUS packets
+< 2025-07-09 11:02:06.828 Type: SSH_FXP_STATUS, Size: 24, Number: 276996
+< 2025-07-09 11:02:06.828 Status code: 0
+> 2025-07-09 11:02:06.828 Type: SSH_FXP_RENAME, Size: 200, Number: 277266
+< 2025-07-09 11:02:06.833 Type: SSH_FXP_STATUS, Size: 24, Number: 277266
+< 2025-07-09 11:02:06.833 Status code: 0
+. 2025-07-09 11:02:06.833 Preserving timestamp [2025-06-24T02:18:45.000Z]
+> 2025-07-09 11:02:06.833 Type: SSH_FXP_SETSTAT, Size: 110, Number: 182537
+< 2025-07-09 11:02:06.843 Type: SSH_FXP_STATUS, Size: 24, Number: 182537
+< 2025-07-09 11:02:06.843 Status code: 0
+. 2025-07-09 11:02:06.843 Transfer done: 'E:\home\ict\robot_ai\docker\docker_file\docker-ce-cli_24.0.7-1~ubuntu.22.04~jammy_arm64.deb' => '/home/ict/robot_ai/docker/docker_file/docker-ce-cli_24.0.7-1~ubuntu.22.04~jammy_arm64.deb' [12038180]
+. 2025-07-09 11:02:06.843 File: 'E:\home\ict\robot_ai\docker\docker_file\docker-ce_24.0.7-1~ubuntu.22.04~jammy_arm64.deb' [2025-06-24T02:18:40.169Z] [13889908]
+. 2025-07-09 11:02:06.843 Copying "E:\home\ict\robot_ai\docker\docker_file\docker-ce_24.0.7-1~ubuntu.22.04~jammy_arm64.deb" to remote directory started.
+. 2025-07-09 11:02:06.843 Binary transfer mode selected.
+. 2025-07-09 11:02:06.843 Checking existence of file.
+> 2025-07-09 11:02:06.843 Type: SSH_FXP_LSTAT, Size: 94, Number: 277511
+< 2025-07-09 11:02:06.968 Type: SSH_FXP_STATUS, Size: 29, Number: 277511
+< 2025-07-09 11:02:06.968 Status code: 2
+. 2025-07-09 11:02:06.968 Checking existence of partially transferred file.
+> 2025-07-09 11:02:06.968 Type: SSH_FXP_LSTAT, Size: 103, Number: 277767
+< 2025-07-09 11:02:06.974 Type: SSH_FXP_STATUS, Size: 29, Number: 277767
+< 2025-07-09 11:02:06.974 Status code: 2
+. 2025-07-09 11:02:06.974 Opening remote file.
+> 2025-07-09 11:02:06.974 Type: SSH_FXP_OPEN, Size: 119, Number: 278019
+< 2025-07-09 11:02:06.979 Type: SSH_FXP_HANDLE, Size: 13, Number: 278019
+> 2025-07-09 11:02:06.979 Type: SSH_FXP_WRITE, Size: 32761, Number: 278534
+. 2025-07-09 11:02:07.095 Increasing send buffer from 524288 to 1048576
+. 2025-07-09 11:02:07.105 Skipped 31 SSH_FXP_WRITE packets
+< 2025-07-09 11:02:07.105 Type: SSH_FXP_STATUS, Size: 24, Number: 278534
+< 2025-07-09 11:02:07.105 Status code: 0
+. 2025-07-09 11:02:08.156 Skipped 393 SSH_FXP_WRITE and 400 SSH_FXP_STATUS packets
+> 2025-07-09 11:02:08.156 Type: SSH_FXP_CLOSE, Size: 13, Number: 387332
+. 2025-07-09 11:02:08.219 Skipped 24 SSH_FXP_STATUS packets
+< 2025-07-09 11:02:08.219 Type: SSH_FXP_STATUS, Size: 24, Number: 387332
+< 2025-07-09 11:02:08.219 Status code: 0
+> 2025-07-09 11:02:08.219 Type: SSH_FXP_RENAME, Size: 192, Number: 387602
+< 2025-07-09 11:02:08.229 Type: SSH_FXP_STATUS, Size: 24, Number: 387602
+< 2025-07-09 11:02:08.229 Status code: 0
+. 2025-07-09 11:02:08.229 Preserving timestamp [2025-06-24T02:18:40.000Z]
+> 2025-07-09 11:02:08.229 Type: SSH_FXP_SETSTAT, Size: 106, Number: 278281
+< 2025-07-09 11:02:08.233 Type: SSH_FXP_STATUS, Size: 24, Number: 278281
+< 2025-07-09 11:02:08.233 Status code: 0
+. 2025-07-09 11:02:08.233 Transfer done: 'E:\home\ict\robot_ai\docker\docker_file\docker-ce_24.0.7-1~ubuntu.22.04~jammy_arm64.deb' => '/home/ict/robot_ai/docker/docker_file/docker-ce_24.0.7-1~ubuntu.22.04~jammy_arm64.deb' [13889908]
+. 2025-07-09 11:02:08.233 File: 'E:\home\ict\robot_ai\docker\docker_file\docker-compose-linux-aarch64' [2025-07-09T02:20:55.530Z] [73297101]
+. 2025-07-09 11:02:08.233 Copying "E:\home\ict\robot_ai\docker\docker_file\docker-compose-linux-aarch64" to remote directory started.
+. 2025-07-09 11:02:08.233 Binary transfer mode selected.
+. 2025-07-09 11:02:08.233 Checking existence of file.
+> 2025-07-09 11:02:08.233 Type: SSH_FXP_LSTAT, Size: 75, Number: 387847
+< 2025-07-09 11:02:08.243 Type: SSH_FXP_STATUS, Size: 29, Number: 387847
+< 2025-07-09 11:02:08.243 Status code: 2
+. 2025-07-09 11:02:08.243 Checking existence of partially transferred file.
+> 2025-07-09 11:02:08.243 Type: SSH_FXP_LSTAT, Size: 84, Number: 388103
+< 2025-07-09 11:02:08.248 Type: SSH_FXP_STATUS, Size: 29, Number: 388103
+< 2025-07-09 11:02:08.248 Status code: 2
+. 2025-07-09 11:02:08.248 Opening remote file.
+> 2025-07-09 11:02:08.248 Type: SSH_FXP_OPEN, Size: 100, Number: 388355
+< 2025-07-09 11:02:08.258 Type: SSH_FXP_HANDLE, Size: 13, Number: 388355
+> 2025-07-09 11:02:08.258 Type: SSH_FXP_WRITE, Size: 32761, Number: 388870
+. 2025-07-09 11:02:08.278 Skipped 47 SSH_FXP_WRITE packets
+< 2025-07-09 11:02:08.278 Type: SSH_FXP_STATUS, Size: 24, Number: 388870
+< 2025-07-09 11:02:08.278 Status code: 0
+. 2025-07-09 11:02:11.787 Skipped 2192 SSH_FXP_WRITE and 2205 SSH_FXP_STATUS packets
+> 2025-07-09 11:02:11.787 Type: SSH_FXP_CLOSE, Size: 13, Number: 962308
+. 2025-07-09 11:02:11.824 Skipped 34 SSH_FXP_STATUS packets
+< 2025-07-09 11:02:11.824 Type: SSH_FXP_STATUS, Size: 24, Number: 962308
+< 2025-07-09 11:02:11.824 Status code: 0
+> 2025-07-09 11:02:11.824 Type: SSH_FXP_RENAME, Size: 154, Number: 962578
+< 2025-07-09 11:02:11.829 Type: SSH_FXP_STATUS, Size: 24, Number: 962578
+< 2025-07-09 11:02:11.829 Status code: 0
+. 2025-07-09 11:02:11.829 Preserving timestamp [2025-07-09T02:20:55.000Z]
+> 2025-07-09 11:02:11.829 Type: SSH_FXP_SETSTAT, Size: 87, Number: 388617
+< 2025-07-09 11:02:11.834 Type: SSH_FXP_STATUS, Size: 24, Number: 388617
+< 2025-07-09 11:02:11.834 Status code: 0
+. 2025-07-09 11:02:11.834 Transfer done: 'E:\home\ict\robot_ai\docker\docker_file\docker-compose-linux-aarch64' => '/home/ict/robot_ai/docker/docker_file/docker-compose-linux-aarch64' [73297101]
+. 2025-07-09 11:02:11.834 Copying finished: Transferred: 121,978,585, Elapsed: 0:00:06, CPS: 18,252,070/s
+> 2025-07-09 11:02:11.834 Script: put "E:\home\ict\robot_ai\docker\Dockerfile" 
+. 2025-07-09 11:02:11.834 Copying 1 files/directories to remote directory "/home/ict/robot_ai/docker" - total size: 981
+. 2025-07-09 11:02:11.834   PrTime: Yes; PrRO: No; Rght: rw-r--r--; PrR: No (No); FnCs: N; RIC: 0001; Resume: S (102400); CalcS: No; Mask: 
+. 2025-07-09 11:02:11.834   TM: B; ClAr: No; RemEOF: No; RemBOM: No; CPS: 0; NewerOnly: No; EncryptNewFiles: Yes; ExcludeHiddenFiles: No; ExcludeEmptyDirectories: No; InclM: ; ResumeL: 0
+. 2025-07-09 11:02:11.834   AscM: *.*html; *.htm; *.txt; *.php; *.php3; *.cgi; *.c; *.cpp; *.h; *.pas; *.bas; *.tex; *.pl; *.js; .htaccess; *.xtml; *.css; *.cfg; *.ini; *.sh; *.xml
+. 2025-07-09 11:02:11.834 File: 'E:\home\ict\robot_ai\docker\Dockerfile' [2025-07-04T07:09:32.033Z] [981]
+. 2025-07-09 11:02:11.834 Copying "E:\home\ict\robot_ai\docker\Dockerfile" to remote directory started.
+. 2025-07-09 11:02:11.834 Binary transfer mode selected.
+. 2025-07-09 11:02:11.834 Opening remote file.
+> 2025-07-09 11:02:11.834 Type: SSH_FXP_OPEN, Size: 61, Number: 962819
+< 2025-07-09 11:02:11.840 Type: SSH_FXP_HANDLE, Size: 13, Number: 962819
+> 2025-07-09 11:02:11.840 Type: SSH_FXP_WRITE, Size: 1006, Number: 963334
+> 2025-07-09 11:02:11.840 Type: SSH_FXP_CLOSE, Size: 13, Number: 963588
+> 2025-07-09 11:02:11.840 Type: SSH_FXP_SETSTAT, Size: 57, Number: 963081
+< 2025-07-09 11:02:11.846 Type: SSH_FXP_STATUS, Size: 24, Number: 963334
+< 2025-07-09 11:02:11.846 Status code: 0
+< 2025-07-09 11:02:11.846 Type: SSH_FXP_STATUS, Size: 24, Number: 963588
+< 2025-07-09 11:02:11.846 Status code: 0
+. 2025-07-09 11:02:11.846 Preserving timestamp [2025-07-04T07:09:32.000Z]
+< 2025-07-09 11:02:11.846 Type: SSH_FXP_STATUS, Size: 24, Number: 963081
+< 2025-07-09 11:02:11.846 Status code: 0
+. 2025-07-09 11:02:11.846 Transfer done: 'E:\home\ict\robot_ai\docker\Dockerfile' => '/home/ict/robot_ai/docker/Dockerfile' [981]
+. 2025-07-09 11:02:11.846 Copying finished: Transferred: 981, Elapsed: 0:00:00, CPS: 81,750/s
+> 2025-07-09 11:02:11.846 Script: put "E:\home\ict\robot_ai\docker\docker-compose.yml" 
+. 2025-07-09 11:02:11.851 Copying 1 files/directories to remote directory "/home/ict/robot_ai/docker" - total size: 1,478
+. 2025-07-09 11:02:11.851   PrTime: Yes; PrRO: No; Rght: rw-r--r--; PrR: No (No); FnCs: N; RIC: 0001; Resume: S (102400); CalcS: No; Mask: 
+. 2025-07-09 11:02:11.851   TM: B; ClAr: No; RemEOF: No; RemBOM: No; CPS: 0; NewerOnly: No; EncryptNewFiles: Yes; ExcludeHiddenFiles: No; ExcludeEmptyDirectories: No; InclM: ; ResumeL: 0
+. 2025-07-09 11:02:11.851   AscM: *.*html; *.htm; *.txt; *.php; *.php3; *.cgi; *.c; *.cpp; *.h; *.pas; *.bas; *.tex; *.pl; *.js; .htaccess; *.xtml; *.css; *.cfg; *.ini; *.sh; *.xml
+. 2025-07-09 11:02:11.851 File: 'E:\home\ict\robot_ai\docker\docker-compose.yml' [2025-07-04T07:09:29.740Z] [1478]
+. 2025-07-09 11:02:11.851 Copying "E:\home\ict\robot_ai\docker\docker-compose.yml" to remote directory started.
+. 2025-07-09 11:02:11.851 Binary transfer mode selected.
+. 2025-07-09 11:02:11.851 Opening remote file.
+> 2025-07-09 11:02:11.851 Type: SSH_FXP_OPEN, Size: 69, Number: 963843
+< 2025-07-09 11:02:11.857 Type: SSH_FXP_HANDLE, Size: 13, Number: 963843
+> 2025-07-09 11:02:11.857 Type: SSH_FXP_WRITE, Size: 1503, Number: 964358
+> 2025-07-09 11:02:11.857 Type: SSH_FXP_CLOSE, Size: 13, Number: 964612
+> 2025-07-09 11:02:11.857 Type: SSH_FXP_SETSTAT, Size: 65, Number: 964105
+< 2025-07-09 11:02:11.861 Type: SSH_FXP_STATUS, Size: 24, Number: 964358
+< 2025-07-09 11:02:11.861 Status code: 0
+< 2025-07-09 11:02:11.861 Type: SSH_FXP_STATUS, Size: 24, Number: 964612
+< 2025-07-09 11:02:11.861 Status code: 0
+. 2025-07-09 11:02:11.861 Preserving timestamp [2025-07-04T07:09:29.000Z]
+< 2025-07-09 11:02:11.870 Type: SSH_FXP_STATUS, Size: 24, Number: 964105
+< 2025-07-09 11:02:11.870 Status code: 0
+. 2025-07-09 11:02:11.870 Transfer done: 'E:\home\ict\robot_ai\docker\docker-compose.yml' => '/home/ict/robot_ai/docker/docker-compose.yml' [1478]
+. 2025-07-09 11:02:11.870 Copying finished: Transferred: 1,478, Elapsed: 0:00:00, CPS: 77,789/s
+> 2025-07-09 11:02:11.870 Script: exit 
+. 2025-07-09 11:02:11.870 Script: Exit code: 0
+. 2025-07-09 11:02:11.870 Closing connection.
+. 2025-07-09 11:02:11.870 Sending special code: 1
+. 2025-07-09 11:02:11.878 Session sent command exit status 0
+. 2025-07-09 11:02:11.878 Main session channel closed
+. 2025-07-09 11:02:11.878 All channels closed
+. 2025-08-25 10:29:17.587 --------------------------------------------------------------------------
+. 2025-08-25 10:29:17.587 WinSCP Version 6.5.2 (Build 16354 2025-06-18) (OS 10.0.19044 – Windows 10 Enterprise LTSC 2021)
+. 2025-08-25 10:29:17.587 Configuration: nul
+. 2025-08-25 10:29:17.588 Log level: Normal
+. 2025-08-25 10:29:17.588 Local account: ZHAOSEO\Administrator
+. 2025-08-25 10:29:17.588 Working directory: E:\home\ict\robot_ai\docker
+. 2025-08-25 10:29:17.588 Process ID: 14032
+. 2025-08-25 10:29:17.596 Ancestor processes: cmd, explorer, ...
+. 2025-08-25 10:29:17.596 Command-line: "D:\Program Files (x86)\WinSCP\WinSCP.exe"  /script=winscp_script.txt /log=winscp_log.txt /ini=nul
+. 2025-08-25 10:29:17.596 Time zone: Current: GMT+8 (中国标准时间), No DST
+. 2025-08-25 10:29:17.596 Login time: 2025年8月25日 10:29:17
+. 2025-08-25 10:29:17.596 --------------------------------------------------------------------------
+. 2025-08-25 10:29:17.596 Script: Retrospectively logging previous script records:
+> 2025-08-25 10:29:17.596 Script: open sftp://admin:***@192.168.0.10/ -hostkey="ssh-ed25519 255 jpSGJzJruc/a09yKIik/CNLRhLtKht8Oe0PjXhrLKNQ"
+. 2025-08-25 10:29:17.596 --------------------------------------------------------------------------
+. 2025-08-25 10:29:17.596 Session name: admin@192.168.0.10 (Ad-Hoc site)
+. 2025-08-25 10:29:17.596 Host name: 192.168.0.10 (Port: 22)
+. 2025-08-25 10:29:17.596 User name: admin (Password: Yes, Key file: No, Passphrase: No)
+. 2025-08-25 10:29:17.596 Tunnel: No
+. 2025-08-25 10:29:17.596 Transfer Protocol: SFTP
+. 2025-08-25 10:29:17.596 Ping type: Off, Ping interval: 30 sec; Timeout: 15 sec
+. 2025-08-25 10:29:17.596 Disable Nagle: No
+. 2025-08-25 10:29:17.596 Proxy: None
+. 2025-08-25 10:29:17.596 Send buffer: 262144
+. 2025-08-25 10:29:17.596 Compression: No
+. 2025-08-25 10:29:17.596 Bypass authentication: No
+. 2025-08-25 10:29:17.596 Try agent: Yes; Agent forwarding: No; KI: Yes; GSSAPI: Yes
+. 2025-08-25 10:29:17.596 GSSAPI: KEX: No; Forwarding: No; Libs: gssapi32,sspi,custom; Custom: 
+. 2025-08-25 10:29:17.596 Ciphers: aes,chacha20,aesgcm,3des,WARN,des,blowfish,arcfour; Ssh2DES: No
+. 2025-08-25 10:29:17.596 KEX: ntru-curve25519,mlkem-curve25519,mlkem-nist,ecdh,dh-gex-sha1,dh-group18-sha512,dh-group17-sha512,dh-group16-sha512,dh-group15-sha512,dh-group14-sha1,rsa,WARN,dh-group1-sha1
+. 2025-08-25 10:29:17.596 SSH Bugs: Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto
+. 2025-08-25 10:29:17.596 Simple channel: Yes
+. 2025-08-25 10:29:17.596 Return code variable: Autodetect; Lookup user groups: Auto
+. 2025-08-25 10:29:17.596 Shell: default
+. 2025-08-25 10:29:17.596 EOL: LF, UTF: Auto
+. 2025-08-25 10:29:17.596 Clear aliases: Yes, Unset nat.vars: Yes, Resolve symlinks: Yes; Follow directory symlinks: No
+. 2025-08-25 10:29:17.596 LS: ls -la, Ign LS warn: Yes, Scp1 Comp: No; Exit code 1 is error: No
+. 2025-08-25 10:29:17.596 SFTP Bugs: Auto,Auto
+. 2025-08-25 10:29:17.596 SFTP Server: default
+. 2025-08-25 10:29:17.596 Local directory: default, Remote directory: home, Update: Yes, Cache: Yes
+. 2025-08-25 10:29:17.596 Cache directory changes: Yes, Permanent: Yes
+. 2025-08-25 10:29:17.596 Recycle bin: Delete to: No, Overwritten to: No, Bin path: 
+. 2025-08-25 10:29:17.596 DST mode: Unix
+. 2025-08-25 10:29:17.596 --------------------------------------------------------------------------
+< 2025-08-25 10:29:17.596 Script: Searching for host...
+. 2025-08-25 10:29:17.598 Looking up host "192.168.0.10" for SSH connection
+. 2025-08-25 10:29:17.598 Connecting to 192.168.0.10 port 22
+. 2025-08-25 10:29:17.606 Connected to 192.168.0.10 (from 192.168.0.15:59191)
+< 2025-08-25 10:29:17.606 Script: Connecting to host...
+. 2025-08-25 10:29:17.607 We claim version: SSH-2.0-WinSCP_release_6.5.2
+. 2025-08-25 10:29:17.607 Connected to 192.168.0.10 (from 192.168.0.15:59191)
+. 2025-08-25 10:29:17.641 Remote version: SSH-2.0-OpenSSH_8.9p1 Ubuntu-3ubuntu0.13
+. 2025-08-25 10:29:17.641 Using SSH protocol version 2
+. 2025-08-25 10:29:17.643 Have a known host key of type ssh-ed25519
+. 2025-08-25 10:29:17.649 Enabling strict key exchange semantics
+. 2025-08-25 10:29:17.649 Doing NTRU Prime / Curve25519 hybrid key exchange, using hash SHA-512 (unaccelerated)
+. 2025-08-25 10:29:17.773 Server also has ecdsa-sha2-nistp256/rsa-sha2-512/rsa-sha2-256 host keys, but we don't know any of them
+. 2025-08-25 10:29:17.773 Host key fingerprint is:
+. 2025-08-25 10:29:17.773 ssh-ed25519 255 SHA256:jpSGJzJruc/a09yKIik/CNLRhLtKht8Oe0PjXhrLKNQ
+< 2025-08-25 10:29:17.773 Script: Authenticating...
+. 2025-08-25 10:29:17.773 Host key matches configured key fingerprint
+. 2025-08-25 10:29:17.773 Initialised AES-256 SDCTR (AES-NI accelerated) [aes256-ctr] outbound encryption
+. 2025-08-25 10:29:17.773 Initialised HMAC-SHA-256 outbound MAC algorithm
+. 2025-08-25 10:29:17.773 Initialised AES-256 SDCTR (AES-NI accelerated) [aes256-ctr] inbound encryption
+. 2025-08-25 10:29:17.773 Initialised HMAC-SHA-256 inbound MAC algorithm
+! 2025-08-25 10:29:17.780 Using username "admin".
+< 2025-08-25 10:29:17.780 Script: Using username "admin".
+. 2025-08-25 10:29:17.792 Server offered these authentication methods: publickey,password
+. 2025-08-25 10:29:17.792 Prompt (password, "SSH password", <no instructions>, "&Password: ")
+. 2025-08-25 10:29:17.792 Using stored password.
+< 2025-08-25 10:29:17.792 Script: Authenticating with pre-entered password.
+. 2025-08-25 10:29:17.792 Sent password
+. 2025-08-25 10:29:17.886 Access granted
+. 2025-08-25 10:29:17.887 Opening main session channel
+. 2025-08-25 10:29:18.249 Opened main channel
+. 2025-08-25 10:29:18.257 Started a shell/command
+< 2025-08-25 10:29:18.257 Script: Authenticated.
+. 2025-08-25 10:29:18.257 --------------------------------------------------------------------------
+. 2025-08-25 10:29:18.261 Using SFTP protocol.
+. 2025-08-25 10:29:18.261 Doing startup conversation with host.
+< 2025-08-25 10:29:18.261 Script: Starting the session...
+. 2025-08-25 10:29:18.261 Well known server, allowing SFTP version 6.
+> 2025-08-25 10:29:18.261 Type: SSH_FXP_INIT, Size: 5, Number: -1
+< 2025-08-25 10:29:18.274 Type: SSH_FXP_VERSION, Size: 238, Number: -1
+. 2025-08-25 10:29:18.274 SFTP version 3 negotiated.
+. 2025-08-25 10:29:18.275 Supports extension posix-rename@openssh.com="1"
+. 2025-08-25 10:29:18.275 Supports statvfs@openssh.com extension version 2
+. 2025-08-25 10:29:18.275 Unknown server extension fstatvfs@openssh.com="2"
+. 2025-08-25 10:29:18.275 Supports hardlink@openssh.com extension version 1
+. 2025-08-25 10:29:18.275 Unknown server extension fsync@openssh.com="1"
+. 2025-08-25 10:29:18.275 Unknown server extension lsetstat@openssh.com="1"
+. 2025-08-25 10:29:18.275 Supports limits@openssh.com extension version 1
+. 2025-08-25 10:29:18.275 Unknown server extension expand-path@openssh.com="1"
+. 2025-08-25 10:29:18.275 We believe the server has signed timestamps bug
+. 2025-08-25 10:29:18.275 We will use UTF-8 strings until server sends an invalid UTF-8 string as with SFTP version 3 and older UTF-8 strings are not mandatory
+> 2025-08-25 10:29:18.275 Type: SSH_FXP_EXTENDED, Size: 27, Number: 200
+< 2025-08-25 10:29:18.280 Type: SSH_FXP_EXTENDED_REPLY, Size: 37, Number: 200
+. 2025-08-25 10:29:18.281 Limiting packet size to server's limit of 262144 + 4 bytes
+. 2025-08-25 10:29:18.282 Getting current directory name.
+. 2025-08-25 10:29:18.282 Getting real path for '.'
+> 2025-08-25 10:29:18.283 Type: SSH_FXP_REALPATH, Size: 10, Number: 272
+< 2025-08-25 10:29:18.291 Type: SSH_FXP_NAME, Size: 43, Number: 272
+. 2025-08-25 10:29:18.291 Real path is '/home/admin'
+. 2025-08-25 10:29:18.291 Startup conversation with host finished.
+< 2025-08-25 10:29:18.291 Script: Session started.
+< 2025-08-25 10:29:18.291 Script: Active session: [1] admin@192.168.0.10
+> 2025-08-25 10:29:18.291 Script: cd /home/ict/robot_ai/docker 
+. 2025-08-25 10:29:18.291 Changing directory to "/home/ict/robot_ai/docker".
+. 2025-08-25 10:29:18.291 Getting real path for '/home/ict/robot_ai/docker'
+> 2025-08-25 10:29:18.291 Type: SSH_FXP_REALPATH, Size: 34, Number: 528
+< 2025-08-25 10:29:18.301 Type: SSH_FXP_NAME, Size: 71, Number: 528
+. 2025-08-25 10:29:18.301 Real path is '/home/ict/robot_ai/docker'
+. 2025-08-25 10:29:18.301 Trying to open directory "/home/ict/robot_ai/docker".
+> 2025-08-25 10:29:18.301 Type: SSH_FXP_LSTAT, Size: 34, Number: 775
+< 2025-08-25 10:29:18.306 Type: SSH_FXP_ATTRS, Size: 37, Number: 775
+. 2025-08-25 10:29:18.306 Getting current directory name.
+< 2025-08-25 10:29:18.306 Script: /home/ict/robot_ai/docker
+> 2025-08-25 10:29:18.306 Script: put "E:\home\ict\robot_ai\docker\install.sh" 
+. 2025-08-25 10:29:18.307 Copying 1 files/directories to remote directory "/home/ict/robot_ai/docker" - total size: 9,448
+. 2025-08-25 10:29:18.307   PrTime: Yes; PrRO: No; Rght: rw-r--r--; PrR: No (No); FnCs: N; RIC: 0001; Resume: S (102400); CalcS: No; Mask: 
+. 2025-08-25 10:29:18.307   TM: B; ClAr: No; RemEOF: No; RemBOM: No; CPS: 0; NewerOnly: No; EncryptNewFiles: Yes; ExcludeHiddenFiles: No; ExcludeEmptyDirectories: No; InclM: ; ResumeL: 0
+. 2025-08-25 10:29:18.308   AscM: *.*html; *.htm; *.txt; *.php; *.php3; *.cgi; *.c; *.cpp; *.h; *.pas; *.bas; *.tex; *.pl; *.js; .htaccess; *.xtml; *.css; *.cfg; *.ini; *.sh; *.xml
+. 2025-08-25 10:29:18.308 File: 'E:\home\ict\robot_ai\docker\install.sh' [2025-08-23T10:06:39.608Z] [9448]
+. 2025-08-25 10:29:18.309 Copying "E:\home\ict\robot_ai\docker\install.sh" to remote directory started.
+. 2025-08-25 10:29:18.309 Binary transfer mode selected.
+. 2025-08-25 10:29:18.309 Opening remote file.
+> 2025-08-25 10:29:18.309 Type: SSH_FXP_OPEN, Size: 61, Number: 1027
+< 2025-08-25 10:29:18.316 Type: SSH_FXP_HANDLE, Size: 13, Number: 1027
+> 2025-08-25 10:29:18.316 Type: SSH_FXP_WRITE, Size: 9473, Number: 1542
+> 2025-08-25 10:29:18.316 Type: SSH_FXP_CLOSE, Size: 13, Number: 1796
+> 2025-08-25 10:29:18.316 Type: SSH_FXP_SETSTAT, Size: 57, Number: 1289
+< 2025-08-25 10:29:18.325 Type: SSH_FXP_STATUS, Size: 24, Number: 1542
+< 2025-08-25 10:29:18.325 Status code: 0
+< 2025-08-25 10:29:18.325 Type: SSH_FXP_STATUS, Size: 24, Number: 1796
+< 2025-08-25 10:29:18.325 Status code: 0
+. 2025-08-25 10:29:18.325 Preserving timestamp [2025-08-23T10:06:39.000Z]
+< 2025-08-25 10:29:18.329 Type: SSH_FXP_STATUS, Size: 24, Number: 1289
+< 2025-08-25 10:29:18.329 Status code: 0
+. 2025-08-25 10:29:18.329 Transfer done: 'E:\home\ict\robot_ai\docker\install.sh' => '/home/ict/robot_ai/docker/install.sh' [9448]
+. 2025-08-25 10:29:18.330 Copying finished: Transferred: 9,448, Elapsed: 0:00:00, CPS: 410,782/s
+> 2025-08-25 10:29:18.330 Script: put "E:\home\ict\robot_ai\docker\docker_file\*" "/home/ict/robot_ai/docker/docker_file/" 
+. 2025-08-25 10:29:18.330 Copying 4 files/directories to remote directory "/home/ict/robot_ai/docker/docker_file/" - total size: 121,978,585
+. 2025-08-25 10:29:18.330   PrTime: Yes; PrRO: No; Rght: rw-r--r--; PrR: No (No); FnCs: N; RIC: 0001; Resume: S (102400); CalcS: No; Mask: 
+. 2025-08-25 10:29:18.330   TM: B; ClAr: No; RemEOF: No; RemBOM: No; CPS: 0; NewerOnly: No; EncryptNewFiles: Yes; ExcludeHiddenFiles: No; ExcludeEmptyDirectories: No; InclM: ; ResumeL: 0
+. 2025-08-25 10:29:18.330   AscM: *.*html; *.htm; *.txt; *.php; *.php3; *.cgi; *.c; *.cpp; *.h; *.pas; *.bas; *.tex; *.pl; *.js; .htaccess; *.xtml; *.css; *.cfg; *.ini; *.sh; *.xml
+. 2025-08-25 10:29:18.331 File: 'E:\home\ict\robot_ai\docker\docker_file\containerd.io_1.7.27-1_arm64.deb' [2025-08-23T10:06:38.886Z] [22753396]
+. 2025-08-25 10:29:18.331 Copying "E:\home\ict\robot_ai\docker\docker_file\containerd.io_1.7.27-1_arm64.deb" to remote directory started.
+. 2025-08-25 10:29:18.331 Binary transfer mode selected.
+. 2025-08-25 10:29:18.331 Checking existence of file.
+> 2025-08-25 10:29:18.331 Type: SSH_FXP_LSTAT, Size: 79, Number: 2055
+< 2025-08-25 10:29:18.336 Type: SSH_FXP_STATUS, Size: 29, Number: 2055
+< 2025-08-25 10:29:18.336 Status code: 2
+. 2025-08-25 10:29:18.336 Checking existence of partially transferred file.
+> 2025-08-25 10:29:18.336 Type: SSH_FXP_LSTAT, Size: 88, Number: 2311
+< 2025-08-25 10:29:18.343 Type: SSH_FXP_STATUS, Size: 29, Number: 2311
+< 2025-08-25 10:29:18.343 Status code: 2
+. 2025-08-25 10:29:18.343 Opening remote file.
+> 2025-08-25 10:29:18.343 Type: SSH_FXP_OPEN, Size: 104, Number: 2563
+< 2025-08-25 10:29:18.349 Type: SSH_FXP_HANDLE, Size: 13, Number: 2563
+> 2025-08-25 10:29:18.349 Type: SSH_FXP_WRITE, Size: 32761, Number: 3078
+. 2025-08-25 10:29:18.364 Skipped 14 SSH_FXP_WRITE packets
+< 2025-08-25 10:29:18.364 Type: SSH_FXP_STATUS, Size: 24, Number: 3078
+< 2025-08-25 10:29:18.365 Status code: 0
+. 2025-08-25 10:29:18.600 Increasing send buffer from 262144 to 524288
+. 2025-08-25 10:29:19.306 Skipped 681 SSH_FXP_WRITE and 669 SSH_FXP_STATUS packets
+> 2025-08-25 10:29:19.306 Type: SSH_FXP_CLOSE, Size: 13, Number: 181252
+. 2025-08-25 10:29:19.327 Skipped 26 SSH_FXP_STATUS packets
+< 2025-08-25 10:29:19.327 Type: SSH_FXP_STATUS, Size: 24, Number: 181252
+< 2025-08-25 10:29:19.327 Status code: 0
+> 2025-08-25 10:29:19.327 Type: SSH_FXP_RENAME, Size: 162, Number: 181522
+< 2025-08-25 10:29:19.334 Type: SSH_FXP_STATUS, Size: 24, Number: 181522
+< 2025-08-25 10:29:19.334 Status code: 0
+. 2025-08-25 10:29:19.334 Preserving timestamp [2025-08-23T10:06:38.000Z]
+> 2025-08-25 10:29:19.334 Type: SSH_FXP_SETSTAT, Size: 91, Number: 2825
+< 2025-08-25 10:29:19.341 Type: SSH_FXP_STATUS, Size: 24, Number: 2825
+< 2025-08-25 10:29:19.341 Status code: 0
+. 2025-08-25 10:29:19.341 Transfer done: 'E:\home\ict\robot_ai\docker\docker_file\containerd.io_1.7.27-1_arm64.deb' => '/home/ict/robot_ai/docker/docker_file/containerd.io_1.7.27-1_arm64.deb' [22753396]
+. 2025-08-25 10:29:19.341 File: 'E:\home\ict\robot_ai\docker\docker_file\docker-ce-cli_24.0.7-1~ubuntu.22.04~jammy_arm64.deb' [2025-08-23T10:06:38.965Z] [12038180]
+. 2025-08-25 10:29:19.341 Copying "E:\home\ict\robot_ai\docker\docker_file\docker-ce-cli_24.0.7-1~ubuntu.22.04~jammy_arm64.deb" to remote directory started.
+. 2025-08-25 10:29:19.341 Binary transfer mode selected.
+. 2025-08-25 10:29:19.341 Checking existence of file.
+> 2025-08-25 10:29:19.341 Type: SSH_FXP_LSTAT, Size: 98, Number: 181767
+< 2025-08-25 10:29:19.348 Type: SSH_FXP_STATUS, Size: 29, Number: 181767
+< 2025-08-25 10:29:19.348 Status code: 2
+. 2025-08-25 10:29:19.348 Checking existence of partially transferred file.
+> 2025-08-25 10:29:19.348 Type: SSH_FXP_LSTAT, Size: 107, Number: 182023
+< 2025-08-25 10:29:19.354 Type: SSH_FXP_STATUS, Size: 29, Number: 182023
+< 2025-08-25 10:29:19.354 Status code: 2
+. 2025-08-25 10:29:19.354 Opening remote file.
+> 2025-08-25 10:29:19.354 Type: SSH_FXP_OPEN, Size: 123, Number: 182275
+< 2025-08-25 10:29:19.360 Type: SSH_FXP_HANDLE, Size: 13, Number: 182275
+> 2025-08-25 10:29:19.361 Type: SSH_FXP_WRITE, Size: 32761, Number: 182790
+. 2025-08-25 10:29:19.371 Skipped 23 SSH_FXP_WRITE packets
+< 2025-08-25 10:29:19.371 Type: SSH_FXP_STATUS, Size: 24, Number: 182790
+< 2025-08-25 10:29:19.371 Status code: 0
+. 2025-08-25 10:29:19.600 Increasing send buffer from 524288 to 1048576
+. 2025-08-25 10:29:19.790 Skipped 344 SSH_FXP_WRITE and 326 SSH_FXP_STATUS packets
+> 2025-08-25 10:29:19.790 Type: SSH_FXP_CLOSE, Size: 13, Number: 276996
+. 2025-08-25 10:29:19.823 Skipped 41 SSH_FXP_STATUS packets
+< 2025-08-25 10:29:19.823 Type: SSH_FXP_STATUS, Size: 24, Number: 276996
+< 2025-08-25 10:29:19.823 Status code: 0
+> 2025-08-25 10:29:19.823 Type: SSH_FXP_RENAME, Size: 200, Number: 277266
+< 2025-08-25 10:29:19.832 Type: SSH_FXP_STATUS, Size: 24, Number: 277266
+< 2025-08-25 10:29:19.832 Status code: 0
+. 2025-08-25 10:29:19.832 Preserving timestamp [2025-08-23T10:06:38.000Z]
+> 2025-08-25 10:29:19.832 Type: SSH_FXP_SETSTAT, Size: 110, Number: 182537
+< 2025-08-25 10:29:19.838 Type: SSH_FXP_STATUS, Size: 24, Number: 182537
+< 2025-08-25 10:29:19.838 Status code: 0
+. 2025-08-25 10:29:19.838 Transfer done: 'E:\home\ict\robot_ai\docker\docker_file\docker-ce-cli_24.0.7-1~ubuntu.22.04~jammy_arm64.deb' => '/home/ict/robot_ai/docker/docker_file/docker-ce-cli_24.0.7-1~ubuntu.22.04~jammy_arm64.deb' [12038180]
+. 2025-08-25 10:29:19.838 File: 'E:\home\ict\robot_ai\docker\docker_file\docker-ce_24.0.7-1~ubuntu.22.04~jammy_arm64.deb' [2025-08-23T10:06:39.070Z] [13889908]
+. 2025-08-25 10:29:19.838 Copying "E:\home\ict\robot_ai\docker\docker_file\docker-ce_24.0.7-1~ubuntu.22.04~jammy_arm64.deb" to remote directory started.
+. 2025-08-25 10:29:19.838 Binary transfer mode selected.
+. 2025-08-25 10:29:19.838 Checking existence of file.
+> 2025-08-25 10:29:19.838 Type: SSH_FXP_LSTAT, Size: 94, Number: 277511
+< 2025-08-25 10:29:19.847 Type: SSH_FXP_STATUS, Size: 29, Number: 277511
+< 2025-08-25 10:29:19.847 Status code: 2
+. 2025-08-25 10:29:19.847 Checking existence of partially transferred file.
+> 2025-08-25 10:29:19.847 Type: SSH_FXP_LSTAT, Size: 103, Number: 277767
+< 2025-08-25 10:29:19.859 Type: SSH_FXP_STATUS, Size: 29, Number: 277767
+< 2025-08-25 10:29:19.859 Status code: 2
+. 2025-08-25 10:29:19.859 Opening remote file.
+> 2025-08-25 10:29:19.859 Type: SSH_FXP_OPEN, Size: 119, Number: 278019
+< 2025-08-25 10:29:19.872 Type: SSH_FXP_HANDLE, Size: 13, Number: 278019
+> 2025-08-25 10:29:19.872 Type: SSH_FXP_WRITE, Size: 32761, Number: 278534
+. 2025-08-25 10:29:19.884 Skipped 40 SSH_FXP_WRITE packets
+< 2025-08-25 10:29:19.884 Type: SSH_FXP_STATUS, Size: 24, Number: 278534
+< 2025-08-25 10:29:19.884 Status code: 0
+. 2025-08-25 10:29:20.340 Skipped 384 SSH_FXP_WRITE and 385 SSH_FXP_STATUS packets
+> 2025-08-25 10:29:20.340 Type: SSH_FXP_CLOSE, Size: 13, Number: 387332
+. 2025-08-25 10:29:20.379 Skipped 39 SSH_FXP_STATUS packets
+< 2025-08-25 10:29:20.379 Type: SSH_FXP_STATUS, Size: 24, Number: 387332
+< 2025-08-25 10:29:20.379 Status code: 0
+> 2025-08-25 10:29:20.379 Type: SSH_FXP_RENAME, Size: 192, Number: 387602
+< 2025-08-25 10:29:20.385 Type: SSH_FXP_STATUS, Size: 24, Number: 387602
+< 2025-08-25 10:29:20.385 Status code: 0
+. 2025-08-25 10:29:20.385 Preserving timestamp [2025-08-23T10:06:39.000Z]
+> 2025-08-25 10:29:20.385 Type: SSH_FXP_SETSTAT, Size: 106, Number: 278281
+< 2025-08-25 10:29:20.392 Type: SSH_FXP_STATUS, Size: 24, Number: 278281
+< 2025-08-25 10:29:20.392 Status code: 0
+. 2025-08-25 10:29:20.392 Transfer done: 'E:\home\ict\robot_ai\docker\docker_file\docker-ce_24.0.7-1~ubuntu.22.04~jammy_arm64.deb' => '/home/ict/robot_ai/docker/docker_file/docker-ce_24.0.7-1~ubuntu.22.04~jammy_arm64.deb' [13889908]
+. 2025-08-25 10:29:20.392 File: 'E:\home\ict\robot_ai\docker\docker_file\docker-compose-linux-aarch64' [2025-08-23T10:06:39.592Z] [73297101]
+. 2025-08-25 10:29:20.393 Copying "E:\home\ict\robot_ai\docker\docker_file\docker-compose-linux-aarch64" to remote directory started.
+. 2025-08-25 10:29:20.393 Binary transfer mode selected.
+. 2025-08-25 10:29:20.393 Checking existence of file.
+> 2025-08-25 10:29:20.393 Type: SSH_FXP_LSTAT, Size: 75, Number: 387847
+< 2025-08-25 10:29:20.398 Type: SSH_FXP_STATUS, Size: 29, Number: 387847
+< 2025-08-25 10:29:20.399 Status code: 2
+. 2025-08-25 10:29:20.399 Checking existence of partially transferred file.
+> 2025-08-25 10:29:20.399 Type: SSH_FXP_LSTAT, Size: 84, Number: 388103
+< 2025-08-25 10:29:20.404 Type: SSH_FXP_STATUS, Size: 29, Number: 388103
+< 2025-08-25 10:29:20.405 Status code: 2
+. 2025-08-25 10:29:20.405 Opening remote file.
+> 2025-08-25 10:29:20.405 Type: SSH_FXP_OPEN, Size: 100, Number: 388355
+< 2025-08-25 10:29:20.412 Type: SSH_FXP_HANDLE, Size: 13, Number: 388355
+> 2025-08-25 10:29:20.412 Type: SSH_FXP_WRITE, Size: 32761, Number: 388870
+. 2025-08-25 10:29:20.428 Skipped 32 SSH_FXP_WRITE packets
+< 2025-08-25 10:29:20.428 Type: SSH_FXP_STATUS, Size: 24, Number: 388870
+< 2025-08-25 10:29:20.429 Status code: 0
+. 2025-08-25 10:29:20.616 Increasing send buffer from 1048576 to 2097152
+. 2025-08-25 10:29:22.609 Increasing send buffer from 2097152 to 4194304
+. 2025-08-25 10:29:23.151 Skipped 2207 SSH_FXP_WRITE and 2176 SSH_FXP_STATUS packets
+> 2025-08-25 10:29:23.151 Type: SSH_FXP_CLOSE, Size: 13, Number: 962308
+. 2025-08-25 10:29:23.241 Skipped 63 SSH_FXP_STATUS packets
+< 2025-08-25 10:29:23.241 Type: SSH_FXP_STATUS, Size: 24, Number: 962308
+< 2025-08-25 10:29:23.241 Status code: 0
+> 2025-08-25 10:29:23.241 Type: SSH_FXP_RENAME, Size: 154, Number: 962578
+< 2025-08-25 10:29:23.248 Type: SSH_FXP_STATUS, Size: 24, Number: 962578
+< 2025-08-25 10:29:23.248 Status code: 0
+. 2025-08-25 10:29:23.248 Preserving timestamp [2025-08-23T10:06:39.000Z]
+> 2025-08-25 10:29:23.248 Type: SSH_FXP_SETSTAT, Size: 87, Number: 388617
+< 2025-08-25 10:29:23.254 Type: SSH_FXP_STATUS, Size: 24, Number: 388617
+< 2025-08-25 10:29:23.254 Status code: 0
+. 2025-08-25 10:29:23.254 Transfer done: 'E:\home\ict\robot_ai\docker\docker_file\docker-compose-linux-aarch64' => '/home/ict/robot_ai/docker/docker_file/docker-compose-linux-aarch64' [73297101]
+. 2025-08-25 10:29:23.254 Copying finished: Transferred: 121,978,585, Elapsed: 0:00:04, CPS: 24,772,255/s
+> 2025-08-25 10:29:23.255 Script: put "E:\home\ict\robot_ai\docker\Dockerfile" 
+. 2025-08-25 10:29:23.255 Copying 1 files/directories to remote directory "/home/ict/robot_ai/docker" - total size: 0
+. 2025-08-25 10:29:23.256   PrTime: Yes; PrRO: No; Rght: rw-r--r--; PrR: No (No); FnCs: N; RIC: 0001; Resume: S (102400); CalcS: No; Mask: 
+. 2025-08-25 10:29:23.256   TM: B; ClAr: No; RemEOF: No; RemBOM: No; CPS: 0; NewerOnly: No; EncryptNewFiles: Yes; ExcludeHiddenFiles: No; ExcludeEmptyDirectories: No; InclM: ; ResumeL: 0
+. 2025-08-25 10:29:23.256   AscM: *.*html; *.htm; *.txt; *.php; *.php3; *.cgi; *.c; *.cpp; *.h; *.pas; *.bas; *.tex; *.pl; *.js; .htaccess; *.xtml; *.css; *.cfg; *.ini; *.sh; *.xml
+* 2025-08-25 10:29:23.259 (EOSError) System Error.  Code: 2.
+* 2025-08-25 10:29:23.259 系统找不到指定的文件。
+. 2025-08-25 10:29:23.259 Asking user:
+. 2025-08-25 10:29:23.259 File or folder 'E:\home\ict\robot_ai\docker\Dockerfile' does not exist. ("System Error.  Code: 2.
+. 2025-08-25 10:29:23.259 系统找不到指定的文件。")
+< 2025-08-25 10:29:23.260 Script: File or folder 'E:\home\ict\robot_ai\docker\Dockerfile' does not exist.
+< 2025-08-25 10:29:23.260 Script: System Error.  Code: 2.
+< 2025-08-25 10:29:23.260 系统找不到指定的文件。
+. 2025-08-25 10:29:23.260 Answer: Abort
+* 2025-08-25 10:29:23.263 (ESkipFile) File or folder 'E:\home\ict\robot_ai\docker\Dockerfile' does not exist.
+* 2025-08-25 10:29:23.263 System Error.  Code: 2.
+* 2025-08-25 10:29:23.263 系统找不到指定的文件。
+. 2025-08-25 10:29:23.263 Copying finished: Transferred: 0, Elapsed: 0:00:00, CPS: 0/s
+. 2025-08-25 10:29:23.263 Script: Failed
+. 2025-08-25 10:29:23.263 Script: Exit code: 1
+. 2025-08-25 10:29:23.263 Closing connection.
+. 2025-08-25 10:29:23.263 Sending special code: 1
+. 2025-08-25 10:29:23.269 Session sent command exit status 0
+. 2025-08-25 10:29:23.269 Main session channel closed
+. 2025-08-25 10:29:23.270 All channels closed

@@ -1,0 +1,132 @@
+# 机器人AI语音识别配置文件
+
+# 服务配置
+machine-name: "robot_ai"
+version: "1.0.0"
+machine-id: "d21e4997e4f78314ca991ffa8734c366"
+machinename: "小勇"
+# 摄像头位置
+server:
+#  ip: "192.168.123.21"
+  ip: "192.168.123.38"
+  port: 19199
+
+# 摄像头地址
+camera_url: "http://127.0.0.1:34550/camera_base64"
+# 语音识别服务选择配置
+speech_recognition:
+  # 选择使用的语音识别服务: "xunfei_aiui", "baidu_realtime" 或 "xunfei_linux"
+  service: "xunfei_linux"
+
+#params_data:
+#  app_id: "121000000147"
+#  process_code: "queryListAPIVcloud"
+#  dataId: "2100000009"
+#  key: "G7H3J9K2L5M8N4P1Q6R3S2T9U6V7W8X5"
+#  userId: "jyyd"
+#  full_identifier: "newland@523652"
+#  params:
+#    regId: "r1957649584173424640"
+## 基站客流数据
+#base_stations_url: "http://robot.yun36.com:8066/base_stations"
+ssh_host: "robot.yun36.com"
+ssh_port: 2066
+ssh_user: "root"
+ssh_pass: "7P8xxEEw9vGx0Yf%"
+
+db_host: "127.0.0.1"
+db_port: 33066
+db_user: "root"
+db_pass: "qweICT!@#444"
+db_name: "passenger_flow"
+table: "flow_data"
+
+# 百炼知识库
+baolian_api_key: "sk-1dcf9fc95ee54c3bbb2a3fdc9ebaa49f"
+baolian_model: "qwen-vl-max-latest"
+baolian_nlp_model: "qwen-plus-latest"
+
+# 网络配置
+network:
+  connection_timeout: 5  # 连接超时时间(秒)
+  receive_timeout: 3     # 接收超时时间(秒)
+  ping_interval: 10      # 心跳检测间隔(秒)
+  reconnect_delay: 5     # 重连延迟时间(秒)
+
+# 日志配置
+logging:
+  level: "INFO"
+  file: "log/robot_ai.log"
+  format: "%(asctime)s.%(msecs)03d %(levelname)s:%(message)s"
+  date_format: "%Y-%m-%d %H:%M:%S"
+
+
+  
+  # 百度端到端实时语音识别配置
+  baidu_realtime:
+    client_id: "erJ8dFilykzXBLf09Sm0u0YQ"
+    client_secret: "EP4TqMs3eRriCFnJ3Dbu9YtHAq1FtP5H"
+    api_key: ""  # iam API_KEY或TOKEN二选一
+    streaming_url: "wss://aip.baidubce.com/ws/2.0/speech/v1/realtime"
+    model_name: "audio-realtime"
+    # 音频参数配置
+    audio:
+      sample_rate: 16000
+      channels: 1
+      format: "int16"
+      chunk_size: 1024
+    # 输出音频配置
+    output_audio:
+      sample_rate: 24000
+      channels: 1
+      format: "int16"
+
+# TTS配置
+tts:
+  voice: "x4_lingfeizhe_oral"
+  speed: 50
+  pitch: 50
+  volume: 50
+
+# 科大讯飞TTS配置
+xunfei:
+  #app_id: "f016fce3"
+  #api_key: "fcb58dc79de9b0568d2287bd8184e291"
+  #api_secret: "YTFiN2NkOGVjNTVjY2QyMTlmMTViOTBh"
+  app_id: "d4752eff"
+  api_key: "6e15eec4443352f81eeea0224842ae9b"
+  api_secret: "ZTEzOWIyMjc5ZmY4OGYyNmI3NDYyMTE0"
+  streaming_tts_url: "wss://aiui.xf-yun.com/v3/aiint/sos"
+  #scene: "A08-zhanting"
+  scene: "main"
+  category:
+  - "OS20015785810.ACTIONS"
+  - "OS20015785810.ACTIONS_${area}"
+  - "OS20015785810.control_aiot"
+  - "OS20015785810.VoiceNavigation"
+  - "OS20015785810.CMD_ACTIONS"
+
+# 开发环境配置
+development:
+  debug: false
+  log_to_console: true
+  log_to_file: true
+
+# 生产环境配置
+production:
+  debug: false
+  log_to_console: false
+  log_to_file: true
+
+pc2:
+  ip: "192.168.123.164"
+  port: 8839
+  base_url: "http://192.168.123.164:8839"
+  endpoints:
+    robot_action: "/dbqa_app/pub_webrtc"
+    robot_waypoint: "/dbqa_app/pub_waypoint"
+    robot_cmd_action: "/dbqa_app/pub_remote_cmd"
+    qa_callback: "/rest_api/qa_callback"
+    led: "/rest_api/led"
+
+music_url: "http://192.168.0.10:34505/tts_audio_control_http"

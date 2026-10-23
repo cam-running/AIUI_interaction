@@ -1,0 +1,34 @@
+# IDE和编辑器配置
+.vscode/
+**/.idea/
+
+# Python缓存文件
+**/__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# 日志文件
+logs/
+*.log
+**/logs/
+
+# 环境变量
+/.env/
+
+# 临时文件
+tmp/
+keda_tts_files/
+.history/
+.cursor/
+.kiro/
+
+# 大模型和向量数据库
+**/chroma_db/
+**/chroma/
+**/bigModels/
+tts_cache/
+cache/
+build/
+docker/build
+AIUI/

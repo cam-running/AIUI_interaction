@@ -1,0 +1,1472 @@
+# -*- coding: UTF-8 -*-
+# @Author     zyb
+# @FileName   main_server.PY
+# @Time       2025-05-27 10:55
+
+import os
+import yaml
+import time
+import asyncio
+import threading
+import uvicorn
+import psutil
+import subprocess
+import configparser  
+
+from pathlib import Path
+from pydub import AudioSegment
+from ruamel.yaml import YAML
+from models.model import *
+from utils.control_aiot import aiot_controller
+from conf.log_uvicorn_conf import LOGGING_CONFIG
+from middlewares.init_logger import init_logger, LoggerInstance
+from middlewares.listen_action import run_action
+from fastapi import FastAPI, UploadFile, File, Form, Query, Body
+from fastapi.middleware.cors import CORSMiddleware
+from conf.basic import *
+from conf import basic
+from utils.audio_playback import *
+from openpyxl import load_workbook, Workbook
+from init_voice import add_voice, add_fail
+from fastapi.responses import FileResponse
+from utils.synchronous import write_names_to_excel, check_and_backup_group
+from utils.recognition_by_kedaxunfei import make_tts_kedaxunfei
+
+app = FastAPI()
+play_c = ControlAudio()
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
+
+def get_logger(log_name):
+    log_dir = "logs"
+    if not os.path.exists(log_dir):
+        os.makedirs(log_dir)
+    log_file = os.path.join(log_dir, f"{log_name}.log")
+    logger = logging.getLogger(log_name)
+    logger.setLevel(logging.INFO)
+    formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s - Line: %(lineno)d')
+    file_handler = logging.FileHandler(log_file, encoding='utf-8')
+    file_handler.setFormatter(formatter)
+    logger.addHandler(file_handler)
+    return logger
+
+
+logger = get_logger('mainserver')
+
+# YAML配置文件路径（固定路径）
+VOICE_CONFIG_PATH = "/home/ict/robot_ai/config/config.yaml"
+VOICE_CONFIG_PATH_NC = "/home/ict/robot_nc/config/config.yaml"
+VOICE_CONFIG_PATH_AIUI = "/home/ict/robot_ai/config/aiui/cfg/aiui.cfg"
+VOICE_CONFIG_PATH_NC_AIUI = "/home/ict/robot_nc/config/aiui/cfg/aiui.cfg"
+
+# 语言模式与voice值的映射关系
+LANGUAGE_VOICE_MAP = {
+    "zh": "x4_lingfeizhe_oral",
+    "yue": "x2_xiaoyue",
+    "en": "x4_EnUs_Grant_emo"
+}
+
+import re
+
+def update_aiui_config(mode):
+    voice = LANGUAGE_VOICE_MAP[mode]
+
+    for path in [VOICE_CONFIG_PATH_AIUI, VOICE_CONFIG_PATH_NC_AIUI]:
+        if not os.path.exists(path):
+            logger.warning(f"配置文件不存在，跳过: {path}")
+            continue
+
+        with open(path, "r", encoding="utf-8") as f:
+            content = f.read()
+
+        # 如果文件中存在 voice_name，同样替换
+        # （若 aiui.cfg 里没有此字段，此正则无匹配，不会报错）
+        content = re.sub(
+            r'("voice_name"\s*:\s*)"[^"]*"',
+            rf'\1"{voice}"',
+            content,
+            count=1
+        )
+
+        with open(path, "w", encoding="utf-8") as f:
+            f.write(content)
+
+        logger.info(f"已更新 {path} -> voice={voice}")
+# ------------------- 核心接口实现 -------------------
+
+@app.post("/audio_language_mode")
+async def set_audio_language_mode(language_mode: LanguageMode):
+    """
+    修改语音语言模式接口
+    - 入参：{"mode": "zh"/"yue"/"en"}
+    - 功能：自动修改config.yaml中tts.voice的值
+    """
+    # 1. 校验传入的模式是否合法
+    mode = language_mode.mode.lower()
+    if mode not in LANGUAGE_VOICE_MAP:
+        raise HTTPException(
+            status_code=400,
+            detail=f"不支持的语言模式！支持：zh(中文)、yue(粤语)、en(英文)，当前传入：{mode}"
+        )
+
+    try:
+        # 2. 读取YAML配置文件
+        with open(VOICE_CONFIG_PATH, "r", encoding="utf-8") as f:
+            config = yaml.safe_load(f)
+
+        # 3. 修改tts.voice配置
+        config["tts"]["voice"] = LANGUAGE_VOICE_MAP[mode]
+
+        # 4. 写入回配置文件（保留原有格式、注释）
+        with open(VOICE_CONFIG_PATH, "w", encoding="utf-8") as f:
+            yaml.dump(config, f, default_flow_style=False, sort_keys=False, allow_unicode=True)
+
+        # 2. 读取YAML配置文件
+        with open(VOICE_CONFIG_PATH_NC, "r", encoding="utf-8") as f:
+            config = yaml.safe_load(f)
+
+        # 3. 修改tts.voice配置
+        config["tts"]["voice"] = LANGUAGE_VOICE_MAP[mode]
+
+        # 4. 写入回配置文件（保留原有格式、注释）
+        with open(VOICE_CONFIG_PATH_NC, "w", encoding="utf-8") as f:
+            yaml.dump(config, f, default_flow_style=False, sort_keys=False, allow_unicode=True)
+
+        update_aiui_config(mode)
+
+        # 5. 返回成功结果
+        return {
+            "code": 200,
+            "msg": "语音语言模式修改成功",
+            "current_mode": mode,
+            "current_voice": LANGUAGE_VOICE_MAP[mode]
+        }
+
+    except FileNotFoundError:
+        raise HTTPException(status_code=500, detail=f"配置文件不存在：{VOICE_CONFIG_PATH}或{VOICE_CONFIG_PATH_NC}")
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"修改配置失败：{str(e)}")
+
+@app.get("/audio_language_mode")
+async def get_audio_language_mode():
+    """
+    查询当前语音语言模式接口
+    - 功能：读取当前tts.voice值，返回对应的语言模式
+    """
+    try:
+        # 1. 读取配置
+        with open(VOICE_CONFIG_PATH, "r", encoding="utf-8") as f:
+            config = yaml.safe_load(f)
+
+        # 2. 获取当前voice值
+        current_voice = config.get("tts", {}).get("voice", "")
+
+        # 3. 反向匹配语言模式
+        current_mode = None
+        for mode, voice in LANGUAGE_VOICE_MAP.items():
+            if voice == current_voice:
+                current_mode = mode
+                break
+
+        if not current_mode:
+            return {
+                "code": 200,
+                "msg": "查询成功",
+                "current_mode": "unknown",
+                "current_voice": current_voice,
+                "tip": "当前voice值不在预设映射中"
+            }
+
+        # 4. 返回结果
+        return {
+            "code": 200,
+            "msg": "查询成功",
+            "current_mode": current_mode,
+            "current_voice": current_voice,
+            "mode_desc": {
+                "zh": "中文",
+                "yue": "粤语",
+                "en": "英文"
+            }[current_mode]
+        }
+
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"查询配置失败：{str(e)}")
+
+NC2_CONF_PATH = "/etc/spm/nc2.conf"
+
+
+def read_record_mode() -> int:
+    """读取 /etc/spm/nc2.conf 中的录音模式 (record.mode)。默认返回 1。"""
+    try:
+        if not os.path.exists(NC2_CONF_PATH):
+            logger.warning(f"录音配置文件不存在: {NC2_CONF_PATH}，使用默认 mode=1")
+            return 1
+
+        mode_value = 1
+        in_record_section = False
+        with open(NC2_CONF_PATH, "r", encoding="utf-8") as f:
+            for raw_line in f:
+                line = raw_line.strip()
+                # 跳过空行与注释
+                if not line or line.startswith("#") or line.startswith(";"):
+                    continue
+                if line.startswith("[") and line.endswith("]"):
+                    # 进入或离开 [record] 段
+                    in_record_section = (line.lower() == "[record]")
+                    continue
+                if in_record_section and line.lower().startswith("mode"):
+                    # 解析 `mode = x`
+                    try:
+                        _k, v = line.split("=", 1)
+                        mode_value = int(v.strip())
+                    except Exception as e:
+                        logger.error(
+                            f"解析录音模式失败，使用默认 mode=1，原始行: {raw_line.rstrip()}，错误: {e}"
+                        )
+                        mode_value = 1
+                    break
+        return mode_value
+    except Exception as e:
+        logger.error(f"读取录音配置失败，使用默认 mode=1: {e}")
+        return 1
+
+
+def write_record_mode(mode: int):
+    """将录音模式写回 /etc/spm/nc2.conf，仅修改 [record] 段中的 mode 行，保留其它注释与内容。"""
+    if mode not in (1, 4, 6):
+        raise ValueError("录音模式仅支持 1 / 4 / 6")
+
+    # 如果文件不存在，创建一个最小配置
+    if not os.path.exists(NC2_CONF_PATH):
+        try:
+            with open(NC2_CONF_PATH, "w", encoding="utf-8") as f:
+                f.write("[record]\n")
+                f.write(f"mode = {mode}\n")
+            logger.info(f"创建默认录音配置文件 {NC2_CONF_PATH}，mode={mode}")
+            return
+        except Exception as e:
+            logger.error(f"创建录音配置文件失败: {e}")
+            raise
+
+    try:
+        with open(NC2_CONF_PATH, "r", encoding="utf-8") as f:
+            lines = f.readlines()
+
+        new_lines = []
+        in_record_section = False
+        mode_line_handled = False
+
+        i = 0
+        while i < len(lines):
+            line = lines[i]
+            stripped = line.strip()
+
+            # 识别 section
+            if stripped.startswith("[") and stripped.endswith("]"):
+                # 如果刚离开 [record] 段，且内部没有找到 mode 行，则补一行
+                if in_record_section and not mode_line_handled:
+                    new_lines.append(f"mode = {mode}\n")
+                    mode_line_handled = True
+                in_record_section = (stripped.lower() == "[record]")
+                new_lines.append(line)
+                i += 1
+                continue
+
+            if in_record_section and stripped.lower().startswith("mode"):
+                # 替换本行的值
+                new_lines.append(f"mode = {mode}\n")
+                mode_line_handled = True
+                i += 1
+                continue
+
+            new_lines.append(line)
+            i += 1
+
+        # 文件末尾如果没有 [record] 段，则追加
+        if not any(l.strip().lower() == "[record]" for l in lines):
+            new_lines.append("\n[record]\n")
+            new_lines.append(f"mode = {mode}\n")
+        else:
+            # 如果存在 [record] 段但没有 mode 行，在循环中已经在段尾补过了
+            pass
+
+        with open(NC2_CONF_PATH, "w", encoding="utf-8") as f:
+            f.writelines(new_lines)
+
+        logger.info(f"录音模式已更新为 mode={mode}，配置文件: {NC2_CONF_PATH}")
+    except Exception as e:
+        logger.error(f"写入录音配置失败: {e}")
+        raise
+
+@app.get("/audio_record_mode")
+def get_audio_record_mode():
+    """查询当前录音模式：1=话筒MIC，4=胸前4MIC，6=头顶6MIC"""
+    mode = read_record_mode()
+    return {
+        "code": 200,
+        "mode": mode,
+        "message": "success",
+        "detail": {
+            "1": "话筒MIC",
+            "4": "胸前4MIC",
+            "6": "头顶6MIC"
+        }
+    }
+
+
+@app.post("/audio_record_mode")
+def set_audio_record_mode(mode: int = Body(..., embed=True)):
+    """设置录音模式：1=话筒MIC，4=胸前4MIC，6=头顶6MIC"""
+    if mode not in (1, 4, 6):
+        return {
+            "code": 400,
+            "message": "mode 仅支持 1 / 4 / 6",
+            "mode": mode
+        }
+    try:
+        write_record_mode(mode)
+        return {
+            "code": 200,
+            "message": "录音模式已更新",
+            "mode": mode
+        }
+    except Exception as e:
+        logger.error(f"更新录音模式失败: {e}")
+        return {
+            "code": 500,
+            "message": f"更新录音模式失败: {e}"
+        }
+
+
+# 内存存储最近100条对话记录
+_qa_records = []
+_QA_MAX = 100
+
+
+@app.post("/rest_api/qa_callback")
+def qa_callback(data: QaCallback):
+    """接收 robot_ai 推送的语音对话内容"""
+    global _qa_records
+    record = {}
+    if data.question is not None:
+        record = {"type": "question", "content": data.question, "time": data.time or time.time()}
+    elif data.answer is not None:
+        record = {"type": "answer", "content": data.answer, "time": data.time or time.time()}
+    if record:
+        _qa_records.append(record)
+        if len(_qa_records) > _QA_MAX:
+            _qa_records = _qa_records[-_QA_MAX:]
+        logger.info(f"收到QA回调: {record}")
+    return {"success": True}
+
+#交互内容上传前端
+@app.get("/rest_api/qa_records")
+def get_qa_records():
+    """前端轮询获取最近对话记录"""
+    return {"code": 200, "data": _qa_records}
+
+
+
+
+@app.post("/update_config")
+def update_config(request: ServiceRequest):
+    try:
+        basic_path = os.path.join(os.path.dirname(__file__), "conf", "basic.py")
+        with open(basic_path, "r", encoding="utf-8") as f:
+            lines = f.readlines()
+        for i, line in enumerate(lines):
+            if "robot_host =" in line:
+                lines[i] = f'    robot_host = "{request.unitreeip}"\n'
+                break
+        with open(basic_path, "w", encoding="utf-8") as f:
+            f.writelines(lines)
+        logger.info(f"机器人IP已更新为: {request.unitreeip}")
+        return {"code": 200, "message": "配置更新成功", "data": {"robot_host": request.unitreeip}}
+    except Exception as e:
+        logger.error(f"配置更新失败: {str(e)}")
+        return {"code": 500, "message": f"配置更新失败: {str(e)}"}
+
+
+def check_client_process(xcname):
+    try:
+        result = subprocess.run(['pgrep', '-f', xcname],
+                                stdout=subprocess.PIPE,
+                                stderr=subprocess.PIPE)
+
+        if result.returncode == 0:
+            return {"code": 200, "message": "程序启动成功"}
+        else:
+            return {"code": 500, "message": "程序启动失败，请联系管理员"}
+
+    except Exception as e:
+        logger.error(f"检查进程出错: {str(e)}")
+        return {"code": 500, "message": f"检查进程出错: {str(e)}"}
+
+
+def run_script(script_name, success_message, error_message):
+    try:
+        command = ['bash', script_name]
+        script_to_process = {
+            'start_client.sh': 'main_client.py',
+            'start_robotai.sh': 'main_robot.py',
+            'start_audio.sh': 'main_audio.py'
+        }
+        subprocess.run(command, check=True, text=True, capture_output=True)
+        logger.info(success_message)
+        process_name = script_to_process.get(script_name)
+        if process_name:
+            resu = check_client_process(process_name)
+            if resu["code"] == 200:
+                return {"code": 200, "message": success_message}
+            return resu
+        return {"code": 200, "message": success_message}
+    except subprocess.CalledProcessError as e:
+        logger.error(f"{error_message}，失败原因：{e.stderr.strip()}")
+        return {"code": 500, "message": f"{error_message}，错误信息：{e.stderr.strip()}"}
+    except Exception as e:
+        logger.error(f"ERROR：{str(e)}")
+        return {"code": 500, "message": f"{error_message}，未知错误：{str(e)}"}
+
+
+@app.post("/service_face_re")
+def service_start_f(request: FaceOpen):
+    logger.info(f"收到请求：{request}")
+    if request.status == "turn_face_re":
+        if request.group_id is None:
+            return {"code": 400, "message": "缺少group_id参数"}
+        groups = [g.strip() for g in request.group_id.split(",")]
+        if len(groups) > 1:
+            return {"code": 400, "message": "group_id参数只能是一个"}
+        xlsx_path = Path("name_file") / f"data_{request.group_id}.xlsx"
+        xlsx_path.parent.mkdir(parents=True, exist_ok=True)
+        if not xlsx_path.exists():
+            wb = Workbook()
+            wb.save(xlsx_path)
+            # return {"code": 404,
+            #         "message": f"未找到data_{request.group_id}.xlsx的数据文件, 请前往<upload_xlsx>上传data_{request.group_id}.xlsx文件"}
+        if request.group_id == GlobalConf.baidu_groups:
+            logger.info("相同组名，无需备份清空已签到文件")
+        else:
+            logger.info("组名不同，备份并清空已签到文件")
+            check_and_backup_group(request.group_id, logger)
+            modify_e(basic, GlobalConf.baidu_groups, request.group_id, "baidu_groups")
+            modify_e(basic, GlobalConf.excel_name, f"data_{request.group_id}.xlsx", "excel_name")
+        play_audio("face_open")
+        logger.info("播放人脸识别开启音频，打开人脸识别")
+        return run_script('start_client.sh', "人脸识别服务已开启", "人脸识别启动服务时出错")
+    elif request.status == "off_face_re":
+        play_audio("face_off")
+        logger.info("播放人脸识别关闭音频，关闭人脸识别")
+        return run_script('stop_client.sh', "人脸识别服务已结束", "人脸识别结束服务时出错")
+    else:
+        return {"code": 400, "message": "无效的请求/未知的参数"}
+
+
+@app.post("/service_robotai")
+def robot_ai(request: RobotAi):
+    logger.info(f"收到请求：{request}")
+    # 获取当前录音模式
+    record_mode = read_record_mode()
+    logger.info(f"当前录音模式为: {record_mode} (1=话筒MIC，4=胸前4MIC，6=头顶6MIC)")
+    if request.status == "open_robot_ai":
+        # 播放语音交互开启音频
+        play_audio("robot_open")
+        logger.info("播放语音交互开启音频，准备开启语音交互")
+
+        # 根据录音模式选择要运行的脚本
+        if record_mode == 1:
+            script_name = 'start_robotai.sh'
+            success_msg = "语音交互服务(AIUI)已开启"
+            error_msg = "语音交互(AIUI)启动服务时出错"
+        elif record_mode == 6:
+            script_name = 'start_robotnc.sh'
+            success_msg = "语音交互服务(NC)已开启"
+            error_msg = "语音交互(NC)启动服务时出错"
+        else:
+            # 其他模式默认使用 start_robotai.sh
+            script_name = 'start_robotai.sh'
+            success_msg = f"语音交互服务(默认AIUI)已开启(当前录音模式{record_mode})"
+            error_msg = f"语音交互(默认AIUI)启动服务时出错(当前录音模式{record_mode})"
+            logger.warning(f"未匹配到专属脚本的录音模式: {record_mode}，使用默认脚本 {script_name}")
+
+        # 执行脚本并返回结果
+        logger.info(f"根据录音模式 {record_mode}，执行脚本: {script_name}")
+        return run_script(script_name, success_msg, error_msg)
+
+    elif request.status == "off_robot_ai":
+        play_audio("robot_off")
+        logger.info("播放语音交互关闭音频，关闭语音交互")
+        return run_script('stop_robot_ai.sh', "语音交互服务已结束", "语音交互结束服务时出错")
+    else:
+        return {"code": 400, "message": "无效的请求/未知的参数"}
+
+@app.post("/robot_audio_start")
+def robot_audio(request: Audio):
+    logger.info(f"收到请求：{request}")
+    if request.status == "audio_start":
+        return run_script('start_audio.sh', "文字转语音服务已开启", "文字转语音启动服务时出错")
+    elif request.status == "audio_off":
+        return run_script('stop_audio.sh', "文字转语音服务已结束", "文字转语音结束服务时出错")
+    else:
+        return {"code": 400, "message": "无效的请求/未知的参数"}
+
+
+def check_process_status(process_name):
+    for proc in psutil.process_iter(['name', 'cmdline']):
+        try:
+            cmdline = proc.info['cmdline']
+            if cmdline and process_name in ' '.join(cmdline):
+                return f"run_{process_name.replace('.py', '')}"
+        except (psutil.NoSuchProcess, psutil.AccessDenied, psutil.ZombieProcess, TypeError):
+            continue
+    return f"kill_{process_name.replace('.py', '')}"
+
+
+@app.get("/check_processes")
+def check_processes():
+    client_status = check_process_status("main_client.py")
+    robot_status = check_process_status("main_robot.py")
+    return {
+        "client_status": client_status,
+        "robot_status": robot_status
+    }
+
+
+
+client = AipFace(GlobalConf.baidu_app_id, GlobalConf.baidu_api_key, GlobalConf.baidu_secret_key)
+
+
+@app.get("/face_list")
+def sel_liat():
+    try:
+        group_name_mapping = {
+            "group0": "集团部门领导",
+            "group1": "ICT本部门",
+            "group2": "测试组2",
+            "group3": "测试组3",
+            "group4": "测试组4",
+            "group5": "测试组5",
+            "group6": "测试组6",
+            "group7": "测试组7",
+            "group8": "苏州智慧公寓",
+            "group9": "G1-A04-中国移动信息港"
+        }
+        liayt = client.getGroupList()
+        if liayt and liayt.get("error_code") == 0:
+            logger.info(f"查询到的组信息：{liayt}")
+            glist = liayt.get("result")
+            group_list = glist.get("group_id_list")
+            result = []
+            for group_id in group_list:
+                result.append({
+                    "group_id": group_id,
+                    "group_name": group_name_mapping[group_id]
+                })
+            return {"data": result, "code": 200}
+        return {"data": [], "code": 200}
+    except Exception as e:
+        logger.error(f"查询组名列表时发生异常: {str(e)}")
+        return {"data": None, "code": 500, "error": str(e)}
+
+
+def userid(sel_g):
+    try:
+        face_list = client.getGroupUsers(sel_g)
+        if face_list and face_list.get("error_code") == 0:
+            face_ids = face_list["result"].get("user_id_list")
+            logger.info(f"查询到用户ID {face_ids}")
+            return face_ids
+        return []
+    except Exception as e:
+        logger.error(f"调用 client.getGroupUsers 时出现异常: {e}")
+        return []
+
+
+@app.get("/xrdfty98hoinmpo9/{groupId}")
+def get_li_user(groupId: str):  # 读取百度人脸库数据
+    new_value_list = []
+    name_list = []
+    # try:
+    result_dict = userid(groupId)
+    for user_id in result_dict:
+        try:
+            username = client.getUser(user_id, groupId)
+            if username and username.get("error_code") == 0:
+                new_name_list = username["result"].get("user_list")
+                if new_name_list:
+                    new_name = new_name_list[0].get("user_info")
+                    if new_name:
+                        name_list.append(new_name)
+                        new_value_list.append({"name": new_name, "userid": user_id})
+        except Exception as e:
+            pass
+        time.sleep(1)
+    write_config(groupId, new_value_list)
+    write_names_to_excel(name_list, groupId)
+    return {"data": new_value_list, "code": 200}
+    # except Exception as e:
+    #     return {f"{groupId}": {}, "code": 500}
+
+
+@app.get("/face_info/{groupId}")
+def get_face_list(groupId: str):
+    config_file_path = os.path.join("conf", "group_name", f"{groupId}.json")
+    # thread = threading.Thread(target=get_li_user, args=(groupId,))
+    # thread.start()   # 同步缓存
+    try:
+        with open(config_file_path, "r", encoding="utf-8") as f:
+            data = json.load(f).get(groupId, [])
+        return {"data": data, "code": 200}
+    except FileNotFoundError:
+        # 文件不存在时返回空列表
+        return {"data": [], "code": 200}
+    except Exception as e:
+        # 处理其他异常
+        logger.error(f"读取配置文件 {config_file_path} 时出错: {str(e)}")
+        return {"data": None, "code": 500, "error": str(e)}
+
+
+@app.delete("/face_del/{group_id}")
+def del_face(group_id: str):
+    try:
+        client.groupDelete(group_id)
+        xlsx_path = os.path.join("name_file", f"data_{group_id}.xlsx")
+        if os.path.exists(xlsx_path):
+            os.remove(xlsx_path)
+        return {"code": 200, "message": f"人脸库{group_id}组删除成功"}
+    except RuntimeError as e:
+        logger.error(f"删除人脸库失败:{e}")
+        return {"code": 500, "message": f"人脸库{group_id}组删除失败"}
+
+
+def del_xls(name):
+    basic_path = os.path.join(os.path.dirname(__file__), "conf", "basic.py")
+    with open(basic_path, "r", encoding="utf-8") as f:
+        for line in f:
+            if "excel_name =" in line:
+                current_excel_name = line.split('=')[1].strip().strip('"\'')
+                break
+        else:
+            current_excel_name = GlobalConf.excel_name  # 回退到默认值
+    excel_path = os.path.join("name_file", current_excel_name)
+    wb = load_workbook(excel_path)
+    sheet = wb.active
+    for row_idx, row in enumerate(sheet.iter_rows(values_only=True), 1):
+        if row[0] == name:
+            sheet.delete_rows(row_idx)
+            break
+    logger.info(f"{current_excel_name}删除{name}成功")
+    wb.save(excel_path)
+
+
+def delete_face_and_conf(userid, groupid, face_token, name):
+    """异步执行删除人脸和配置文件的操作"""
+    client.faceDelete(userid, groupid, face_token)
+    delete_user(groupid, name, userid)
+    del_xls(name)
+
+
+@app.delete("/del_userinfo/{userid}/{groupid}/{username}")
+def del_info_img(userid: str, groupid: str, username: str):
+    try:
+        user_face = client.faceGetlist(userid, groupid)
+        if user_face and user_face.get("error_code") == 0:
+            face_token = user_face["result"]["face_list"][0]["face_token"]
+
+            def thread_task():
+                delete_face_and_conf(userid, groupid, face_token, username)
+
+            thread = threading.Thread(target=thread_task)
+            thread.start()
+            # face_token = user_face["result"]["face_list"][0]["face_token"]
+            # del_face = client.faceDelete(userid, groupid, face_token)
+            # conf_del = delete_user(groupid, username, userid)
+            # if del_face and del_face.get("error_code") == 0 and conf_del and conf_del["code"] == 200:
+            return {"code": 200, "message": f"{username}删除成功"}
+        else:
+            return {"code": 500, "message": f"未找到{username}信息"}
+    except Exception as e:
+        return {"code": 500, "message": f"未知错误: {e}"}
+
+
+@app.post("/upload_xlsx")
+async def upload_xlsx(file: UploadFile = File(...)):
+    try:
+        os.makedirs("name_file", exist_ok=True)
+        filename = file.filename
+        if not filename.endswith('.xlsx'):
+            return {"code": 400, "message": "仅支持.xlsx格式文件"}
+        if not any(filename == f"data_group{i}.xlsx" for i in range(0, 10)):
+            return {"code": 400, "message": "文件名错误，与识别组名保持一致"}
+        save_path = os.path.join("name_file", filename)
+        with open(save_path, "wb") as f:
+            content = await file.read()
+            f.write(content)
+        return {"code": 200, "message": "文件上传成功", "filename": filename}
+    except Exception as e:
+        logger.error(f"文件上传失败: {str(e)}")
+        return {"code": 500, "message": f"文件上传失败: {str(e)}"}
+
+
+import base64
+
+
+@app.get("/get_img")
+async def get_all_images():
+    try:
+        image_dir = "/home/ict/web_images"
+        images = {}
+        for img_file in os.listdir(image_dir):
+            if img_file.lower().endswith('.jpg'):
+                with open(os.path.join(image_dir, img_file), 'rb') as f:
+                    images[img_file] = base64.b64encode(f.read()).decode('utf-8')
+        return {
+            "code": 200,
+            "message": "success",
+            "data": images
+        }
+    except Exception as e:
+        logger.error(f"获取图片失败: {str(e)}")
+        return {"code": 500, "message": f"获取图片失败: {str(e)}", "data": {}}
+
+
+@app.delete("/del_img")
+async def del_all_imgs():
+    try:
+        image_dir = "/home/ict/web_images"
+        if not os.path.exists(image_dir):
+            return {"code": 404, "message": "图片目录不存在"}
+        deleted_files = []
+        for img_file in os.listdir(image_dir):
+            if img_file.lower().endswith('.jpg'):
+                file_path = os.path.join(image_dir, img_file)
+                os.remove(file_path)
+                deleted_files.append(img_file)
+        if not deleted_files:
+            return {"code": 200, "message": "暂无图片"}
+        logger.info(f"已删除图片: {deleted_files}")
+        return {
+            "code": 200,
+            "message": "success"
+        }
+    except Exception as e:
+        logger.error(f"删除图片失败: {str(e)}")
+        return {"code": 500, "message": f"删除图片失败: {str(e)}"}
+
+
+@app.post("/start_serv_tts")
+async def start_serv_tts():
+    try:
+        script_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "server_tts", "serv_tts.sh")
+        if not os.path.isfile(script_path):
+            return get_rtn_json(code=404, message="serv_tts.sh 脚本未找到")
+        result = subprocess.run([script_path], capture_output=True, text=True, check=True)
+        return get_rtn_json(code=200, message="output:%s" % result.stdout)
+    except subprocess.CalledProcessError as e:
+        return get_rtn_json(code=500, message="脚本执行失败,err:%s" % e.stderr)
+    except Exception as e:
+        return get_rtn_json(code=500, message=str(e))
+
+
+def get_rtn_json(code=200, message="success", data={}):
+    return {"code": code, "message": message, "data": data}
+
+
+def run_max_script(volume_level):
+    try:
+        basic_path = os.path.join(os.path.dirname(__file__), "conf", "basic.py")
+        with open(basic_path, "r", encoding="utf-8") as f:
+            lines = f.readlines()
+        for i, line in enumerate(lines):
+            if "volume_num =" in line:
+                lines[i] = f'    volume_num = {volume_level}\n'
+                break
+        with open(basic_path, "w", encoding="utf-8") as f:
+            f.writelines(lines)
+        return {"success": True, "message": "音量已更新为 " + str(volume_level)}
+    except subprocess.CalledProcessError as e:
+        return False, f"执行max.py失败: {e.stderr.strip()}"
+    except Exception as e:
+        return False, f"发生未知错误: {str(e)}"
+
+
+# @app.post('/set_volume')
+# async def api_set_volume(request: VolumeRequest):
+#     volume = int(request.volume)
+#     if volume < 0 or volume > 150:
+#         return {"status_code": 400, "detail": "音量必须在0-150之间"}
+
+#     # 更新配置文件中的音量值
+#     run_max_script(volume)
+
+#     try:
+#         # 优先使用 ALSA 音量控制，避免 PulseAudio 连接问题
+#         from utils.alsa_volume_control import create_alsa_controller
+
+#         controller = create_alsa_controller()
+
+#         # 获取当前音量状态
+#         current_volume = controller.get_volume()
+#         logger.info(f"当前音量: {current_volume}%, 目标音量: {volume}%")
+
+#         # 将150映射到100%，其他值按比例缩放
+#         alsa_volume = min(100, int(volume * 100 / 150))
+
+#         # 设置音量
+#         if controller.set_volume(alsa_volume):
+#             # 验证设置结果
+#             new_volume = controller.get_volume()
+#             logger.info(f"ALSA音量设置成功: {alsa_volume}% (原始值:{volume}) -> {new_volume}%")
+#             return {"success": True, "message": f"音量已设置为{alsa_volume}%", "code": 200}
+#         else:
+#             logger.error(f"ALSA音量设置失败: {alsa_volume}%")
+#             return {"code": 500, "msg": f"ALSA音量设置失败"}
+
+#     except ImportError as e:
+#         logger.warning(f"ALSA模块不可用，回退到PulseAudio: {e}")
+#         # 回退到原来的 PulseAudio 方式
+#         try:
+#             command = ["pactl", "set-sink-volume", "@DEFAULT_SINK@", f"{volume}%"]
+#             subprocess.run(
+#                 command,
+#                 check=True,
+#                 stdout=subprocess.PIPE,
+#                 stderr=subprocess.PIPE,
+#                 text=True
+#             )
+#             return {"success": True, "message": f"音量已设置为{volume}%", "code": 200}
+#         except subprocess.CalledProcessError as e:
+#             logger.error(f"PulseAudio设置音量失败: {e.stderr.strip()}")
+#             return {"code": 500, "msg": f"音量修改失败: {e.stderr.strip()}"}
+#         except Exception as e:
+#             logger.error(f"PulseAudio设置音量时出错: {str(e)}")
+#             return {"code": 500, "msg": f"未知错误: {str(e)}"}
+
+#     except Exception as e:
+#         logger.error(f"ALSA音量控制异常: {str(e)}")
+#         return {"code": 500, "msg": f"音量控制异常: {str(e)}"}
+@app.post('/set_volume')
+async def api_set_volume(request: VolumeRequest):
+    volume = int(request.volume)
+    if volume < 0 or volume > 150:
+        return {"status_code": 400, "detail": "音量必须在0-150之间"}
+
+    # 更新配置文件中的音量值
+    run_max_script(volume)
+    try:
+        command = ["pactl", "set-sink-volume", "@DEFAULT_SINK@", f"{volume}%"]
+        subprocess.run(
+            command,
+            check=True,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE,
+            text=True
+        )
+        return {"success": True, "message": f"音量已设置为{volume}%", "code": 200}
+    except subprocess.CalledProcessError as e:
+        logger.error(f"PulseAudio设置音量失败: {e.stderr.strip()}")
+        return {"code": 500, "msg": f"音量修改失败: {e.stderr.strip()}"}
+    except Exception as e:
+        logger.error(f"PulseAudio设置音量时出错: {str(e)}")
+        return {"code": 500, "msg": f"未知错误: {str(e)}"}
+
+    # 垃圾代码,可以清理
+    ##########################################################################
+    # try:
+    #     # 优先使用 ALSA 音量控制，避免 PulseAudio 连接问题
+    #     from utils.alsa_volume_control import create_alsa_controller
+
+    #     controller = create_alsa_controller()
+
+    #     # 获取当前音量状态
+    #     current_volume = controller.get_volume()
+    #     logger.info(f"当前音量: {current_volume}%, 目标音量: {volume}%")
+
+    #     # 将150映射到100%，其他值按比例缩放
+    #     alsa_volume = min(100, int(volume * 100 / 150))
+
+    #     # 设置音量
+    #     if controller.set_volume(alsa_volume):
+    #         # 验证设置结果
+    #         new_volume = controller.get_volume()
+    #         logger.info(f"ALSA音量设置成功: {alsa_volume}% (原始值:{volume}) -> {new_volume}%")
+    #         return {"success": True, "message": f"音量已设置为{alsa_volume}%", "code": 200}
+    #     else:
+    #         logger.error(f"ALSA音量设置失败: {alsa_volume}%")
+    #         return {"code": 500, "msg": f"ALSA音量设置失败"}
+
+    # except ImportError as e:
+    #     logger.warning(f"ALSA模块不可用，回退到PulseAudio: {e}")
+    #     # 回退到原来的 PulseAudio 方式
+    #     try:
+    #         command = ["pactl", "set-sink-volume", "@DEFAULT_SINK@", f"{volume}%"]
+    #         subprocess.run(
+    #             command,
+    #             check=True,
+    #             stdout=subprocess.PIPE,
+    #             stderr=subprocess.PIPE,
+    #             text=True
+    #         )
+    #         return {"success": True, "message": f"音量已设置为{volume}%", "code": 200}
+    #     except subprocess.CalledProcessError as e:
+    #         logger.error(f"PulseAudio设置音量失败: {e.stderr.strip()}")
+    #         return {"code": 500, "msg": f"音量修改失败: {e.stderr.strip()}"}
+    #     except Exception as e:
+    #         logger.error(f"PulseAudio设置音量时出错: {str(e)}")
+    #         return {"code": 500, "msg": f"未知错误: {str(e)}"}
+
+    # except Exception as e:
+    #     logger.error(f"ALSA音量控制异常: {str(e)}")
+    #     return {"code": 500, "msg": f"音量控制异常: {str(e)}"}
+    ##########################################################################
+
+@app.put("/set_4_timbre")
+async def api_set_timbre(request: TimberRequest):
+    timbre_model = request.timbre_model
+    # 找到robot_ai文件下的voice_conf.py文件
+    robot_ai_path = os.path.join(os.path.dirname("/home/ict/robot_ai/"))
+    config_yml_path = os.path.join(robot_ai_path, "config/config.yaml")
+    voice_conf_path = os.path.join(robot_ai_path, "conf/voice_conf.py")
+    run_yml_path = os.path.join(robot_ai_path, "run.yml")
+    # 通过传参修改voice_conf.py文件里VoiceConf类中的xunfei_voice_type类型
+    try:
+        # 通过传参修改voice_conf.py文件里VoiceConf类中的xunfei_voice_type类型
+        if not os.path.exists(voice_conf_path) and not os.path.exists(run_yml_path) and not os.path.exists(
+                config_yml_path):
+            return {"status_code": 404, "detail": "配置文件不存在"}
+        # 老版配置
+        if os.path.exists(voice_conf_path) and os.path.exists(run_yml_path):
+            with open(voice_conf_path, "r", encoding="utf-8") as f:
+                lines = f.readlines()
+            for i, line in enumerate(lines):
+                if "xunfei_voice_type =" in line:
+                    lines[i] = f'    xunfei_voice_type = "{timbre_model}"\n'
+                    break
+            with open(voice_conf_path, "w", encoding="utf-8") as f:
+                f.writelines(lines)
+
+            yaml = YAML()
+            yaml.preserve_quotes = True
+            # 读取配置文件（保留注释）
+            with open(run_yml_path, 'r', encoding='utf-8') as file:
+                config = yaml.load(file)
+            # 修改voice值
+            config['voice']['xunfei_voice_type'] = timbre_model
+            # 写回配置文件（保留注释和格式）
+            with open(run_yml_path, 'w', encoding='utf-8') as file:
+                yaml.dump(config, file)
+            return {"status_code": 200, "detail": f"成功修改音色:{timbre_model}"}
+
+        #  新版配置
+        if os.path.exists(config_yml_path):
+            # 配置文件路径
+            # 使用ruamel.yaml保留注释
+            yaml = YAML()
+            yaml.preserve_quotes = True
+
+            # 读取配置文件（保留注释）
+            with open(config_yml_path, 'r', encoding='utf-8') as file:
+                config = yaml.load(file)
+            # 修改voice值
+            config['tts']['voice'] = timbre_model
+            # 写回配置文件（保留注释和格式）
+            with open(config_yml_path, 'w', encoding='utf-8') as file:
+                yaml.dump(config, file)
+            print(f"成功修改voice值为: {timbre_model}，并保留了所有注释")
+            return {"status_code": 200, "detail": f"成功修改"}
+
+    except Exception as e:
+        return {"status_code": 500, "detail": f"发生未知错误: {str(e)}"}
+
+
+@app.post("/play_any_mp3")
+async def play_anyt(request: Any_mp3):
+    mp3_writing = request.mp3_writing
+    try:
+        pwd = add_voice(mp3_writing)
+        process = subprocess.Popen(
+            ["play", str(pwd)],
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE,
+            preexec_fn=os.setsid
+        )
+        # 等待进程完成
+        process.wait()
+        if process.returncode == 0:
+            # 播放完成后删除文件
+            try:
+                os.remove(str(pwd))
+                logger.info(f"音频文件已删除: {pwd}")
+            except Exception as e:
+                logger.error(f"删除音频文件失败: {str(e)}")
+
+            return {"success": True, "message": "音频播放成功"}
+        else:
+            error_msg = process.stderr.read().decode().strip()
+            logger.error(f"音频播放失败: {error_msg}")
+            return {"success": False, "message": f"音频播放失败: {error_msg}", "code": 500}
+    except ValueError as e:
+        logger.error(f"验证失败: {str(e)}")
+        return {"success": False, "message": str(e), "code": 400}
+    except Exception as e:
+        logger.error(f"播放音频出错: {str(e)}")
+        return {"success": False, "message": f"发生未知错误: {str(e)}", "code": 500}
+
+
+@app.get("/volume_status")
+async def volume_status():
+    volume = GlobalConf.volume_num
+    return {"success": True, "volume": volume, "code": 200}
+
+
+@app.put("/no_face")  # 未识别到人时候的更新音频接口
+def upd_face_video(request: Update_audio_recognized):
+    code = request.code
+    text = request.text
+    voice_dir = os.path.join(os.path.dirname(__file__), "voice")
+    if code == 1:
+        voice_file = os.path.join(voice_dir, f"show.mp3")
+        full_message = f"{text}"
+        while True:
+            success = make_tts_kedaxunfei(
+                logger,
+                GlobalConf.app_id,
+                GlobalConf.api_key,
+                GlobalConf.vcn,
+                full_message,
+                voice_file
+            )
+            if success:
+                break
+        if os.path.exists(voice_file):
+            audio = AudioSegment.from_mp3(voice_file)
+            wav_path = os.path.join(voice_dir, f"show.wav")
+            audio.export(wav_path, format="wav")
+            logger.info(f"成功生成WAV文件: {wav_path}")
+            os.remove(voice_file)
+            logger.info(f"已删除临时MP3文件: {voice_file}")
+            return {"code": 200, "message": "show文件已成"}
+        else:
+            logger.error(f"生成MP3文件失败: {voice_file}")
+            return {"code": 500, "message": "生成show.MP3文件失败"}
+    elif code == 2:
+        voice_file = os.path.join(voice_dir, f"fail.mp3")
+        full_message = f"{text}"
+        while True:
+            success = make_tts_kedaxunfei(
+                logger,
+                GlobalConf.app_id,
+                GlobalConf.api_key,
+                GlobalConf.vcn,
+                full_message,
+                voice_file
+            )
+            if success:
+                break
+        if os.path.exists(voice_file):
+            audio = AudioSegment.from_mp3(voice_file)
+            wav_path = os.path.join(voice_dir, f"fail.wav")
+            audio.export(wav_path, format="wav")
+            logger.info(f"成功生成WAV文件: {wav_path}")
+            os.remove(voice_file)
+            logger.info(f"已删除临时MP3文件: {voice_file}")
+            return {"code": 200, "message": "fail文件已生成"}
+        else:
+            logger.error(f"生成MP3文件失败: {voice_file}")
+            return {"code": 500, "message": "生成fail.MP3文件失败"}
+    else:
+        return {"code": 400, "message": "无效的请求/未知的参数"}
+
+
+@app.put("/set_identify_sta")
+def udp_indentify(reques: Identify_s):
+    sta = reques.sta
+    if sta not in ["online", "realtime"]:
+        logger.error(f"无效的identify_sta参数: {sta}")
+        return {"code": 400, "message": "参数必须是'online'或'realtime'"}
+    try:
+        basic_path = os.path.join(os.path.dirname(__file__), "conf", "basic.py")
+        with open(basic_path, "r", encoding="utf-8") as f:
+            lines = f.readlines()
+        found = False
+        for i, line in enumerate(lines):
+            if "identify_sta =" in line:
+                lines[i] = f'    identify_sta = "{sta}"\n'
+                found = True
+                break
+        if not found:
+            logger.error("未找到identify_sta配置项")
+            return {"code": 500, "message": "配置项不存在"}
+        temp_path = basic_path + ".tmp"
+        with open(temp_path, "w", encoding="utf-8") as f:
+            f.writelines(lines)
+        os.replace(temp_path, basic_path)
+        logger.info(f"成功更新identify_sta为: {sta}")
+        return {"code": 200, "message": "配置更新成功", "data": {"identify_sta": sta}}
+    except Exception as e:
+        logger.error(f"更新identify_sta失败: {str(e)}")
+        return {"code": 500, "message": f"配置更新失败: {str(e)}"}
+
+
+@app.post("/invoice_add")
+async def upload_xlsx_c(file: UploadFile = File(...)):
+    try:
+        os.makedirs("chicken_xl", exist_ok=True)
+        filename = file.filename
+        if not filename.endswith('.xlsx'):
+            return {"code": 400, "message": "仅支持.xlsx格式文件"}
+        for old_file in os.listdir("chicken_xl"):
+            if old_file.endswith('.xlsx'):
+                os.remove(os.path.join("chicken_xl", old_file))
+                logger.info(f"已删除旧文件: {old_file}")
+        save_path = os.path.join("chicken_xl", filename)
+        with open(save_path, "wb") as f:
+            content = await file.read()
+            f.write(content)
+        return {"code": 200, "message": "文件上传成功", "filename": filename}
+    except Exception as e:
+        logger.error(f"文件上传失败: {str(e)}")
+        return {"code": 500, "message": f"文件上传失败: {str(e)}"}
+
+
+@app.get("/get_xlsx_filename")
+async def get_xlsx_filename_voice(download: bool = False):
+    try:
+        if not os.path.exists("chicken_xl"):
+            return {"code": 404, "message": "目录不存在"}
+        xlsx_files = [f for f in os.listdir("chicken_xl") if f.endswith('.xlsx')]
+        if not xlsx_files:
+            return {"code": 404, "message": "未找到xlsx文件"}
+        file_path = os.path.join("chicken_xl", xlsx_files[0])
+        if download:
+            response = FileResponse(
+                file_path,
+                media_type="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+                filename=xlsx_files[0]
+            )
+            response.headers["Content-Disposition"] = f"attachment; filename={xlsx_files[0]}"
+            return response
+        return {
+            "code": 200,
+            "message": "获取文件名成功",
+            "filename": xlsx_files[0],
+            "filepath": file_path,
+            "download_url": f"/get_xlsx_filename?download=true"
+        }
+    except Exception as e:
+        logger.error(f"获取xlsx文件名失败: {str(e)}")
+        return {"code": 500, "message": f"获取文件名失败: {str(e)}"}
+
+
+@app.put("/set_config_basic")
+def set_basic_code(request: Yx_indentify_code):
+    through1 = request.through_1  # 第一次识别间隔
+    through2 = request.through_2  # 第二次识别间隔
+    interval_time1 = request.interval_time  # 失败时识别间隔
+    interval_code1 = request.interval_code  # 失败时动作编码
+    action_code1 = request.action_code_1  # 第一次识别动作编码
+    action_code2 = request.action_code_2  # 第二次识别动作编码
+    ident_num = request.identifications_num  # 识别次数
+
+    if through1 < 7:
+        return {"code": 400, "message": "第一次识别间隔时长不能小于7秒"}
+    if through2 < 7:
+        return {"code": 400, "message": "第二次识别间隔时长不能小于7秒"}
+    if interval_time1 < 5:
+        return {"code": 400, "message": "失败时识别间隔时长不能小于5秒"}
+
+    basic_path = os.path.join(os.path.dirname(__file__), "conf", "basic.py")
+    with open(basic_path, "r", encoding="utf-8") as f:
+        lines = f.readlines()
+    config_mapping = {
+        "through_1": through1,
+        "through_2": through2,
+        "interval_time": interval_time1,
+        "interval_code": interval_code1,
+        "action_code_1": action_code1,
+        "action_code_2": action_code2,
+        "identifications_num": ident_num
+    }
+    modified = False
+    for i, line in enumerate(lines):
+        for config_name, config_value in config_mapping.items():
+            if f"{config_name} =" in line:
+                lines[i] = f'    {config_name} = {config_value}\n'
+                modified = True
+
+    if modified:
+        temp_path = basic_path + ".tmp"
+        with open(temp_path, "w", encoding="utf-8") as f:
+            f.writelines(lines)
+        os.replace(temp_path, basic_path)
+        logger.info(
+            f"成功更新配置: through_1={through1}, through_2={through2}, interval_time={interval_time1}, action_code_1={action_code1}, "
+            f"action_code_2={action_code2}, interval_code = {interval_code1}, identifications_num = {ident_num}")
+        return {"code": 200, "message": "配置更新成功"}
+    else:
+        logger.error("未找到需要修改的配置项")
+        return {"code": 500, "message": "配置项不存在"}
+
+
+@app.post("/file_voice_upd")  # 更新失败音频
+def f_voice_upd(text: str = Form(...)):
+    try:
+        add_fail(text)
+        return {"code": 200, "message": "success"}
+    except Exception as e:
+        logger.error(f"Build failed: {str(e)}")
+        return {"code": 500, "message": f"Build failed: {str(e)}"}
+
+
+@app.get("/headcount_num")
+def headcount_num():
+    basic_path = os.path.join(os.path.dirname(__file__), "conf", "basic.py")
+    with open(basic_path, "r", encoding="utf-8") as f:
+        for line in f:
+            if "excel_name =" in line:
+                current_excel_name = line.split('=')[1].strip().strip('"\'')
+                break
+        else:
+            current_excel_name = GlobalConf.excel_name  # 回退到默认值
+    excel_path = os.path.join("name_file", current_excel_name)
+    wb = load_workbook(excel_path)
+    sheet = wb.active
+    all_names = [row[0] for row in sheet.iter_rows(min_row=1, values_only=True) if row[0]]
+    all_num = len(all_names)
+    checked = 0
+    if os.path.exists(GlobalConf.sign_in_file):
+        try:
+            with open(GlobalConf.sign_in_file, 'r', encoding='utf-8') as f:
+                content = f.read().strip()
+                if content:
+                    sign_data = json.loads(content)
+                else:
+                    sign_data = {}
+                checked = len(sign_data)
+        except Exception as e:
+            logger.info(f"ERROR 读取签到文件失败: {str(e)}")
+            checked = 0
+    not_checked = max(all_num - checked, 0)
+    return {"code": 200, "message": "success", "all": all_num, "checked": checked, "not_checked": not_checked}
+
+
+@app.get("/patterns")
+def identify_patterns():
+    # 从配置文件直接读取最新值
+    basic_path = os.path.join(os.path.dirname(__file__), "conf", "basic.py")
+    with open(basic_path, "r", encoding="utf-8") as f:
+        for line in f:
+            if "identify_sta =" in line:
+                sta = line.split('=')[1].strip().strip('"\'')
+                break
+        else:
+            sta = GlobalConf.identify_sta  # 回退到默认值
+
+    result = sta == 'online'
+    return {"code": 200, "message": "success", "status": result}
+
+
+@app.get("/cache_json/{sta}")
+def get_speech_data(sta: str, user_id: str = None):
+    from datetime import datetime
+    try:
+        conf_dir = os.path.join(os.path.dirname(__file__), "conf")
+        if sta == "spe":
+            if not user_id:
+                return {"code": 400, "message": "user_id不能为空"}
+            json_path = os.path.join(conf_dir, "speech_json.json")
+            key1, key2 = "speech1", "speech2"
+        elif sta == "fail":
+            json_path = os.path.join(conf_dir, "failed_json.json")
+            key1, key2 = "failed", None
+        else:
+            return {"code": 400, "message": "参数错误"}
+        if not os.path.exists(json_path):
+            return {"code": 404, "message": "文件不存在"}
+        with open(json_path, "r", encoding="utf-8") as f:
+            data = json.load(f)
+        result = []
+        for timestamp, content in data.items():
+            try:
+                if sta == "spe" and content.get("user_id") != user_id:
+                    continue
+                dt = datetime.fromtimestamp(int(timestamp))
+                formatted_time = dt.strftime("%Y-%m-%d %H:%M:%S")
+                item = {
+                    "time": formatted_time,
+                    "content1": content[key1]
+                }
+                if sta == "spe":
+                    item["user_id"] = content.get("user_id")
+                if key2:
+                    item["content2"] = content[key2]
+                result.append(item)
+            except Exception as e:
+                logger.error(f"处理数据时出错: {str(e)}")
+                continue
+        return {
+            "code": 200,
+            "message": "success",
+            "data": sorted(result, key=lambda x: x["time"], reverse=True)
+        }
+    except Exception as e:
+        logger.error(f"读取{sta}数据失败: {str(e)}")
+        return {"code": 500, "message": f"读取数据失败: {str(e)}"}
+
+
+@app.get("/download_xlsx_file")
+async def download_xlsx_file():
+    try:
+        # 检查目录是否存在
+        if not os.path.exists("chicken_xl"):
+            return {"code": 404, "message": "目录不存在"}
+        xlsx_files = [f for f in os.listdir("chicken_xl") if f.endswith('.xlsx')]
+        if not xlsx_files:
+            return {"code": 404, "message": "未找到xlsx文件"}
+        file_path = os.path.join("chicken_xl", xlsx_files[0])
+        return FileResponse(
+            file_path,
+            media_type="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+            filename=xlsx_files[0]
+        )
+    except Exception as e:
+        logger.error(f"下载xlsx文件失败: {str(e)}")
+        return {"code": 500, "message": f"下载文件失败: {str(e)}"}
+
+
+@app.get('/aiot/get_devices')
+def get_aiot_devices():
+    """获取智能设备"""
+    devices = list(aiot_controller.resource_info.keys())
+    return {"code": 200, "message": "success", "data": devices}
+
+
+@app.post('/aiot/switch_device')
+def control_aiot_device(device: str = Body(..., embed=True), switch: str = Body(..., embed=True)):
+    """
+        控制智能设备
+    :param device: 设备名称  ceiling_light
+    :param switch: 开关状态  open/close
+    """
+    res, msg = aiot_controller.control_device_power(device, switch)
+    if res:
+        return {"code": 200, "message": "success", "data": ''}
+    else:
+        return {"code": 500, "message": msg}
+
+
+@app.get('/aiot/get_scenes')
+def get_aiot_scenes():
+    """获取智能场景"""
+    scenes = []
+    for k, v in aiot_controller.scenes_id.items():
+        scenes.append({
+            "name": '明灯模式' if k == 'scene_001' else '灭灯模式',
+            "id": k
+        })
+    return {"code": 200, "message": "success", "data": scenes}
+
+
+@app.post('/aiot/switch_scene')
+def switch_aiot_scene(scene: str = Body(..., embed=True)):
+    """切换智能场景"""
+    res, msg = aiot_controller.execute_scene(scene)
+    if res:
+        return {"code": 200, "message": "success", "data": ''}
+    else:
+        return {"code": 500, "message": msg}
+
+
+config_path = '/home/ict/robot_ai/config/dify.yaml'
+# config_path = 'D:/huaSuRobbot/robot_ai_V2/config/dify.yaml'
+@app.get('/llm/settings/model-switch-enable')
+def get_model_switch_enable():
+    """获取切换模型开关(注意把robot_ai_running_path修改为语言robot_ai运行的目录)"""
+    if not os.path.exists(config_path):
+        return {"code": 500, "message": "Dify配置文件不存在"}
+    try:
+        with open(config_path, 'r', encoding='utf-8') as f:
+            dify_config = yaml.safe_load(f)
+        is_enable = dify_config.get('models', {}).get('switch', False)
+        return {"code": 200, "message": "success", "data": is_enable}
+    except Exception as e:
+        return {"code": 500, "message": f"写入文件失败: {str(e)}"}
+
+@app.post('/llm/settings/model-switch')
+def model_switch_enable(enable: bool = Body(..., embed=True)):
+    """是否运行切换模型(注意把robot_ai_running_path修改为语言robot_ai运行的目录)"""
+    if not os.path.exists(config_path):
+        return {"code": 500, "message": "Dify配置文件不存在"}
+    try:
+        with open(config_path, 'r', encoding='utf-8') as f:
+            dify_config = yaml.safe_load(f)
+        # 修改current_model
+        dify_config['models']['switch'] = enable
+        # 写回配置文件
+        with open(config_path, 'w', encoding='utf-8') as f:
+            yaml.safe_dump(dify_config, f, default_flow_style=False, allow_unicode=True)
+        return {"code": 200, "message": "success", "data": ''}
+    except Exception as e:
+        return {"code": 500, "message": f"写入文件失败: {str(e)}"}
+
+
+@app.get('/llm/models')
+def get_llm_models():
+    """获取所有模型"""
+    if not os.path.exists(config_path):
+        return {"code": 500, "message": "Dify配置文件不存在"}
+    try:
+        with open(config_path, 'r', encoding='utf-8') as f:
+            dify_config = yaml.safe_load(f)
+        # 获取所有模型及其dify_type
+        models_config = dify_config.get('models', {})
+        model_info = []
+        # 排除非模型配置项
+        exclude_keys = ['switch', 'api-key', 'url', 'current_model']
+        for key, value in models_config.items():
+            if key not in exclude_keys and isinstance(value, dict):
+                model_info.append(value.get('dify_type'))
+        return {"code": 200, "message": "success", "data": model_info}
+    except Exception as e:
+        return {"code": 500, "message": f"写入文件失败: {str(e)}"}
+
+
+@app.post('/llm/models/switch')
+def switch_model(model_name: str = Body(..., embed=True)):
+    """切换模型"""
+    if not os.path.exists(config_path):
+        return {"code": 500, "message": "Dify配置文件不存在"}
+    try:
+        with open(config_path, 'r', encoding='utf-8') as f:
+            dify_config = yaml.safe_load(f)
+        # 修改current_model
+        dify_config['models']['current_model'] = model_name
+        # 写回配置文件
+        with open(config_path, 'w', encoding='utf-8') as f:
+            yaml.safe_dump(dify_config, f, default_flow_style=False, allow_unicode=True)
+        return {"code": 200, "message": "success", "data": ''}
+    except Exception as e:
+        return {"code": 500, "message": f"写入文件失败: {str(e)}"}
+
+
+def main() -> None:
+    logger.info("准备启动系统")
+    init_logger()
+    run_action(LoggerInstance.logger_service)
+    time.sleep(0.1)
+    LoggerInstance.logger_main.info("加载服务框架")
+    uvicorn.run(app=app,
+                host='0.0.0.0', port=34555, log_config=LOGGING_CONFIG,
+                reload_dirs=[os.path.dirname(os.path.abspath(__file__))])
+
+
+if __name__ == "__main__":
+    main()
+

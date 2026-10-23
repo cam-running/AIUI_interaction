@@ -1,0 +1,372 @@
+#!/usr/bin/env python3
+# coding=utf-8
+from utils.logger import logger
+from core.aiui.recorder import SpmRecorder
+from core.aiui.recorder import Recorder
+import handlers.aiui.pyaiui as pyaiui
+from handlers.aiui.pyAIUIConstant import AIUIConstant
+import json5
+import os
+import sys
+import json
+from threading import Thread
+import time
+from handlers.aiui.EventListener import EventListener, EventData
+from pathlib import Path
+from core.aiui.ws_recorder import WsVadAudioRecorder
+from core.aiui.audio_segment import VadSegmentCollector
+
+import os
+import configparser
+
+CONFIG_PATH = "/etc/spm/nc2.conf"
+_MIC_MODE_CACHE = None  # 简单缓存，避免每次都读文件
+
+def get_mic_mode_from_config(logger) -> int:
+    """
+    从 /etc/spm/nc2.conf 读取录音模式:
+      1 -> 使用 U7K Recorder
+      6 -> 使用 NC2 SpmRecorder
+    读不到或出错时，默认返回 1（U7K），并打日志。
+    """
+    global _MIC_MODE_CACHE
+    if _MIC_MODE_CACHE is not None:
+        return _MIC_MODE_CACHE
+
+    mode = 1  # 默认值：U7K
+    if not os.path.exists(CONFIG_PATH):
+        logger.warning(f"配置文件 {CONFIG_PATH} 不存在，使用默认录音模式 mode=1(U7K)")
+        _MIC_MODE_CACHE = mode
+        return mode
+
+    cfg = configparser.ConfigParser()
+    try:
+        cfg.read(CONFIG_PATH, encoding="utf-8")
+        if cfg.has_section("record") and cfg.has_option("record", "mode"):
+            raw = cfg.get("record", "mode").strip()
+            try:
+                mode = int(raw)
+            except ValueError:
+                logger.error(f"配置文件 {CONFIG_PATH} 中 mode='{raw}' 非法，使用默认 mode=1(U7K)")
+                mode = 1
+        else:
+            logger.warning(f"配置文件 {CONFIG_PATH} 中缺少 [record]/mode，使用默认 mode=1(U7K)")
+    except Exception as e:
+        logger.error(f"读取配置文件 {CONFIG_PATH} 失败: {e}，使用默认 mode=1(U7K)")
+        mode = 1
+
+    _MIC_MODE_CACHE = mode
+    logger.info(f"录音模式配置加载完成: mode={mode}")
+    return mode
+
+
+CHUNK = 2048
+
+# 使用相对路径配置
+script_path = Path(__file__).resolve()
+BASE_DIR = script_path.parent.parent.parent
+cfg_file = os.path.join(BASE_DIR, "config", "aiui", "cfg", "aiui.cfg")
+
+WAITING = 0
+ABORT = -1
+ALLOW = 1
+
+
+
+
+def read_json5(path):
+    try:
+        with open(path, "r", encoding="utf-8") as f:
+            return json5.loads(f.read())
+    except Exception as e:
+        logger.error("{},{}".format(e, __file__))
+    return None
+
+
+class AIUINode():
+    def __init__(self, event_listener, debug=False, wakeup_mute=False):
+        self.agent_status = None
+        event_listener.set_agent(self)
+        self.event_listener = event_listener
+        self.agent = pyaiui.IAIUIAgent.createAgent(json5.dumps(
+            read_json5(cfg_file), quote_keys=True), event_listener)
+        self.__recorder_ = None
+        self.is_recording = False
+        self.recorder_states = WAITING  # -1:中断状态;0:等待状态;1:允许录音状态
+        self.wakeup_mute = wakeup_mute
+        self.is_hlw = False
+        self.set_is_hlw()
+        self.running = True
+        self._seg_collector = VadSegmentCollector(sample_rate=16000, max_ms=15000, min_ms=800, tail_ms=0, logger=logger)
+
+
+
+    @property
+    def recorder(self):
+        mic_mode = get_mic_mode_from_config(logger)
+        """对外暴露的录音器属性，懒加载 Recorder(CHUNK)"""
+        if self.__recorder_ is None:
+            if mic_mode==1:
+                logger.info("使用U7K Recorder")
+                # 这里的 Recorder 来自 core.aiui.recorder
+                # 我们已经在 recorder.py 里让 Recorder = FrontendRecorder
+                self.__recorder_ = Recorder(chunk=CHUNK)
+            else:
+                logger.info("使用NC3 WS Recorder(PCM)")
+                self.__recorder_ = WsVadAudioRecorder(
+                    host="127.0.0.1",
+                    port=7000,
+                    path="/",
+                    on_wakeup=self._on_ws_wakeup,
+                )
+                # logger.info("使用NC2 Recorder")
+                # self.__recorder_ = SpmRecorder(
+                #     chunk=CHUNK,
+                #     host="127.0.0.1",
+                #     port=7000,
+                # )
+        return self.__recorder_
+    
+    def text_to_speak_multiple_options_callback(self, text, vcn="qige", speed=50, pitch=50, volume=50):
+        self.cmd_tts(text, vcn, speed, pitch, volume)
+        return True
+
+    def direct_control_callback(self, text):
+        self.event_listener.EventNLP(EventData({"text": text}))
+        return True
+
+    def text_to_speak_callback(self, text):
+        self.cmd_tts(text)
+        return True
+
+    def _on_ws_wakeup(self, keyword: str):
+        """WS 唤醒事件回调：触发事件语音与录音流程"""
+        logger.info(f"WS唤醒事件")
+        try:
+            if keyword:
+                self.event_listener.eventTtsBySendText("wakeup",keyword)
+            else:
+                self.event_listener.play_wakeup_phrase()
+        except Exception as e:
+            logger.debug(f"WS唤醒事件通知失败: {e}")
+        self.wakeup_callback()
+
+    def set_is_hlw(self):
+        # 简化HLW检测逻辑
+        self.is_hlw = False
+
+    def cmd_tts(self, text, vcn="qige", speed=50, pitch=50, volume=50):
+        text = pyaiui.Buffer.create(bytes(text, encoding="utf-8"))
+        TTSMsg = pyaiui.IAIUIMessage.create(
+            AIUIConstant.CMD_TTS, 1, 0, "text_encoding=utf-8,vcn={},ent=x,speed={},pitch={},volume={}".format(vcn, speed, pitch, volume), text)
+        self.agent.sendMessage(TTSMsg)
+        TTSMsg.destroy()
+
+    def cmd_tts_stop(self):
+        text = pyaiui.Buffer.create(bytes("", encoding="utf-8"))
+        TTSMsg = pyaiui.IAIUIMessage.create(
+            AIUIConstant.CMD_TTS, 2, 0, "text_encoding=utf-8,vcn=qige,ent=x", text)
+        self.agent.sendMessage(TTSMsg)
+        TTSMsg.destroy()
+
+    def wakeup_callback(self, msg=None):
+        self.recorder_states = ABORT  # 中断上一次录音等待
+        self.getState()
+        # if self.is_recording:
+        #     self.reset_wakeup_agent()
+        #     self.is_recording = False
+        if self.agent_status != AIUIConstant.STATE_WORKING:
+            self.wakeup_agent()
+
+        # 简化唤醒处理，直接开始录音
+        logger.info("🎤 AIUI唤醒，开始录音")
+        self.recorder_states = ALLOW  # 直接允许录音
+        Thread(target=self.__wait_play_to_start_record).start()
+
+    def __wait_play_to_start_record(self):
+        # 简化等待逻辑，直接开始录音
+        self.recorder_states = ALLOW  # 直接赋值允许录音
+        self.start_record()
+
+    def start_record(self):
+        logger.info("开始录音...")
+        self.is_recording = True
+        if self.is_hlw == False:
+            logger.info("启动非HLW录音模式")
+            # 使用连续录音循环
+            import threading
+            threading.Thread(target=self.__continuous_record,
+                             daemon=True).start()
+        else:
+            logger.info("HLW录音模式已启用")
+
+    def __start_record(self):
+        """单次录音会话"""
+        logger.info("录音流已启动，开始接收音频数据...")
+        audio_count = 0
+        recorder = self.recorder
+        # for data in self.recorder.read():
+        #     if self.is_recording:
+        #         audio_count += 1
+        #         if audio_count % 100 == 0:  # 每100个音频块记录一次
+        #             logger.info(f"已接收 {audio_count} 个音频块")
+        #         self.audio_stream_callback(data)
+        #     else:
+        #         logger.info("录音已停止")
+        #         break
+        # logger.info(f"录音流结束，总共接收 {audio_count} 个音频块")
+        
+        for item in self.recorder.read():
+            if not self.is_recording:
+                break
+
+            # WS recorder: (vad_status, pcm, meta)
+            if isinstance(item, tuple) and len(item) == 3:
+                vad_status, pcm, meta = item
+                audio_count += 1
+                # logger.info(f"WS已接收 {audio_count} 个音频块:{vad_status}")
+                self.audio_stream_callback((vad_status, pcm, meta))
+                if vad_status == 3:
+                    # 一次录音结束
+                    logger.info("NC提交一次对话")
+                    self.stop_write() 
+                    continue
+            else:
+                # 兼容HS原来的 recorder bytes
+                audio_count += 1
+                self.audio_stream_callback(item)
+                if audio_count % 100 == 0:  # 每100个音频块记录一次
+                    logger.info(f"MC已接收 {audio_count} 个音频块")
+
+
+    def __continuous_record(self):
+        """连续录音循环"""
+        while self.running and self.recorder_states == ALLOW:
+            self.is_recording = True
+            self.__start_record()
+            # if not (self.running and self.recorder_states == ALLOW):
+            #     break
+            # 录音结束后短暂等待
+            # WS 模式不需要 sleep，否则会产生 1s 的录音空窗
+            if isinstance(self.recorder, WsVadAudioRecorder):
+                continue
+            if self.running and self.recorder_states == ALLOW:
+                logger.info("等待重新开始录音...")
+                time.sleep(1)
+
+    # def audio_stream_callback(self, data):
+    #     if self.is_recording:
+    #         if self.is_hlw:
+    #             audio_buffer = pyaiui.Buffer.create(data.data)
+    #             self.record_stream_call_back(data.data)
+    #         else:
+    #             audio_buffer = pyaiui.Buffer.create(data)
+    #             self.record_stream_call_back(data)
+    #         self.cmd_write_audio(audio_buffer)
+    #     else:
+    #         logger.debug("录音已停止，跳过音频数据处理")
+    def audio_stream_callback(self, data):
+        if not self.is_recording:
+            return
+
+        # WS: (vad_status, pcm, meta)
+        if isinstance(data, tuple) and len(data) == 3:
+            vad_status, pcm, meta = data
+            ts_ms = int(meta.get("ts_ms", 0) or 0)
+
+            # 你如果仍需把音频写入 AIUI 引擎（可选）
+            audio_buffer = pyaiui.Buffer.create(pcm)
+            self.cmd_write_audio(audio_buffer)
+
+            # 汇聚成段（vad_end 时产出）
+            seg = self._seg_collector.feed(int(vad_status), pcm, ts_ms=ts_ms)
+            if seg is not None:
+                dur_s = len(seg.pcm) / 2 / 16000.0
+                logger.info(f"[ASR] segment ready: {len(seg.pcm)} bytes, {dur_s:.2f}s")
+                # TODO: 在这里调用你的 ASR
+                # text = self.asr(seg.pcm, sample_rate=seg.sample_rate)
+                # logger.info(f"[ASR] text={text}")
+            return
+
+        # ---- 原逻辑（bytes）保持不变 ----
+        pcm = data.data if hasattr(data, "data") else data
+        audio_buffer = pyaiui.Buffer.create(pcm)
+        self.cmd_write_audio(audio_buffer)
+
+
+    def record_stream_call_back(self, buffer):
+        pass
+
+    def wakeup_agent(self):
+        wakeup_msg = pyaiui.IAIUIMessage.create(AIUIConstant.CMD_WAKEUP)
+        self.agent.sendMessage(wakeup_msg)
+        wakeup_msg.destroy()
+
+    def reset_wakeup_agent(self):
+        reset_wakeup_msg = pyaiui.IAIUIMessage.create(
+            AIUIConstant.CMD_RESET_WAKEUP)
+        self.agent.sendMessage(reset_wakeup_msg)
+        reset_wakeup_msg.destroy()
+
+    def getState(self):
+        get_state_msg = pyaiui.IAIUIMessage.create(AIUIConstant.CMD_GET_STATE)
+        self.agent.sendMessage(get_state_msg)
+        get_state_msg.destroy()
+
+    def cmd_write_audio(self, audio_buffer):
+        writeMsg = pyaiui.IAIUIMessage.create(
+            AIUIConstant.CMD_WRITE, 0, 0, "data_type=audio", audio_buffer)
+        self.agent.sendMessage(writeMsg)
+        writeMsg.destroy()
+        # 添加调试日志，每1000个音频块记录一次
+        if hasattr(self, '_audio_sent_count'):
+            self._audio_sent_count += 1
+        else:
+            self._audio_sent_count = 1
+
+        if self._audio_sent_count % 1000 == 0:
+            logger.info(f"已发送 {self._audio_sent_count} 个音频块给AIUI引擎")
+
+    def cmd_write_text(self, text):
+        text = pyaiui.Buffer.create(bytes(text, encoding="utf-8"))
+        writeMsg = pyaiui.IAIUIMessage.create(
+            AIUIConstant.CMD_WRITE, 0, 0, "data_type=text", text)
+        self.agent.sendMessage(writeMsg)
+        writeMsg.destroy()
+
+    def stop_write(self):
+        writeMsgStop = pyaiui.IAIUIMessage.create(
+            AIUIConstant.CMD_STOP_WRITE, params="data_type=audio")
+        self.agent.sendMessage(writeMsgStop)
+        writeMsgStop.destroy()
+
+    def start(self, spin=True):
+        self.cmd_tts_stop()
+        # 唤醒AIUI引擎
+        logger.info("正在唤醒AIUI引擎...")
+        self.reset_wakeup_agent()
+
+        # 等待引擎启动
+        time.sleep(1)
+
+        # 设置录音状态为允许录音
+        logger.info("设置录音状态为允许录音...")
+        self.recorder_states = ALLOW
+
+        # 启动录音
+        logger.info("正在启动录音...")
+        self.start_record()
+
+        if spin:  # 是否阻塞运行
+            while self.running:
+                time.sleep(0.1)
+
+    def shutdown(self):
+        self.running = False
+
+
+def load_sn():
+    return "yd-00:00:00:00:00:01"
+
+
+pyaiui.AIUISetting.setSystemInfo("sn", load_sn())

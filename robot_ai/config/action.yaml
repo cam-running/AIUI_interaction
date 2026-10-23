@@ -1,0 +1,75 @@
+# 机器人动作指令常量
+actions:
+  # 基础动作常量
+  # SALUTE: "SALUTE"  # 敬礼
+  LOVE_PRINT: "LOVE_PRINT"  # 比心
+  # SPREAD_ARMS_HORIZONTALLY: "SPREAD_ARMS_HORIZONTALLY"  # 水平展开双臂
+  RAISE_HANDS: "RAISE_HANDS"  # 抬起双臂
+  # RIGHT_HAND_GUIDING: "RIGHT_HAND_GUIDING"  # 右手引导
+  # LEFT_HAND_GUIDING: "LEFT_HAND_GUIDING"  # 左手引导
+  END_HANDSHAKE: "END_HANDSHAKE"  # 结束握手
+  # TURN_AROUND_WAVE_HAND: "TURN_AROUND_WAVE_HAND"  # 转身挥手
+  WAVE_HAND: "WAVE_HAND"  # 挥手
+  KEEP_HANDSHAKE: "KEEP_HANDSHAKE"  # 保持握手
+  AUTO_DROP_HANDSHAKE: "AUTO_DROP_HANDSHAKE"  # 握手结束自动放下
+
+# 动作指令字典
+action_dict:
+  BEFORE: 1001  # 前
+  BACK: 1002    # 后
+  LEFT: 1003    # 左
+  RIGHT: 1004   # 右
+  TURN_LEFT: 1005
+  TURN_RIGHT: 1006
+  # RESET: 2000   # 重置
+  # KEEP_HANDSHAKE: 2001  # 保持握手
+  # END_HANDSHAKE: 2002   # 结束握手
+  # WAVE_HAND: 2003       # 挥手
+  # TURN_AROUND_WAVE_HAND: 2004  # 转身挥手
+  # AUTO_DROP_HANDSHAKE: 2005    # 握手结束自动放下
+  # RAISE_HAND_TO_CHEST: 2006    # 抬起双臂到胸部
+  # SPREAD_ARMS_HORIZONTALLY: 2007  # 水平展开双臂
+  # LEFT_HAND_GUIDING: 2008      # 左手引导
+  # RIGHT_HAND_GUIDING: 2009     # 右手引导
+  # LEFT_TWIST_HANDS_UP: 2010    # 左手向上 twisting
+  # RIGHT_TWIST_HANDS_UP: 2011   # 右手向上 twisting
+  # RAISE_PLATE_TO_CHEST: 2012   # 抬起 Plate 到胸部
+  # RAISE_GLASS: 2013            # 抬起 Glass
+  # LOVE_PRINT: 2014             # 比心
+  # HUGGING: 2015                # 拥抱
+  # SALUTE: 2016                 # 敬礼
+  # BATTLE_POSE: 3056            # 战斗姿态
+  # HAND_CAMERA: 3057            # 手部相机
+  RESET: 99   # 重置
+  KEEP_HANDSHAKE: 27  # 保持握手
+  END_HANDSHAKE: 27   # 结束握手
+  WAVE_HAND: 26       # 挥手
+  # TURN_AROUND_WAVE_HAND: 2004  # 转身挥手
+  AUTO_DROP_HANDSHAKE: 27    # 握手结束自动放下
+  RAISE_HAND_TO_CHEST: 15    # 抬起双臂到胸部
+  # SPREAD_ARMS_HORIZONTALLY: 2007  # 水平展开双臂
+  # LEFT_HAND_GUIDING: 2008      # 左手引导
+  # RIGHT_HAND_GUIDING: 2009     # 右手引导
+  # LEFT_TWIST_HANDS_UP: 2010    # 左手向上 twisting
+  # RIGHT_TWIST_HANDS_UP: 2011   # 右手向上 twisting
+  # RAISE_PLATE_TO_CHEST: 2012   # 抬起 Plate 到胸部
+  # RAISE_GLASS: 2013            # 抬起 Glass
+  LOVE_PRINT: 20             # 比心
+  HUGGING: 19                # 拥抱
+  # SALUTE: 2016                 # 敬礼
+  BATTLE_POSE: 24            # 战斗姿态
+  HAND_CAMERA: 21            # 手部相机
+  # TWO_HAND_KISS: 11          # 双手飞吻
+  CLAP: 17                   # 鼓掌
+  HIGH_FIVE: 18              # 击掌
+  REJECT: 22                 # 拒绝
+  LEFT_KISS: 12              # 左手飞吻
+  RIGHT_KISS: 13             # 右手飞吻
+
+# 点位字典
+point_dict:
+  POINT_ONE: "1"    # 点位1
+  POINT_TWO: "2"    # 点位2
+  POINT_THREE: "3"  # 点位3
+  POINT_FOUR: "4"   # 点位4
+

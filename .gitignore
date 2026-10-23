@@ -1,0 +1,34 @@
+# 日志
+*.log
+global.log
+*.tmp
+
+# 编译产物
+build/
+devel/
+install/
+__pycache__/
+*.pyc
+*.pyo
+.idea/
+.vscode/
+*.egg-info/
+
+# 大文件/资源目录（按你目录里的内容）
+mp3/
+web_images/
+*.mp3
+*.wav
+*.pcm
+*.bag
+*.bag.active
+
+# 环境与密钥
+.env
+*.key
+*.pem
+secrets/
+# 超大AI模型文件
+robot_ai/config/aiui/esr/esr-ch_en.jet
+# 大二进制包
+robot_ai/docker/docker_file/docker-compose-linux-aarch64

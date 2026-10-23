@@ -1,0 +1,26 @@
+models:
+  api-key: app-CvpbsWQAnQN1ejnXKzCblT8J
+  current_model: xunfei
+  deepseek:
+    dify_type: deepseek
+  ernie:
+    dify_type: ernie
+  kimi:
+    dify_type: kimi
+  llama:
+    dify_type: llama
+  qwen2.5:
+    dify_type: qwen2.5
+  qwen3:
+    dify_type: qwen3
+  qwenvl:
+    dify_type: qwenvl
+  switch: true
+  xunfei:
+    dify_type: xunfei
+url: http://robot.yun36.com:8066/v1/chat-messages
+user: howsoGQ@qq.com
+vision:
+  recognize-api-key: app-wzRAbuWYxm9WiyY6fpQzA7Cu
+  recognize-url: http://robot.yun36.com:8066/v1/chat-messages
+  switch: true

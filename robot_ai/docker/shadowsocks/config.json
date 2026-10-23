@@ -1,0 +1,17 @@
+{
+    "server": "v.yun36.com",
+    "server_port": 5020,
+    "server_udp_port": 0,
+    "password": "zhaoseo1985gpt",
+    "method": "aes-256-cfb",
+    "protocol": "auth_sha1_v4",
+    "protocolparam": "",
+    "obfs": "tls1.2_ticket_auth",
+    "obfsparam": "",
+    "remarks_base64": "",
+    "group": "",
+    "enable": true,
+    "udp_over_tcp": false,
+    "local_address": "127.0.0.1",
+    "local_port": 1080
+}

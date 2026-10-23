@@ -1,0 +1,457 @@
+#!/usr/bin/env python3
+# coding=utf-8
+from handlers.xunfei.knowledge_handler import KnowledgeHandler
+from handlers.xunfei.intent_handler import IntentHandler
+from handlers.xunfei.nlp_handler import NLPHandler
+from handlers.xunfei.speech_handler import XunfeiSpeechHandler
+import time
+import handlers.aiui.pyaiui as pyaiui
+from handlers.aiui.pyAIUIConstant import AIUIConstant
+import json5
+import os
+import sys
+import random
+from utils.logger import logger
+
+# 导入xunfei的处理逻辑
+
+#### EVENT_RESULT ####
+IAT = "iat"     # 听写结果
+NLP = "nlp"     # 语义结果
+TPP = "tpp"     # 后处理服务结果
+TTS = "tts"     # 云端tts结果
+ITRANS = "itrans"   # 翻译结果
+
+NO_SKILL = 0
+IS_LOCAL_SKILL = 1
+IS_BOTH_AIUI_LOCAL_SKILL = 2
+LAST_TTS_FLAG_KEY = "lrst"
+IS_LAST_TTS_AUDIO = "1"
+EMPTY_PACKET = "AIUI DATA NULL"
+
+# 缓存配置，避免重复获取
+_config_cache = None
+_wakeup_words_cache = None
+_detection_config_cache = None
+
+
+class EventData(object):
+    def __init__(self, data):
+        self.data = data
+
+    def get_data(self):
+        return self.data
+
+
+class EventListener(pyaiui.AIUIEventListener):
+    def __init__(self, skills_dict, debug=False):
+        self.Event_Listener_dict = {
+            AIUIConstant.EVENT_STATE: self.getEventState,
+            AIUIConstant.EVENT_WAKEUP: self.eventWakeup,
+            AIUIConstant.EVENT_SLEEP: self.eventSleep,
+            #AIUIConstant.EVENT_VAD: self.eventVAD,
+            AIUIConstant.EVENT_RESULT: self.eventResult,
+            AIUIConstant.EVENT_ERROR: self.eventError,
+            AIUIConstant.EVENT_CONNECTED_TO_SERVER: self.eventConnectedToServer,
+            AIUIConstant.EVENT_SERVER_DISCONNECTED: self.eventServerDisconnected
+        }
+        self.local_custom_skills_dict = skills_dict
+        self.debug = debug
+        self.agent = None
+        self.param = None
+        self.content = None
+        self.is_aiui_local_skill = NO_SKILL
+        self.is_tts_reply = False
+        self.tts_processing = False  # 添加TTS处理状态标记
+        self.processing_intent = False  # 🔧 修复: 增加意图处理锁，防止NLP并行干扰
+
+        # 初始化xunfei处理器
+        self.speech_handler = XunfeiSpeechHandler()
+        self.nlp_handler = NLPHandler()
+        self.intent_handler = IntentHandler()
+        self.knowledge_handler = KnowledgeHandler()
+        # 把意图类注册到语音处理器
+        self.speech_handler.intent_handler = self.intent_handler
+        # 设置NLP处理器的意图处理器引用
+        self.nlp_handler.intent_handler = self.intent_handler
+        # 把iat处理器注册到nlp
+        self.nlp_handler.iat_handler = self.speech_handler
+
+    def _log_performance(self, event_type, start_time):
+        """记录性能统计"""
+        global _performance_stats
+
+        if self.debug:
+            end_time = time.time()
+            duration = (end_time - start_time) * 1000  # 转换为毫秒
+
+            if event_type not in _performance_stats['event_times']:
+                _performance_stats['event_times'][event_type] = []
+
+            _performance_stats['event_times'][event_type].append(duration)
+            _performance_stats['total_events'] += 1
+
+            # 计算平均时间
+            times = _performance_stats['event_times'][event_type]
+            avg_time = sum(times) / len(times)
+            _performance_stats['avg_times'][event_type] = avg_time
+
+            # 每100个事件输出一次性能统计
+            if _performance_stats['total_events'] % 100 == 0:
+                logger.info(
+                    f"📊 性能统计 (事件 {_performance_stats['total_events']}): {event_type} 平均耗时 {avg_time:.2f}ms")
+
+    def get_performance_stats(self):
+        """获取性能统计信息"""
+        return _performance_stats.copy()
+
+    def set_agent(self, agent):
+        self.agent = agent
+
+    def onEvent(self, event):
+        """agent事件回调解析"""
+        eventType = event.getEventType()
+        if eventType in self.Event_Listener_dict:
+            self.Event_Listener_dict[eventType](event)
+        else:
+            logger.info("接收到未处理的 EventType: {}".format(eventType))
+
+    def eventError(self, event):
+        logger.info(f"AIUI错误: code={event.getArg1()}, info={event.getInfo()}")
+        from utils.tts_client import play_text_async
+        if event.getArg1() == 10019:
+            play_text_async("非常抱歉，根据相关法律法规，我们无法提供关于以下内容的答案，谢谢您的理解。", use_cache=True)
+
+    def getEventState(self, event):
+        arg1 = event.getArg1()
+        self.agent.agent_status = arg1
+        logger.info(f"🔄 AIUI状态: {arg1}")
+
+    def eventWakeup(self, event):
+        logger.info("🎤 AIUI唤醒")
+
+    def eventSleep(self, event):
+        arg1 = event.getArg1()
+        if arg1 == AIUIConstant.TYPE_AUTO:
+            logger.info("😴 自动休眠")
+        if arg1 == AIUIConstant.TYPE_COMPEL:
+            logger.info("😴 强制休眠")
+            self.agent.wakeup_agent()
+
+    def eventVAD(self, event):
+        arg1 = event.getArg1()
+        if AIUIConstant.VAD_BOS == arg1:
+            logger.info("🎤 VAD:检测到前端点")
+        elif AIUIConstant.VAD_EOS == arg1:
+            logger.info("🎤 VAD:检测到后端点")
+            self.agent.is_recording = False
+
+    def eventConnectedToServer(self, event):
+        """处理与服务端连接建立事件"""
+        logger.info("🔗 AIUI已连接到服务器")
+
+    def eventServerDisconnected(self, event):
+        """处理与服务端断开连接事件"""
+        logger.info("🔌 AIUI与服务器断开连接")
+
+    def _extract_text_from_iat(self, resultJson):
+        """优化的文本提取方法，避免重复代码"""
+        try:
+            text_data = resultJson.get('text', {})
+            ws_list = text_data.get('ws', [])
+
+            # 使用列表推导式优化字符串拼接
+            words = [cw.get('w', '')
+                     for item in ws_list for cw in item.get('cw', [])]
+            return ''.join(words), text_data
+        except Exception as e:
+            logger.error(f"文本提取失败: {e}")
+            return "", {}
+
+    def eventResult(self, event):
+        try:
+            info = json5.loads(event.getInfo().encode("utf-8"))
+            datas = info["data"]
+            data0 = datas[0]
+            self.param = data0["params"]
+            contents = data0["content"]
+            content0 = contents[0]
+            self.content = content0
+
+            sub = self.param["sub"]
+
+            # 避免TTS重复输出
+            if sub == TTS and self.tts_processing:
+                # 如果正在处理TTS，只处理音频数据，不重复打印
+                pass
+            else:
+                logger.info(f"📝 收到AIUI结果，类型: {sub}")
+
+            dataBundle = event.getData()
+            cnt_id = content0["cnt_id"]
+
+            # 性能优化：根据结果类型分发处理
+            if sub == NLP:
+                self._process_nlp_result(dataBundle, cnt_id)
+            elif sub == IAT:
+                self._process_iat_result(dataBundle, cnt_id)
+            elif sub == TTS:
+                self._process_tts_result(content0, dataBundle, cnt_id)
+            elif sub == "cbm_semantic":
+                self._process_cbm_semantic_result(dataBundle, cnt_id)
+            elif sub == "cbm_knowledge":
+                self._process_cbm_knowledge_result(dataBundle, cnt_id)
+            else:
+                # 处理其他类型的结果 - 减少日志输出
+                if self.debug:
+                    self._process_other_result(sub, dataBundle, cnt_id)
+
+        except Exception as e:
+            logger.info(f"❌ 结果处理错误: {e}")
+
+    def _process_nlp_result(self, dataBundle, cnt_id):
+        """处理NLP结果"""
+        # 🔧 修复: 如果正在处理意图判定，不拦截 NLP
+        if self.processing_intent:
+            logger.info("⏳ [EventListener] 意图判定进行中，NLP 继续处理")
+            # 不 return，继续处理 NLP
+        
+        # 只有在意图判定完成且命中技能时，才拦截
+        elif self.intent_handler and self.intent_handler.is_cbm_semantic_processed():
+            logger.info("🚫 [EventListener] NLP被意图状态拦截，跳过处理")
+            return
+            
+        resultStr = dataBundle.getBinaryAsStr(cnt_id)
+        resultJson = json5.loads(resultStr)
+        logger.info(f"🧠 NLP结果: {resultJson}")
+        self._handle_nlp_result(resultJson)
+
+    def _process_iat_result(self, dataBundle, cnt_id):
+        """处理语音识别结果"""
+        resultStr = dataBundle.getBinaryAsStr(cnt_id)
+        resultJson = json5.loads(resultStr)
+
+        # 提取文本（优化版本）
+        recognized_text, text_data = self._extract_text_from_iat(resultJson)
+        if recognized_text:
+            logger.info(f"🎤 IAT结果: {recognized_text}")
+
+            # 复用xunfei的语音识别处理逻辑
+            self._handle_iat_result_optimized(
+                resultJson, recognized_text, text_data)
+
+    def _process_tts_result(self, content0, dataBundle, cnt_id):
+        """处理TTS结果"""
+        if "error" in content0 and content0["error"] == EMPTY_PACKET:
+            return
+
+        # 设置TTS处理状态
+        if not self.tts_processing:
+            self.tts_processing = True
+
+        buffer = dataBundle.getBinary(cnt_id)
+        dts = content0["dts"]  # 音频块位置状态信息
+        self.EventTTS(EventData({"buffer": buffer, "dts": dts}))
+
+    def _process_cbm_semantic_result(self, dataBundle, cnt_id):
+        """处理语义理解结果"""
+        # 🔧 修复: 设置意图处理锁
+        self.processing_intent = True
+        try:
+            resultStr = dataBundle.getBinaryAsStr(cnt_id)
+            resultJson = json5.loads(resultStr)
+            logger.info(f"🧠 语义理解结果: {resultJson}")
+            self._handle_cbm_semantic_result(resultJson)
+        finally:
+            # 🔧 修复: 处理完成后释放锁
+            self.processing_intent = False
+
+    def _process_cbm_knowledge_result(self, dataBundle, cnt_id):
+        """处理知识库结果"""
+        resultStr = dataBundle.getBinaryAsStr(cnt_id)
+        resultJson = json5.loads(resultStr)
+        logger.info(f"📚 知识库结果: {resultJson}")
+        self._handle_cbm_knowledge_result(resultJson)
+
+    def _process_other_result(self, sub, dataBundle, cnt_id):
+        """处理其他类型结果"""
+        logger.info(f"📝 其他类型结果: {sub}")
+        resultStr = dataBundle.getBinaryAsStr(cnt_id)
+        if resultStr:
+            try:
+                resultJson = json5.loads(resultStr)
+                logger.info(f"📄 结果内容: {resultJson}")
+            except:
+                logger.info(f"📄 结果内容: {resultStr}")
+
+    def _handle_nlp_result(self, resultJson):
+        """处理NLP结果，复用xunfei逻辑"""
+        try:
+            # 从AIUI的NLP结果中提取text和status
+            nlp_text = resultJson.get('nlp', {}).get('text', '')
+            nlp_status = resultJson.get('nlp', {}).get('status', 0)
+
+            logger.info(f"📝 提取NLP文本: {nlp_text}, 状态: {nlp_status}")
+
+            # 如果是结束状态（status=2），即使文本是标点符号也要处理
+            if nlp_status == 2:
+                logger.info("🎯 AIUI检测到结束状态，强制处理NLP结果")
+            else:
+                # 非结束状态下的验证
+                # 验证NLP结果的有效性
+                if not nlp_text or len(nlp_text.strip()) == 0:
+                    logger.debug("AIUI NLP文本为空，跳过处理")
+                    return
+
+                # 检查是否只是标点符号
+                stripped_text = nlp_text.strip()
+                if len(stripped_text) == 1 and stripped_text in '。，！？；：""''（）【】':
+                    logger.debug(f"AIUI NLP文本为纯标点符号，跳过处理: {stripped_text}")
+                    return
+
+            # 构造xunfei格式的数据
+            xunfei_data = {
+                'content': {
+                    'result': {
+                        'nlp': {
+                            'text': nlp_text,
+                            'status': nlp_status
+                        }
+                    }
+                }
+            }
+
+            logger.info(f"🚀 准备调用xunfei NLP处理器: {xunfei_data}")
+            # 使用xunfei的NLP处理器
+            self.nlp_handler.handle_nlp_result(xunfei_data)
+
+        except Exception as e:
+            logger.error(f"❌ AIUI NLP处理错误: {e}")
+            # 异常情况下尝试重置NLP处理器状态
+            try:
+                if hasattr(self.nlp_handler, '_reset_state'):
+                    self.nlp_handler._reset_state()
+                    logger.info("已重置NLP处理器状态")
+            except Exception as reset_error:
+                logger.error(f"重置NLP处理器状态失败: {reset_error}")
+
+    def _handle_iat_result_optimized(self, resultJson, recognized_text, text_data):
+        """优化的语音识别结果处理"""
+        try:
+            logger.info(f"🎤 提取IAT文本: {recognized_text}")
+
+            # 🔧 修复: 新对话开始，重置意图处理标记
+            if self.intent_handler:
+                self.intent_handler.reset_cbm_semantic_processed()
+                logger.info("🔄 [AIUI] 新对话开始，已重置意图拦截标记")
+
+            # 构造xunfei格式的数据
+            xunfei_data = {
+                'content': {
+                    'result': {
+                        'text': {
+                            'ws': text_data.get('ws', []),
+                            'ls': text_data.get('ls', False),
+                            'sn': text_data.get('sn', 0)
+                        }
+                    }
+                }
+            }
+
+            # 使用xunfei的语音识别处理器
+            self.speech_handler.handle_iat_result(xunfei_data)
+
+        except Exception as e:
+            logger.info(f"❌ IAT处理错误: {e}")
+
+    def _handle_cbm_semantic_result(self, resultJson):
+        """🔧 修复: 根据 rc 值决定是否走意图处理"""
+        try:
+            text_value = resultJson.get('cbm_semantic', {}).get('text', '')
+            if not text_value:
+                logger.warning("语义理解结果中没有找到 text 字段")
+                return
+                
+            parsed = json5.loads(text_value)
+            rc = parsed.get('rc', -1)
+            
+            logger.info(f"🔍 解析后的语义数据: {parsed}")
+            
+            if rc == 0:
+                # 命中技能，设置标记并调用意图处理器
+                logger.info(f"✅ 命中技能，rc={rc}，走意图处理")
+                self.intent_handler.cbm_semantic_processed = True
+                xunfei_data = {
+                    'content': {
+                        'result': {
+                            'cbm_semantic': {'text': text_value}
+                        }
+                    }
+                }
+                logger.info(f"🔍 传递的数据结构: {xunfei_data}")
+                self.intent_handler.handle_intent_result(xunfei_data)
+            else:
+                # 未命中技能，不设置标记，让 NLP 继续处理
+                logger.info(f"🔴 未命中技能，rc={rc}，不走意图，等待 NLP 处理")
+                # 确保标记为 False
+                self.intent_handler.cbm_semantic_processed = False
+                
+        except Exception as e:
+            logger.error(f"❌ 语义理解处理错误: {e}")
+            # 异常时也确保标记重置
+            if self.intent_handler:
+                self.intent_handler.cbm_semantic_processed = False
+
+    def _handle_cbm_knowledge_result(self, resultJson):
+        """处理知识库结果，复用xunfei逻辑"""
+        try:
+            # 构造xunfei格式的数据
+            xunfei_data = {
+                'content': {
+                    'result': {
+                        'cbm_knowledge': resultJson
+                    }
+                }
+            }
+
+            # 使用xunfei的知识库处理器
+            self.knowledge_handler.handle_knowledge_result(xunfei_data)
+
+        except Exception as e:
+            logger.info(f"❌ 知识库处理错误: {e}")
+
+    def EventNLP(self, event):
+        """语义结果回调 - 简化版本"""
+        nlp_result_text = event.data["text"]
+        logger.info(f"🎯 NLP处理: {nlp_result_text}")
+
+        # 简单的回复逻辑
+        if self.agent:
+            reply = f"我听到了：{nlp_result_text}"
+            logger.info(f"🔊 语音回复: {reply}")
+            self.agent.cmd_tts(reply)
+
+    def EventTTS(self, event):
+        """TTS结果 - 简化版本，使用xunfei的TTS处理"""
+        pass
+
+    def packed_socket_msg(self, cmd_type, params_dict={}):
+        msg = {
+            "cmd": cmd_type
+        }
+        msg.update(params_dict)
+        return msg
+
+    def is_tts_download_complete(self):
+        if "dts" in self.content and self.content["dts"] in (2, 3):
+            return True
+        return False
+
+
+def parse_iat(resultJson):
+    is_last = resultJson["text"]["ls"]
+    joinText = ""
+    if is_last == False:
+        for ws in resultJson["text"]["ws"]:
+            joinText += ws["cw"][0]["w"]
+        logger.info(joinText)

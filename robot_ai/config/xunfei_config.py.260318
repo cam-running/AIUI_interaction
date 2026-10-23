@@ -1,0 +1,80 @@
+# -*- coding:utf-8 -*-
+"""
+讯飞大模型多语种语音识别配置
+"""
+
+# 讯飞开放平台配置
+XUNFEI_CONFIG = {
+    "APPID": "d4752eff",
+    "APIKey": "6e15eec4443352f81eeea0224842ae9b",
+    "APISecret": "ZTEzOWIyMjc5ZmY4OGYyNmI3NDYyMTE0",
+    #"APPID": "f016fce3",
+    #"APIKey": "fcb58dc79de9b0568d2287bd8184e291",
+    #"APISecret": "YTFiN2NkOGVjNTVjY2QyMTlmMTViOTBh",
+    "URL": "wss://iat.cn-huabei-1.xf-yun.com/v1"
+}
+
+# 大模型多语种语音识别参数
+IAT_PARAMS = {
+    "domain": "slm",  # 指定访问的领域 slm
+    "language": "mul_cn",  # 语种 mul_cn
+    "accent": "mandarin",  # 口音
+    "eos": 6000,  # 静音多少秒停止识别 如6000毫秒
+    "vinfo": 1,  # 句子级别帧对齐
+    "result": {
+        "encoding": "utf8",
+        "compress": "raw",
+        "format": "json"
+    }
+}
+
+# 音频参数配置
+AUDIO_CONFIG = {
+    "frame_size": 1280,  # 每一帧的音频大小（建议值）
+    "interval": 0.04,  # 发送音频间隔(单位:s) - 建议40ms
+    "sample_rate": 16000,  # 采样率
+    "channels": 1,  # 声道数
+    "bit_depth": 16,  # 位深度
+    "encoding": "raw"  # 音频编码格式
+}
+
+# 支持的语种列表
+SUPPORTED_LANGUAGES = {
+    "zh": "中文",
+    "en": "英文",
+    "ja": "日语",
+    "ko": "韩语",
+    "ru": "俄语",
+    "fr": "法语",
+    "es": "西班牙语",
+    "ar": "阿拉伯语",
+    "de": "德语",
+    "th": "泰语",
+    "vi": "越南语",
+    "hi": "印地语",
+    "pt": "葡萄牙语",
+    "it": "意大利语",
+    "ms": "马来语",
+    "id": "印尼语",
+    "fil": "菲律宾语",
+    "tr": "土耳其语",
+    "el": "希腊语",
+    "cs": "捷克语",
+    "ur": "乌尔都语",
+    "bn": "孟加拉语",
+    "ta": "泰米尔语",
+    "uk": "乌克兰语",
+    "kk": "哈萨克语",
+    "uz": "乌兹别克语",
+    "pl": "波兰语",
+    "mn": "蒙语",
+    "sw": "斯瓦西里语",
+    "ha": "豪撒语",
+    "fa": "波斯语",
+    "nl": "荷兰语",
+    "sv": "瑞典语",
+    "ro": "罗马尼亚语",
+    "bg": "保加利亚语",
+    "ug": "维语",
+    "tib": "藏语"
+}

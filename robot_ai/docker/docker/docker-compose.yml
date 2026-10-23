@@ -1,0 +1,58 @@
+services:
+  robot-system:
+    build:
+      context: ../..
+      dockerfile: docker/docker/Dockerfile
+#      args:
+#        HTTP_PROXY: "http://172.17.0.1:2080"
+#        HTTPS_PROXY: "http://172.17.0.1:2080"
+    container_name: robot-system
+    restart: unless-stopped
+    ports:
+      - "8000:8000"     # 主应用端口
+      - "34505:34505"     # server_tts 服务端口
+      - "34555:34555"     # face_voice 主服务端口
+      - "5001:5001"     # face_voice 视频服务端口
+      - "34550:34550"     # Redcse web 服务端口
+    environment:
+      - APP_HOST=0.0.0.0
+      - APP_PORT=8000
+      - APP_DEBUG=false
+      - ENVIRONMENT=prod
+      - LOG_LEVEL=INFO
+      - GIT_USERNAME=admin
+      - GIT_PASSWORD=admin
+      - PYTHONPATH=/app:/home/ict:/home/admin/Redcse
+#      - http_proxy=http://172.17.0.1:2080
+#      - https_proxy=http://172.17.0.1:2080
+    volumes:
+      - ../../logs:/app/logs
+      - ../../static:/app/static
+      - ../../config:/app/config
+      - robot_code:/home/ict              # 挂载代码目录
+      - redcse_code:/home/admin/Redcse    # 挂载 Redcse 代码目录
+      - /dev/video0:/dev/video0           # 摄像头设备
+      - /dev/snd:/dev/snd                 # 音频设备
+    devices:
+      - /dev/video0:/dev/video0           # 摄像头设备权限
+      - /dev/snd:/dev/snd                 # 音频设备权限
+    privileged: true                      # 访问硬件设备
+    networks:
+      - robot-network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s                   # 增加启动时间，等待所有服务就绪
+    stdin_open: true
+    tty: true
+
+networks:
+  robot-network:
+    driver: bridge
+
+volumes:
+  postgres_data:
+  robot_code:              # 存储下载的代码仓库
+  redcse_code:             # 存储 Redcse 代码目录 

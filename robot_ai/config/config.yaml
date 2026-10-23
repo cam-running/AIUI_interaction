@@ -1,0 +1,85 @@
+machine-name: robot_ai
+version: 1.0.0
+machine-id: d21e4997e4f78314ca991ffa8734c366
+machinename: 小苏
+server:
+  ip: 192.168.123.38
+  port: 19199
+camera_url: http://127.0.0.1:34550/camera_base64
+speech_recognition:
+  service: xunfei_linux
+ssh_host: robot.yun36.com
+ssh_port: 2066
+ssh_user: root
+ssh_pass: 7P8xxEEw9vGx0Yf%
+db_host: 127.0.0.1
+db_port: 33066
+db_user: root
+db_pass: qweICT!@#444
+db_name: passenger_flow
+table: flow_data
+baolian_api_key: sk-1dcf9fc95ee54c3bbb2a3fdc9ebaa49f
+baolian_model: qwen-vl-max-latest
+baolian_nlp_model: qwen-plus-latest
+network:
+  connection_timeout: 5
+  receive_timeout: 3
+  ping_interval: 10
+  reconnect_delay: 5
+logging:
+  level: INFO
+  file: log/robot_ai.log
+  format: '%(asctime)s.%(msecs)03d %(levelname)s:%(message)s'
+  date_format: '%Y-%m-%d %H:%M:%S'
+  baidu_realtime:
+    client_id: erJ8dFilykzXBLf09Sm0u0YQ
+    client_secret: EP4TqMs3eRriCFnJ3Dbu9YtHAq1FtP5H
+    api_key: ''
+    streaming_url: wss://aip.baidubce.com/ws/2.0/speech/v1/realtime
+    model_name: audio-realtime
+    audio:
+      sample_rate: 16000
+      channels: 1
+      format: int16
+      chunk_size: 1024
+    output_audio:
+      sample_rate: 24000
+      channels: 1
+      format: int16
+tts:
+  voice: x4_lingfeizhe_oral
+  speed: 45
+  pitch: 50
+  volume: 50
+xunfei:
+  app_id: 5dd2b0dc
+  api_key: 0135f644fc86f99197c5604a0f9f7ec6
+  api_secret: MjY1Yjg5ZTk4NTZkNTY1NjQ2ZDIzMGE1
+  streaming_tts_url: wss://aiui.xf-yun.com/v3/aiint/sos
+  scene: main
+  category:
+  - OS21773201376.ACTIONS
+  - OS21773201376.ACTIONS_${area}
+  - OS21773201376.control_aiot
+  - OS21773201376.VoiceNavigation
+  - OS21773201376.CMD_ACTIONS
+development:
+  debug: false
+  log_to_console: true
+  log_to_file: true
+production:
+  debug: false
+  log_to_console: false
+  log_to_file: true
+pc2:
+  ip: 192.168.123.99
+  port: 8839
+  base_url: http://192.168.123.99:8839
+  endpoints:
+    robot_action: /dbqa_app/pub_webrtc
+    robot_waypoint: /dbqa_app/pub_waypoint
+    robot_cmd_action: /dbqa_app/pub_remote_cmd
+    qa_callback: /rest_api/qa_callback
+    led: /rest_api/led
+music_url: http://192.168.0.10:34505/tts_audio_control_http
+qa_callback_url: http://192.168.123.1:34555/rest_api/qa_callback

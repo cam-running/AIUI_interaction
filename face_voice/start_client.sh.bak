@@ -1,0 +1,25 @@
+#!/bin/bash
+export DISPLAY=:0
+export XDG_RUNTIME_DIR=/run/user/$(id -u)
+export HOME=/home/firefly
+
+CURRENT_USER=$(whoami)
+CURRENT_UID=$(id -u)
+echo "当前用户: $CURRENT_USER (UID: $CURRENT_UID)"
+
+if pgrep -f "python3 /home/ict/face_voice/main_client.py" > /dev/null; then
+    echo "发现已有人脸识别服务在运行，直接退出..."
+    exit 0
+fi
+
+echo "启动人脸识别服务..."
+nohup python3 /home/ict/face_voice/main_client.py > client.log 2>&1 &
+PID=$!
+echo "人脸识别服务已启动，PID: $PID"
+
+if kill -0 $PID > /dev/null 2>&1; then
+    echo "人脸识别服务启动成功，正在运行"
+else
+    echo "错误: 人脸识别服务启动失败，请检查日志文件 client.log"
+    exit 1
+fi

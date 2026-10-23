@@ -1,0 +1,97 @@
+# ALSA配置文件 - 自动生成
+# 用于修复音频设备配置问题
+
+# 默认设备配置
+pcm.!default {
+    type hw
+    card 0
+    device 0
+}
+
+ctl.!default {
+    type hw
+    card 0
+}
+
+# 简单PCM设备
+pcm.simple {
+    type plug
+    slave.pcm "hw:0,0"
+}
+
+# 默认PCM设备
+pcm.!default {
+    type plug
+    slave.pcm "simple"
+}
+
+# 禁用不存在的设备以避免ALSA错误
+pcm.front {
+    type null
+}
+
+pcm.rear {
+    type null
+}
+
+pcm.center_lfe {
+    type null
+}
+
+pcm.side {
+    type null
+}
+
+pcm.surround21 {
+    type null
+}
+
+pcm.surround40 {
+    type null
+}
+
+pcm.surround41 {
+    type null
+}
+
+pcm.surround50 {
+    type null
+}
+
+pcm.surround51 {
+    type null
+}
+
+pcm.surround71 {
+    type null
+}
+
+pcm.iec958 {
+    type null
+}
+
+pcm.spdif {
+    type null
+}
+
+pcm.hdmi {
+    type null
+}
+
+pcm.modem {
+    type null
+}
+
+pcm.phoneline {
+    type null
+}
+
+# 禁用OSS设备
+pcm.dsp {
+    type null
+}
+
+# 禁用USB音频设备错误
+pcm.usb_stream {
+    type null
+}

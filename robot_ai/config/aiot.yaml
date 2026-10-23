@@ -1,0 +1,69 @@
+# AIOT 物联中控平台配置
+
+# 机器ID配置
+machine:
+  machine-id: "d21e4997e4f78314ca991ffa8734c366"
+  machine-name: "robot_ai"
+
+# 物联AIOT平台配置
+aiot_platform:
+  # 江苏移动业务账号
+  union_id: "18505105276"
+  # union_id: "13951742810"
+  
+  # 测试环境配置
+  # host: "http://iot.test.tstar-tech.com:6001"
+  # app_id: "DXJSul8kAD4o0vLm"
+  # app_secret: "NExpWCKDl7vXb4ElFfqktsFr+Go5tiem"
+  
+  # 正式环境配置
+  host: "http://iot.tstar-tech.com:6001/"
+  app_id: "NVOPaEwo8S61ytrZ"
+  app_secret: "/uUMzm79BK0RPzI8VBgomSRjngXb5/sH"
+
+# 场景配置
+scenes:
+  scene_001: "500"  # 明灯id
+  scene_002: "501"  # 灭灯id
+
+# 设备配置
+devices:
+  livingroom_downlight:
+    dev_name: "客厅筒灯"
+    product_id: "RSD00003"
+    device_id: "ATARZ4A3000124587C00D2DC"
+    resource_id: "power1"
+    open_value: "1"
+    close_value: "2"
+  
+  rail_light:
+    dev_name: "客厅轨道灯"
+    product_id: "U7GE5C7X"
+    device_id: "0001200d1cc089fffecaf196"
+    resource_id: "power1"
+    open_value: true
+    close_value: false
+  
+  light_strip:
+    dev_name: "灯带"
+    product_id: "KXYP79V2"
+    device_id: "0001200d90395efffe80c4ee"
+    resource_id: "power1"
+    open_value: true
+    close_value: false
+  
+  ceiling_light:
+    dev_name: "吸顶灯"
+    product_id: "KXYP79V2"
+    device_id: "0001200d90395efffe80c4ee"
+    resource_id: "power2"
+    open_value: true
+    close_value: false
+  
+  the_curtains:
+    dev_name: "窗帘"
+    product_id: "RSD00005"
+    device_id: "ATARWSA40001B8D61AA720B0"
+    resource_id: "work1.work1"
+    open_value: "1"
+    close_value: "2"
